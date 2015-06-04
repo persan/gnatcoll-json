@@ -1,0 +1,16 @@
+with "aws.gpr";
+with "gnatcoll-json.gpr";
+with "gnatcoll-json-builder.gpr";
+project GnatColl.JSON.Tests is
+
+   for Languages use ("ada");
+   for Source_Dirs use ("tests/**");
+   for Object_Dir use ".obj/" &Project'Name;
+   for Exec_Dir use "bin";
+
+
+   package Compiler is
+
+   end Compiler;
+
+end GnatColl.JSON.Tests;
