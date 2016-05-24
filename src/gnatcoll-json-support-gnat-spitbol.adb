@@ -4,7 +4,7 @@ package body GNATCOLL.JSON.Support.GNAT.SPitbol is
    -- JSON_Table --
    ----------------
 
-   package body Table is
+   package body JSON_Table is
 
       ------------
       -- Create --
@@ -49,7 +49,7 @@ package body GNATCOLL.JSON.Support.GNAT.SPitbol is
       procedure Set_Field
         (Val        : JSON_Value;
          Field_Name : UTF8_String;
-         Field  : V.Table)
+         Field      : V.Table)
       is
       begin
          --  Generated stub: replace with real body!
@@ -86,7 +86,7 @@ package body GNATCOLL.JSON.Support.GNAT.SPitbol is
       ---------
 
       function Get
-        (Val : JSON_Value;
+        (Val   : JSON_Value;
          Field : UTF8_String)
          return V.Table_Entry
       is
@@ -102,9 +102,9 @@ package body GNATCOLL.JSON.Support.GNAT.SPitbol is
       ---------------
 
       procedure Set_Field
-        (Val  : JSON_Value;
+        (Val        : JSON_Value;
          Field_Name : UTF8_String;
-         Field  : V.Table_Entry)
+         Field      : V.Table_Entry)
       is
       begin
          --  Generated stub: replace with real body!
@@ -141,7 +141,7 @@ package body GNATCOLL.JSON.Support.GNAT.SPitbol is
       ---------
 
       function Get
-        (Val : JSON_Value;
+        (Val   : JSON_Value;
          Field : UTF8_String)
          return V.Table_Array
       is
@@ -159,7 +159,7 @@ package body GNATCOLL.JSON.Support.GNAT.SPitbol is
       procedure Set_Field
         (Val        : JSON_Value;
          Field_Name : UTF8_String;
-         Field  : V.Table_Array)
+         Field      : V.Table_Array)
       is
       begin
          --  Generated stub: replace with real body!
@@ -167,6 +167,6 @@ package body GNATCOLL.JSON.Support.GNAT.SPitbol is
          raise Program_Error with "Unimplemented procedure Set_Field";
       end Set_Field;
 
-   end Table;
+   end JSON_Table;
 
 end GNATCOLL.JSON.Support.GNAT.SPitbol;

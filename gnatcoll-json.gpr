@@ -1,16 +1,15 @@
-with "asis";
 with "gnatcoll";
 
 library project GnatColl.JSON is
 
    for Languages use ("ada");
    for Source_Dirs use ("src");
-   for Object_Dir use ".obj/" & project'name;
+   for Object_Dir use ".obj/" & project'Name;
    for Library_Dir use "lib";
    for Library_Name use "gnatcolljson";
 
    package Compiler is
-      for Default_Switches ("ada") use ("-gnat12","-gnatq");
+      for Default_Switches ("ada") use ("-gnat12", "-gnatq");
    end Compiler;
 
    package Naming is

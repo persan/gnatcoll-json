@@ -16,7 +16,7 @@ package GNATCOLL.JSON.Support.GNAT.SPitbol is
       with function Get (Val : JSON_Value; Field : UTF8_String) return Value_Type is <>;
       with procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Value_Type) is <>;
 
-   package Table is
+   package JSON_Table is
 
       function Create (Val : V.Table) return JSON_Value;
       function Get (Val : GNATCOLL.JSON.JSON_Value) return V.Table;

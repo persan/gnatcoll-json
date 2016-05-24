@@ -5,11 +5,11 @@ generic
    with function Hash (Element : Element_Type) return Hash_Type;
 
    with function Equivalent_Elements
-          (Left, Right : Element_Type) return Boolean;
+     (Left, Right : Element_Type) return Boolean;
    with function "=" (Left, Right : Element_Type) return Boolean is <>;
 
-   with package V is new Standard.Ada.Containers.Bounded_Hashed_Sets (Element_Type,Hash,
-                                                          Equivalent_Elements, "=");
+   with package V is new Standard.Ada.Containers.Bounded_Hashed_Sets (Element_Type, Hash,
+                                                                      Equivalent_Elements, "=");
    use V;
 
    with function Create (Val : Element_Type) return JSON_Value is <>;
@@ -19,9 +19,9 @@ generic
    with procedure Set_Field  (Val        : JSON_Value;  Field_Name : UTF8_String; Field  : Element_Type) is <>;
 
 package GNATCOLL.JSON.Support.Ada.Containers.Bounded_Hashed_Sets is
-   function Create (Val : set) return JSON_Value;
-   function Get (Val : JSON_Value) return set;
+   function Create (Val : Set) return JSON_Value;
+   function Get (Val : JSON_Value) return Set;
 
-   function Get (Val : JSON_Value; Field : UTF8_String) return set;
-   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : set);
+   function Get (Val : JSON_Value; Field : UTF8_String) return Set;
+   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Set);
 end;

@@ -8,8 +8,6 @@ package GNATCOLL.JSON.Support.System.Storage_Elements.JSON is
    function Get (Val : JSON_Value; Field : UTF8_String) return Storage_Offset;
    procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Storage_Offset);
 
-
-
    function Create (Val : Storage_Element) return JSON_Value;
 
    function Get (Val : JSON_Value) return Storage_Element;
@@ -35,7 +33,7 @@ private
      with Inline_Always => True;
    function Value (Item : String) return Storage_Element  with
      Inline_Always => True,
-       Pre => Item'Length = 2;
+     Pre => Item'Length = 2;
 
    function Value (Item : String) return Storage_Array  with
      Inline_Always => True;

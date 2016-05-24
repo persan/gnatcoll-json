@@ -790,7 +790,7 @@ package body GNATCOLL.JSON.Support.Builder.Sampler is
 
       end if;
 
-     -<>- Fix output files
+      --<>- Fix output files
 
       --  and here we have to do the job:
 

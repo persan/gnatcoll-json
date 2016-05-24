@@ -7,8 +7,8 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Ordered_Sets is
    function Create (Val : Set) return JSON_Value is
       Ret : JSON_Array;
    begin
-         for i of val loop
-            Append (Ret, Create (I));
+      for I of Val loop
+         Append (Ret, Create (I));
       end loop;
       return Create (Ret);
    end Create;
