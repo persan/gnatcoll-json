@@ -1,0 +1,10 @@
+with "gnatcoll.gpr";
+with "aws.gpr";
+
+project Jsonsample is
+
+   for Source_Dirs use ("src");
+   for Object_Dir use ".obj/" & project'Name;
+   for Main use ("jsonsamlke-main.adb");
+
+end Jsonsample;
