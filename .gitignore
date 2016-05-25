@@ -1,6 +1,6 @@
 # Object file
 *.o
-
+bug
 # Ada Library Information
 *.ali
 .obj

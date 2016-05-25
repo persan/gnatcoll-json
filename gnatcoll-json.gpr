@@ -2,53 +2,19 @@ with "gnatcoll";
 
 library project GnatColl.JSON is
 
-   type Build_Kind2 is
-      ("default", "relocatable");
-   type Build_Kind1 is
-      ("static", "relocatable", "static-pic");
-   type Build_Kind is
-      ("static", "relocatable", "static-pic");
    for Languages use ("ada");
    for Source_Dirs use ("src");
    for Object_Dir use ".obj/" & project'Name;
    for Library_Dir use "lib";
    for Library_Name use "gnatcolljson";
-   LIBRARY_TYPE : Build_Kind := external ("LIBRARY_TYPE");
-   XMLADA_BUILD : Build_Kind1 := external ("XMLADA_BUILD");
-   AWS_BUILD : Build_Kind2 := external ("AWS_BUILD");
-
    package Compiler is
 
-      case LIBRARY_TYPE is
-
-         when "static" =>
-
-            case XMLADA_BUILD is
-
-               when "static" =>
-
-                  case AWS_BUILD is
-
-                     when "default" =>
-                        for Default_Switches ("ada") use ("-gnatwa", "-gnat12", "-gnatq", "-gnatyaAbBcdefhiklnOprtux", "-fstack-check", "-gnatQ");
-
-                     when "relocatable" =>
-                        for Default_Switches ("ada") use ("-gnat12", "-gnatq");
-                  end case;
-
-               when "relocatable" =>
-                  for Default_Switches ("ada") use ("-gnat12", "-gnatq");
-
-               when "static-pic" =>
-                  for Default_Switches ("ada") use ("-gnat12", "-gnatq");
-            end case;
-
-         when "relocatable" =>
-            for Default_Switches ("ada") use ("-gnat12", "-gnatq");
-
-         when "static-pic" =>
-            for Default_Switches ("ada") use ("-gnat12", "-gnatq");
-      end case;
+      for Default_Switches ("ada") use ("-gnatwa",
+                                        "-gnat12",
+                                        "-gnatq",
+                                        "-gnatyaAbBcdefhiklnOprtux",
+                                        "-fstack-check",
+                                        "-gnatQ");
    end Compiler;
 
    package Naming is
@@ -56,4 +22,3 @@ library project GnatColl.JSON is
    end Naming;
 
 end GnatColl.JSON;
-
