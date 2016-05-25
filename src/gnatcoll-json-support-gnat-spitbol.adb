@@ -1,3 +1,4 @@
+with Interfaces;
 package body GNATCOLL.JSON.Support.GNAT.SPitbol is
 
    ----------------
@@ -5,17 +6,14 @@ package body GNATCOLL.JSON.Support.GNAT.SPitbol is
    ----------------
 
    package body JSON_Table is
-
+      use V;
       ------------
       -- Create --
       ------------
 
       function Create (Val : V.Table) return JSON_Value is
       begin
-         --  Generated stub: replace with real body!
-         pragma Compile_Time_Warning (Standard.True, "Create unimplemented");
-         raise Program_Error with "Unimplemented function Create";
-         return Create (Val);
+         return Create (Convert_To_Array (Val));
       end Create;
 
       ---------
@@ -24,10 +22,11 @@ package body GNATCOLL.JSON.Support.GNAT.SPitbol is
 
       function Get (Val : GNATCOLL.JSON.JSON_Value) return V.Table is
       begin
-         --  Generated stub: replace with real body!
-         pragma Compile_Time_Warning (Standard.True, "Get unimplemented");
-         raise Program_Error with "Unimplemented function Get";
-         return Get (Val);
+         return Ret : V.Table (Interfaces.Unsigned_32 (Integer'(Get (Val, "N")))) do
+            for E of Table_Array'(Get (Val, "Data")) loop
+               Set (Ret, E.Name, E.Value);
+            end loop;
+         end return;
       end Get;
 
       ---------
@@ -36,10 +35,7 @@ package body GNATCOLL.JSON.Support.GNAT.SPitbol is
 
       function Get (Val : JSON_Value; Field : UTF8_String) return V.Table is
       begin
-         --  Generated stub: replace with real body!
-         pragma Compile_Time_Warning (Standard.True, "Get unimplemented");
-         raise Program_Error with "Unimplemented function Get";
-         return Get (Val, Field);
+         return Get (JSON_Value'(Get (Val, Field)));
       end Get;
 
       ---------------
@@ -52,9 +48,7 @@ package body GNATCOLL.JSON.Support.GNAT.SPitbol is
          Field      : V.Table)
       is
       begin
-         --  Generated stub: replace with real body!
-         pragma Compile_Time_Warning (Standard.True, "Set_Field unimplemented");
-         raise Program_Error with "Unimplemented procedure Set_Field";
+         Set_Field (Val, Field_Name, Create (Field));
       end Set_Field;
 
       ------------
@@ -63,10 +57,10 @@ package body GNATCOLL.JSON.Support.GNAT.SPitbol is
 
       function Create (Val : V.Table_Entry) return JSON_Value is
       begin
-         --  Generated stub: replace with real body!
-         pragma Compile_Time_Warning (Standard.True, "Create unimplemented");
-         raise Program_Error with "Unimplemented function Create";
-         return Create (Val);
+         return Ret : constant JSON_Value := Create_Object do
+            Set_Field (Ret, "Name", Create (Val.Name));
+            Set_Field (Ret, "Value", Create (Val.Value));
+         end return;
       end Create;
 
       ---------
@@ -75,10 +69,10 @@ package body GNATCOLL.JSON.Support.GNAT.SPitbol is
 
       function Get (Val : GNATCOLL.JSON.JSON_Value) return V.Table_Entry is
       begin
-         --  Generated stub: replace with real body!
-         pragma Compile_Time_Warning (Standard.True, "Get unimplemented");
-         raise Program_Error with "Unimplemented function Get";
-         return Get (Val);
+         return Ret : V.Table_Entry do
+            Ret.Name := Get (Val, "Name");
+            Ret.Value := Get (Val, "Value");
+         end return;
       end Get;
 
       ---------
@@ -91,10 +85,7 @@ package body GNATCOLL.JSON.Support.GNAT.SPitbol is
          return V.Table_Entry
       is
       begin
-         --  Generated stub: replace with real body!
-         pragma Compile_Time_Warning (Standard.True, "Get unimplemented");
-         raise Program_Error with "Unimplemented function Get";
-         return Get (Val, Field);
+         return Get (JSON_Value'(Get (Val, Field)));
       end Get;
 
       ---------------
@@ -107,9 +98,7 @@ package body GNATCOLL.JSON.Support.GNAT.SPitbol is
          Field      : V.Table_Entry)
       is
       begin
-         --  Generated stub: replace with real body!
-         pragma Compile_Time_Warning (Standard.True, "Set_Field unimplemented");
-         raise Program_Error with "Unimplemented procedure Set_Field";
+         Set_Field (Val, Field_Name, Create (Field));
       end Set_Field;
 
       ------------
@@ -117,11 +106,12 @@ package body GNATCOLL.JSON.Support.GNAT.SPitbol is
       ------------
 
       function Create (Val : V.Table_Array) return JSON_Value is
+         Data : JSON_Array;
       begin
-         --  Generated stub: replace with real body!
-         pragma Compile_Time_Warning (Standard.True, "Create unimplemented");
-         raise Program_Error with "Unimplemented function Create";
-         return Create (Val);
+         for D of   Val loop
+            Append (Data, Create (D));
+         end loop;
+         return Create (Data);
       end Create;
 
       ---------
@@ -129,11 +119,13 @@ package body GNATCOLL.JSON.Support.GNAT.SPitbol is
       ---------
 
       function Get (Val : GNATCOLL.JSON.JSON_Value) return V.Table_Array is
+         D : constant JSON_Array := Get (Val);
       begin
-         --  Generated stub: replace with real body!
-         pragma Compile_Time_Warning (Standard.True, "Get unimplemented");
-         raise Program_Error with "Unimplemented function Get";
-         return Get (Val);
+         return Ret : V.Table_Array (1 .. Length (D)) do
+            for I in Ret'Range loop
+               Ret (I) := Get (Get (D, I));
+            end loop;
+         end return;
       end Get;
 
       ---------
@@ -146,10 +138,7 @@ package body GNATCOLL.JSON.Support.GNAT.SPitbol is
          return V.Table_Array
       is
       begin
-         --  Generated stub: replace with real body!
-         pragma Compile_Time_Warning (Standard.True, "Get unimplemented");
-         raise Program_Error with "Unimplemented function Get";
-         return Get (Val, Field);
+         return Get (JSON_Value'(Get (Val, Field)));
       end Get;
 
       ---------------
@@ -162,9 +151,7 @@ package body GNATCOLL.JSON.Support.GNAT.SPitbol is
          Field      : V.Table_Array)
       is
       begin
-         --  Generated stub: replace with real body!
-         pragma Compile_Time_Warning (Standard.True, "Set_Field unimplemented");
-         raise Program_Error with "Unimplemented procedure Set_Field";
+         Set_Field (Val, Field_Name, Create (Field));
       end Set_Field;
 
    end JSON_Table;

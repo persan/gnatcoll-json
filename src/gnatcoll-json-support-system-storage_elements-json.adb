@@ -6,59 +6,59 @@ package body GNATCOLL.JSON.Support.System.Storage_Elements.JSON is
          Ret (1) := Map (Item / Storage_Element'(16));
          Ret (2) := Map (Item mod Storage_Element (16));
       end return;
-   end;
+   end Image;
 
    function Image (Item : Storage_Array) return String is
       Cursor : Natural := 1;
    begin
-      return Ret : String (1 .. Item'Length * 2 ) do
+      return Ret : String (1 .. Item'Length * 2) do
          for I of Item loop
             Ret (Cursor .. Cursor + 1) := Image (I);
             Cursor := Cursor + 2;
          end loop;
       end return;
-   end;
+   end Image;
 
-   function Image (Base : Standard.System.Address; Length : Storage_Offset ) return String is
+   function Image (Base : Standard.System.Address; Length : Storage_Offset) return String is
       Buffer : Storage_Array (1 .. Length) with
         Import => True,
         Address => Base;
    begin
       return Image (Buffer);
-   end;
+   end Image;
 
    function Value (Item : String) return Storage_Element is
       Map : constant array (Character'('0') .. Character'('F')) of Storage_Element :=
-              ('0' => 0,
-               '1' => 1,
-               '2' => 2,
-               '3' => 3,
-               '4' => 4,
-               '5' => 5,
-               '6' => 6,
-               '7' => 7,
-               '8' => 8,
-               '9' => 9,
-               'A' => 10,
-               'B' => 11,
-               'C' => 12,
-               'D' => 13,
-               'E' => 14,
-               'F' => 15,
+              ('0'    => 0,
+               '1'    => 1,
+               '2'    => 2,
+               '3'    => 3,
+               '4'    => 4,
+               '5'    => 5,
+               '6'    => 6,
+               '7'    => 7,
+               '8'    => 8,
+               '9'    => 9,
+               'A'    => 10,
+               'B'    => 11,
+               'C'    => 12,
+               'D'    => 13,
+               'E'    => 14,
+               'F'    => 15,
                others => 0);
    begin
-      return Map (Item (ITEM'First)) * 16 + Map (Item (ITEM'Last));
-   end;
+      return Map (Item (Item'First)) * 16 + Map (Item (Item'Last));
+   end Value;
    function Value (Item : String) return Storage_Array is
       Cursor : Natural := Item'First;
    begin
       return Ret : Storage_Array (1 .. Item'Length / 2) do
          for I in Ret'Range loop
-            Ret (I) := value(Item (Cursor .. Cursor + 1));
+            Ret (I) := Value (Item (Cursor .. Cursor + 1));
             Cursor := Cursor + 2;
          end loop;
       end return;
-   end;
+   end Value;
 
    ------------
    -- Create --
@@ -75,7 +75,7 @@ package body GNATCOLL.JSON.Support.System.Storage_Elements.JSON is
 
    function Get (Val : JSON_Value) return Storage_Offset is
    begin
-      return Storage_Offset(integer'(Get (Val)));
+      return Storage_Offset (Integer'(Get (Val)));
    end Get;
 
    ---------
@@ -83,12 +83,12 @@ package body GNATCOLL.JSON.Support.System.Storage_Elements.JSON is
    ---------
 
    function Get
-     (Val : JSON_Value;
+     (Val   : JSON_Value;
       Field : UTF8_String)
       return Storage_Offset
    is
    begin
-      return Storage_Offset(integer'(Get (Val, Field)));
+      return Storage_Offset (Integer'(Get (Val, Field)));
    end Get;
 
    ---------------
@@ -96,9 +96,9 @@ package body GNATCOLL.JSON.Support.System.Storage_Elements.JSON is
    ---------------
 
    procedure Set_Field
-     (Val : JSON_Value;
+     (Val        : JSON_Value;
       Field_Name : UTF8_String;
-      Field  : Storage_Offset)
+      Field      : Storage_Offset)
    is
    begin
       Set_Field (Val, Field_Name, Integer (Field));
@@ -119,7 +119,7 @@ package body GNATCOLL.JSON.Support.System.Storage_Elements.JSON is
 
    function Get (Val : JSON_Value) return Storage_Element is
    begin
-      return Storage_Element(integer'(Get (Val)));
+      return Storage_Element (Integer'(Get (Val)));
    end Get;
 
    ---------
@@ -127,12 +127,12 @@ package body GNATCOLL.JSON.Support.System.Storage_Elements.JSON is
    ---------
 
    function Get
-     (Val : JSON_Value;
+     (Val   : JSON_Value;
       Field : UTF8_String)
       return Storage_Element
    is
    begin
-      return Storage_Element(integer'(Get (Val, Field)));
+      return Storage_Element (Integer'(Get (Val, Field)));
    end Get;
 
    ---------------
@@ -140,9 +140,9 @@ package body GNATCOLL.JSON.Support.System.Storage_Elements.JSON is
    ---------------
 
    procedure Set_Field
-     (Val : JSON_Value;
+     (Val        : JSON_Value;
       Field_Name : UTF8_String;
-      Field  : Storage_Element)
+      Field      : Storage_Element)
    is
    begin
       Set_Field (Val, Field_Name, Integer (Field));
@@ -163,7 +163,7 @@ package body GNATCOLL.JSON.Support.System.Storage_Elements.JSON is
 
    function Get (Val : JSON_Value) return Storage_Array is
    begin
-      return value(String'(Get (Val)));
+      return Value (String'(Get (Val)));
    end Get;
 
    ---------
@@ -171,12 +171,12 @@ package body GNATCOLL.JSON.Support.System.Storage_Elements.JSON is
    ---------
 
    function Get
-     (Val : JSON_Value;
+     (Val   : JSON_Value;
       Field : UTF8_String)
       return Storage_Array
    is
    begin
-      return value(String'(Get (Val, Field)));
+      return Value (String'(Get (Val, Field)));
    end Get;
 
    ---------------
@@ -184,9 +184,9 @@ package body GNATCOLL.JSON.Support.System.Storage_Elements.JSON is
    ---------------Inline_Always
 
    procedure Set_Field
-     (Val : JSON_Value;
+     (Val        : JSON_Value;
       Field_Name : UTF8_String;
-      Field  : Storage_Array)
+      Field      : Storage_Array)
    is
    begin
       Set_Field (Val, Field_Name, Image (Field));

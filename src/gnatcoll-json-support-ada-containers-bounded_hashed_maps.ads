@@ -16,16 +16,16 @@ generic
       "="); use V;
 
    with function Create (Val : Key_Type) return JSON_Value is <>;
-   with function Get (Val : JSON_Value) return Key_Type is <>;
+   with function Get (Val : JSON_Value) return Key_Type is <> with Unreferenced;
 
    with function Get_Name (Val : JSON_Value; Field : UTF8_String) return Key_Type is <>;
-   with procedure Set_Field  (Val        : JSON_Value;  Field_Name : UTF8_String; Field  : Key_Type) is <>;
+   with procedure Set_Field  (Val        : JSON_Value;  Field_Name : UTF8_String; Field  : Key_Type) is <> with Unreferenced;
 
    with function Create (Val : Element_Type) return JSON_Value is <>;
-   with function Get (Val : JSON_Value) return Element_Type is <>;
+   with function Get (Val : JSON_Value) return Element_Type is <> with Unreferenced;
 
    with function Get_Name (Val : JSON_Value; Field : UTF8_String) return Element_Type is <>;
-   with procedure Set_Field  (Val        : JSON_Value;  Field_Name : UTF8_String; Field  : Element_Type) is <>;
+   with procedure Set_Field  (Val        : JSON_Value;  Field_Name : UTF8_String; Field  : Element_Type) is <> with Unreferenced;
 
 package GNATCOLL.JSON.Support.Ada.Containers.Bounded_Hashed_Maps is
 
@@ -35,4 +35,4 @@ package GNATCOLL.JSON.Support.Ada.Containers.Bounded_Hashed_Maps is
    function Get (Val : JSON_Value; Field : UTF8_String) return Map;
    procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Map);
 
-end;
+end GNATCOLL.JSON.Support.Ada.Containers.Bounded_Hashed_Maps;

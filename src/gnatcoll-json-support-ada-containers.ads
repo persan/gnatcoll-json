@@ -12,4 +12,4 @@ package GNATCOLL.JSON.Support.Ada.Containers is
    function Get (Val : JSON_Value; Field : UTF8_String) return Count_Type with Inline_Always;
    procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Count_Type) with Inline_Always;
 
-end;
+end GNATCOLL.JSON.Support.Ada.Containers;

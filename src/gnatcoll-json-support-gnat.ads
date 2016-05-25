@@ -1,3 +1,3 @@
 package GNATCOLL.JSON.Support.GNAT is
 
-end;
+end GNATCOLL.JSON.Support.GNAT;

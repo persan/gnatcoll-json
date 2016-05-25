@@ -11,10 +11,10 @@ package GNATCOLL.JSON.Support.GNAT.SPitbol is
       with package V is new Standard.GNAT.Spitbol.Table (Value_Type, Null_Value, Img, "=");
 
       with function Create (Val : Value_Type) return JSON_Value is <>;
-      with function Get (Val : GNATCOLL.JSON.JSON_Value) return Value_Type is <>;
+      with function Get (Val : GNATCOLL.JSON.JSON_Value) return Value_Type is <> with unreferenced;
 
       with function Get (Val : JSON_Value; Field : UTF8_String) return Value_Type is <>;
-      with procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Value_Type) is <>;
+      with procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Value_Type) is <> with unreferenced;
 
    package JSON_Table is
 
@@ -32,5 +32,5 @@ package GNATCOLL.JSON.Support.GNAT.SPitbol is
       function Get (Val : GNATCOLL.JSON.JSON_Value) return V.Table_Array;
       function Get (Val : JSON_Value; Field : UTF8_String) return V.Table_Array;
       procedure Set_Field  (Val        : JSON_Value;  Field_Name : UTF8_String; Field  : V.Table_Array);
-   end;
-end;
+   end JSON_Table;
+end GNATCOLL.JSON.Support.GNAT.SPitbol;

@@ -53,7 +53,7 @@ package body GNATCOLL.JSON.Support.Ada.Calendar is
       return JSON_Value
    is
    begin
-      return Ret : JSON_Value := Create_Object do
+      return Ret : constant JSON_Value := Create_Object do
          Set_Field (Ret, "Year", Val.Year);
          Set_Field (Ret, "Month", Val.Month);
          Set_Field (Ret, "Day",  Val.Day);

@@ -1,3 +1,3 @@
 package GNATCOLL.JSON.Support.Ada is
 
-end;
+end GNATCOLL.JSON.Support.Ada;

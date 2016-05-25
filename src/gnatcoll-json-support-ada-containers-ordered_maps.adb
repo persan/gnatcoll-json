@@ -2,11 +2,11 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Ordered_Maps is
 
    function Create (Val : Map_Entry) return JSON_Value is
    begin
-      return Ret : JSON_Value := Create_Object do
+      return Ret : constant JSON_Value := Create_Object do
          Ret.Set_Field ("Key", Create (Val.Key));
-         Ret.Set_Field ("Element", Create (val.Element));
+         Ret.Set_Field ("Element", Create (Val.Element));
       end return;
-   end;
+   end Create;
 
    function Get (Val : JSON_Value) return Map_Entry is
    begin
@@ -14,7 +14,7 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Ordered_Maps is
          Ret.Key := Get_Name (Val, "Key");
          Ret.Element := Get_Name (Val, "Element");
       end return;
-   end;
+   end Get;
 
    ------------
    -- Create --
@@ -25,7 +25,7 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Ordered_Maps is
       procedure Process (Position : Cursor) is
       begin
          Append (V, Create (Map_Entry'((Key (Position), Element (Position)))));
-      end;
+      end Process;
    begin
       Val.Iterate (Process'Access);
       return Create (V);
@@ -36,12 +36,12 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Ordered_Maps is
    ---------
 
    function Get (Val : JSON_Value) return Map is
-      L : JSON_Array := Val.Get;
+      L : constant JSON_Array := Val.Get;
    begin
       return Ret : Map do
          for I in 1 .. Length (L) loop
             declare
-               Value : Map_Entry := Get (Get (L, I));
+               Value : constant Map_Entry := Get (Get (L, I));
             begin
                Ret.Include (Value.Key, Value.Element);
             end;
@@ -63,9 +63,9 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Ordered_Maps is
    ---------------
 
    procedure Set_Field
-     (Val : JSON_Value;
+     (Val        : JSON_Value;
       Field_Name : UTF8_String;
-      Field  : Map)
+      Field      : Map)
    is
    begin
       Set_Field (Val, Field_Name, Create (Field));

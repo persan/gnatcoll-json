@@ -23,4 +23,4 @@ private
    function To_Time (Src : Internal_Time) return Time;
    function To_Internal_Time (Src : Time) return Internal_Time;
 
-end;
+end GNATCOLL.JSON.Support.Ada.Calendar;

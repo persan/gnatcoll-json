@@ -23,12 +23,12 @@ package body GNATCOLL.JSON.Support.Ada.Containers is
    ---------
 
    function Get
-     (Val : JSON_Value;
+     (Val   : JSON_Value;
       Field : UTF8_String)
       return Hash_Type
    is
    begin
-      return Hash_Type (Long_Integer'(Get (Val,Field)));
+      return Hash_Type (Long_Integer'(Get (Val, Field)));
    end Get;
 
    ---------------
@@ -36,9 +36,9 @@ package body GNATCOLL.JSON.Support.Ada.Containers is
    ---------------
 
    procedure Set_Field
-     (Val : JSON_Value;
+     (Val        : JSON_Value;
       Field_Name : UTF8_String;
-      Field  : Hash_Type)
+      Field      : Hash_Type)
    is
    begin
       Set_Field (Val, Field_Name, Long_Integer (Field));
@@ -67,12 +67,12 @@ package body GNATCOLL.JSON.Support.Ada.Containers is
    ---------
 
    function Get
-     (Val : JSON_Value;
+     (Val   : JSON_Value;
       Field : UTF8_String)
       return Count_Type
    is
    begin
-      return Count_Type (Long_Integer'(Get (Val,Field)));
+      return Count_Type (Long_Integer'(Get (Val, Field)));
    end Get;
 
    ---------------
@@ -80,9 +80,9 @@ package body GNATCOLL.JSON.Support.Ada.Containers is
    ---------------
 
    procedure Set_Field
-     (Val : JSON_Value;
+     (Val        : JSON_Value;
       Field_Name : UTF8_String;
-      Field  : Count_Type)
+      Field      : Count_Type)
    is
    begin
       Set_Field (Val, Field_Name, Long_Integer (Field));

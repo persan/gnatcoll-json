@@ -15,7 +15,6 @@ package GNATCOLL.JSON.Support.System.Storage_Elements.JSON is
    function Get (Val : JSON_Value; Field : UTF8_String) return Storage_Element;
    procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Storage_Element);
 
-
    function Create (Val : Storage_Array) return JSON_Value;
 
    function Get (Val : JSON_Value) return Storage_Array;
@@ -29,11 +28,10 @@ private
    function Image (Item : Storage_Array) return String  with
      Inline_Always => True;
    function Image (Base   : Standard.System.Address;
-                   Length : Storage_Offset ) return String
+                   Length : Storage_Offset) return String
      with Inline_Always => True;
    function Value (Item : String) return Storage_Element  with
-     Inline_Always => True,
-     Pre => Item'Length = 2;
+     Inline_Always => True;
 
    function Value (Item : String) return Storage_Array  with
      Inline_Always => True;
