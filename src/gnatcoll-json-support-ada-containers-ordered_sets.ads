@@ -5,9 +5,9 @@ generic
    with function "<" (Left, Right : Element_Type) return Boolean is <>;
    with function "=" (Left, Right : Element_Type) return Boolean is <>;
 
-   with package V is new Standard.Ada.Containers.Ordered_Sets (Element_Type,
+   with package S is new Standard.Ada.Containers.Ordered_Sets (Element_Type,
                                                                "<", "=");
-   use V;
+   use S;
 
    with function Create (Val : Element_Type) return JSON_Value is <>;
    with function Get (Val : JSON_Value) return Element_Type is <>;

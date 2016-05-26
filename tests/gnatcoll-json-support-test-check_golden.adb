@@ -6,6 +6,7 @@ package body GNATCOLL.JSON.Support.Test.Check_Golden is
    use Ada.Directories;
    use AUnit;
    use AUnit.Assertions;
+
    ---------------
    -- Test_Read --
    ---------------
@@ -64,7 +65,7 @@ package body GNATCOLL.JSON.Support.Test.Check_Golden is
    begin
       Register_Routine (Test    => Test,
                         Routine => Check_Golden'Unrestricted_Access,
-                        Name    =>  "Check_Golden:1");
+                        Name    =>  "Check_Golden");
    end Register_Tests;
 
    ----------

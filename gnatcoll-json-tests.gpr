@@ -1,7 +1,6 @@
 with "aws.gpr";
 with "gnatcoll-json.gpr";
 with "aunit";
--- with "gnatcoll-json-builder.gpr";
 project GnatColl.JSON.Tests is
 
    for Main use ("gnatcoll-json-support-test-main.adb");

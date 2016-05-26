@@ -23,7 +23,7 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Ordered_Sets is
    function Get (Val : JSON_Value) return Set is
       L : constant JSON_Array := Val.Get ("Data");
    begin
-      return Ret : V.Set do
+      return Ret : S.Set do
          for I in 1 .. Length (L) loop
             Ret.Include (Element_Type'(Get (Get (L, I))));
          end loop;
