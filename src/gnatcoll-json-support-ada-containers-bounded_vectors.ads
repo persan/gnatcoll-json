@@ -11,9 +11,6 @@ generic
    with function Create (Val : Element_Type) return JSON_Value is <>;
    with function Get (Val : JSON_Value) return Element_Type is <>;
 
-   with function Get_Name (Val : JSON_Value; Field : UTF8_String) return Element_Type is <> with unreferenced;
-   with procedure Set_Field  (Val        : JSON_Value;  Field_Name : UTF8_String; Field  : Element_Type) is <> with unreferenced;
-
 package GNATCOLL.JSON.Support.Ada.Containers.Bounded_Vectors is
    function Create (Val : Vector) return JSON_Value;
 

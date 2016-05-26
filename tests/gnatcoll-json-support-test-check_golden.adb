@@ -33,7 +33,8 @@ package body GNATCOLL.JSON.Support.Test.Check_Golden is
             when others =>
                Ok := False;
          end;
-
+         Close (F1);
+         Close (F2);
       exception
          when others  =>
             Ok := False;
