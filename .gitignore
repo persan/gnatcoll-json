@@ -6,3 +6,5 @@ bug
 .obj
 bin/*
 x
+Makefile.conf
+_
