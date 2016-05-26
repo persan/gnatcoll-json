@@ -18,5 +18,4 @@ private
       Create       => Create,
       Get          => Get);
 
-
 end Data.JSON;

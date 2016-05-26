@@ -6,7 +6,7 @@ with Ada.Strings.Maps;
 with Ada.Text_IO;
 with Ada.Text_IO.Text_Streams;
 with GNATCOLL.Io.Native;
-package body GNATCOLL.JSON.Support.Ada.Containers.Vectors.Test is
+package body GNATCOLL.JSON.Support.Test .. Ada.Containers.Vectors is
    use AUnit;
    use AUnit.Test_Cases.Registration;
    use Standard.Ada.Text_IO;
@@ -64,4 +64,4 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Vectors.Test is
       return Format (Unit_Name);
    end Name;
 
-end GNATCOLL.JSON.Support.Ada.Containers.Vectors.Test;
+end GNATCOLL.JSON.Support.Test.Ada.Containers.Vectors;

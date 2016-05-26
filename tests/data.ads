@@ -2,6 +2,7 @@ with Ada.Containers.Vectors;
 with Ada.Strings.Unbounded;
 
 package Data is
+   pragma Annotate (FOOL, TEXT);
    type Rec is tagged limited private;
    procedure Add (Self : in out Rec; Data : String);
    procedure Add (Self : in out Rec; Data : Integer);
