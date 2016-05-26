@@ -16,9 +16,7 @@ private
       "="          => "=",
       V            => Foxes,
       Create       => Create,
-      Get          => Get,
-      Get_Name     => Get,
-      Set_Field    => Set_Field);
+      Get          => Get);
 
 
 end Data.JSON;

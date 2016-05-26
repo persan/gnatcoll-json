@@ -1,5 +1,6 @@
 with "aws.gpr";
 with "gnatcoll-json.gpr";
+with "aunit";
 -- with "gnatcoll-json-builder.gpr";
 project GnatColl.JSON.Tests is
 
@@ -12,7 +13,7 @@ project GnatColl.JSON.Tests is
 
 
    package Compiler is
-
+      for Default_Switches ("Ada") use  GnatColl.JSON.Compiler'Default_Switches ("Ada");
    end Compiler;
 
 end GnatColl.JSON.Tests;
