@@ -1,12 +1,7 @@
 
 with Ada.Containers.Ordered_Sets;
 generic
-   type Element_Type is private;
-   with function "<" (Left, Right : Element_Type) return Boolean is <>;
-   with function "=" (Left, Right : Element_Type) return Boolean is <>;
-
-   with package S is new Standard.Ada.Containers.Ordered_Sets (Element_Type,
-                                                               "<", "=");
+   with package S is new Standard.Ada.Containers.Ordered_Sets (<>);
    use S;
 
    with function Create (Val : Element_Type) return JSON_Value is <>;

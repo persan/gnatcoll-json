@@ -9,13 +9,7 @@ generic
    with function Get (Val : JSON_Value) return Element_Type is <>;
 
    with package V is new Standard.Ada.Containers.Bounded_Vectors (Index_Type, Element_Type, "=" => "=");
-
-   with package JSON is new   GNATCOLL.JSON.Support.Ada.Containers.Bounded_Vectors
-     (Index_Type      => Index_Type,
-      Element_Type    => Element_Type,
-      V               => V,
-      Create          => Create,
-      Get             => Get);
+   with package JSON is new   GNATCOLL.JSON.Support.Ada.Containers.Bounded_Vectors (V);
    with function Initialize return V.Vector;
 package GNATCOLL.JSON.Support.Test.Ada.Containers.Bounded_Vectors is
    type Test_Case is new AUnit.Test_Cases.Test_Case with  record

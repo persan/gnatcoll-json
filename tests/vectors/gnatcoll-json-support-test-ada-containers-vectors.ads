@@ -10,12 +10,7 @@ generic
 
    with package V is new Standard.Ada.Containers.Vectors (Index_Type, Element_Type, "=" => "=");
 
-   with package JSON is new   GNATCOLL.JSON.Support.Ada.Containers.Vectors
-     (Index_Type      => Index_Type,
-      Element_Type    => Element_Type,
-      V               => V,
-      Create          => Create,
-      Get             => Get);
+   with package JSON is new   GNATCOLL.JSON.Support.Ada.Containers.Vectors (V);
    with procedure Initialize (Data : in out V.Vector);
 package GNATCOLL.JSON.Support.Test.Ada.Containers.Vectors is
    type Test_Case is new AUnit.Test_Cases.Test_Case with  record

@@ -1,11 +1,6 @@
 with Ada.Containers.Bounded_Vectors;
 generic
-   type Index_Type is range <>;
-   type Element_Type is private;
-   with function "=" (Left, Right : Element_Type) return Boolean is <>;
-
-   with package V is new Standard.Ada.Containers.Bounded_Vectors (Index_Type,
-                                                                  Element_Type, "=");
+   with package V is new Standard.Ada.Containers.Bounded_Vectors (<>);
    use V;
 
    with function Create (Val : Element_Type) return JSON_Value is <>;
