@@ -1,8 +1,8 @@
 with Ada.Strings.Unbounded;
-with JsonSample.String_Maps;
-with JsonSample.String_Vectors;
+with JSONSample.String_Maps;
+with JSONSample.String_Vectors;
 with Ada.Finalization;
-package JsonSample.InterfaceTypes is
+package JSONSample.InterfaceTypes is
 
 
    type Req_State_Type is (Active_Command,
@@ -60,4 +60,4 @@ package JsonSample.InterfaceTypes is
      (Self : in out Server;
       Req  : Request'Class) return Response'Class is abstract;
 
-end JsonSample.InterfaceTypes;
+end JSONSample.InterfaceTypes;

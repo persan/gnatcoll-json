@@ -1,3 +1,2 @@
-package JsonSample is
-   type Annotation is (Optionl);
-end JsonSample;
+package JSONSample is
+end JSONSample;

@@ -1,6 +1,6 @@
 with Ada.Unchecked_Deallocation;
 
-package body JsonSample.InterfaceTypes is
+package body JSONSample.InterfaceTypes is
    type String_Maps_Map_Access is access all String_Maps.Map;
    type Interupt_Message_Type_Access is access all Interupt_Message_Type;
    type Posix_Time_Access is access all Posix_Time;
@@ -67,4 +67,4 @@ package body JsonSample.InterfaceTypes is
       end if;
    end Finalize;
 
-end JsonSample.InterfaceTypes;
+end JSONSample.InterfaceTypes;

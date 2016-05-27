@@ -1,9 +1,10 @@
 with GNATCOLL.JSON; use GNATCOLL.JSON;
-package JsonSample.InterfaceTypes.JSON is
+with GNATCOLL.JSON.Support.Enum_Generic;
+package JSONSample.InterfaceTypes.JSON is
 
    procedure Map_Response (User_Object : in out Response;
                            Name        : UTF8_String;
-                           Value       : JS ON_Value);
+                           Value       : JSON_Value);
    procedure Map_JSON_Object is new GNATCOLL.JSON.Gen_Map_JSON_Object (Mapped => Response);
 
 
@@ -27,38 +28,69 @@ package JsonSample.InterfaceTypes.JSON is
                                 Value       : JSON_Value);
    procedure Map_JSON_Object is new GNATCOLL.JSON.Gen_Map_JSON_Object (Mapped => Progress_Type);
 
-
-
-   function Create (Val : Boolean) return JSON_Value;
-   function Get (Val : JSON_Value) return Boolean;
+   function Create (Val : Req_State_Type) return JSON_Value;
+   function Get (Val : JSON_Value) return Req_State_Type;
    procedure Set_Field
      (Val        : JSON_Value;
       Field_Name : UTF8_String;
-      Field      : UTF8_Unbounded_String);
+      Field      : Req_State_Type);
 
 
-
-
-   function Create (Val : Boolean) return JSON_Value;
-   function Get (Val : JSON_Value) return Boolean;
+   function Create (Val : Request) return JSON_Value;
+   function Get (Val : JSON_Value) return Request;
    procedure Set_Field
      (Val        : JSON_Value;
       Field_Name : UTF8_String;
-      Field      : UTF8_Unbounded_String);
+      Field      : Request);
 
-
-   function Create (Val : Boolean) return JSON_Value;
-   function Get (Val : JSON_Value) return Boolean;
+   function Create (Val : Host_Id) return JSON_Value;
+   function Get (Val : JSON_Value) return Host_Id;
    procedure Set_Field
      (Val        : JSON_Value;
       Field_Name : UTF8_String;
-      Field      : UTF8_Unbounded_String);
+      Field      : Host_Id);
 
-   function Create (Val : Boolean) return JSON_Value;
-   function Get (Val : JSON_Value) return Boolean;
+
+   function Create (Val : Severity_Type) return JSON_Value;
+   function Get (Val : JSON_Value) return Severity_Type;
    procedure Set_Field
      (Val        : JSON_Value;
       Field_Name : UTF8_String;
-      Field      : UTF8_Unbounded_String);
+      Field      : Severity_Type);
 
-end JsonSample.InterfaceTypes.JSON;
+   function Create (Val : State_Type) return JSON_Value;
+   function Get (Val : JSON_Value) return State_Type;
+   procedure Set_Field
+     (Val        : JSON_Value;
+      Field_Name : UTF8_String;
+      Field      : State_Type);
+
+   function Create (Val : Posix_Time) return JSON_Value;
+   function Get (Val : JSON_Value) return Posix_Time;
+   procedure Set_Field
+     (Val        : JSON_Value;
+      Field_Name : UTF8_String;
+      Field      : Posix_Time);
+
+   function Create (Val : Interupt_Message_Type) return JSON_Value;
+   function Get (Val : JSON_Value) return Interupt_Message_Type;
+   procedure Set_Field
+     (Val        : JSON_Value;
+      Field_Name : UTF8_String;
+      Field      : Interupt_Message_Type);
+
+   function Create (Val : Progress_Type) return JSON_Value;
+   function Get (Val : JSON_Value) return Progress_Type;
+   procedure Set_Field
+     (Val        : JSON_Value;
+      Field_Name : UTF8_String;
+      Field      : Progress_Type);
+
+   function Create (Val : Response) return JSON_Value;
+   function Get (Val : JSON_Value) return Response;
+   procedure Set_Field
+     (Val        : JSON_Value;
+      Field_Name : UTF8_String;
+      Field      : Response);
+
+end JSONSample.InterfaceTypes.JSON;
