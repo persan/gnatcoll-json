@@ -21,9 +21,10 @@ package body GNATCOLL.JSON.Support.GNAT.SPitbol is
       ---------
 
       function Get (Val : GNATCOLL.JSON.JSON_Value) return V.Table is
+         Data : constant JSON_Array := Get (Val);
       begin
-         return Ret : V.Table (Interfaces.Unsigned_32 (Integer'(Get (Val, "N")))) do
-            for E of Table_Array'(Get (Val, "Data")) loop
+         return Ret : V.Table (Interfaces.Unsigned_32 (Length (Data))) do
+            for E of Table_Array'(Get (Val)) loop
                Set (Ret, E.Name, E.Value);
             end loop;
          end return;
@@ -58,8 +59,8 @@ package body GNATCOLL.JSON.Support.GNAT.SPitbol is
       function Create (Val : V.Table_Entry) return JSON_Value is
       begin
          return Ret : constant JSON_Value := Create_Object do
-            Set_Field (Ret, "Name", Create (Val.Name));
-            Set_Field (Ret, "Value", Create (Val.Value));
+            Set_Field (Ret, "Key", Create (Val.Name));
+            Set_Field (Ret, "Element", Create (Val.Value));
          end return;
       end Create;
 
@@ -70,8 +71,8 @@ package body GNATCOLL.JSON.Support.GNAT.SPitbol is
       function Get (Val : GNATCOLL.JSON.JSON_Value) return V.Table_Entry is
       begin
          return Ret : V.Table_Entry do
-            Ret.Name := Get (Val, "Name");
-            Ret.Value := Get (Val, "Value");
+            Ret.Name := Get (Val, "Key");
+            Ret.Value := Get (Val, "Element");
          end return;
       end Get;
 

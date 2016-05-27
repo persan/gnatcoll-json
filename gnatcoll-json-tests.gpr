@@ -1,4 +1,3 @@
-with "aws.gpr";
 with "gnatcoll-json.gpr";
 with "aunit";
 project GnatColl.JSON.Tests is

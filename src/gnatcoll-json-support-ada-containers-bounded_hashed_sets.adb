@@ -7,14 +7,10 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Bounded_Hashed_Sets is
    function Create (Val : Set) return JSON_Value is
       Arr : JSON_Array;
    begin
-      return Ret : JSON_Value do
-         for I of Val loop
-            Append (Arr, Create (I));
-         end loop;
-         Set_Field (Ret, "Capacity", Create (Val.Capacity));
-         Set_Field (Ret, "Modulus", Create (Val.Modulus));
-         Set_Field (Ret, "Data", Create (Arr));
-      end return;
+      for I of Val loop
+         Append (Arr, Create (I));
+      end loop;
+      return Create (Arr);
    end Create;
 
    ---------
@@ -22,9 +18,11 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Bounded_Hashed_Sets is
    ---------
 
    function Get (Val : JSON_Value) return Set is
-      L : constant JSON_Array := Val.Get ("Data");
+      L        : constant JSON_Array := Val.Get;
+      Capacity : constant Count_Type := Count_Type (Length (L));
+      Modulus  : constant Hash_Type := Default_Modulus (Capacity);
    begin
-      return Ret : Set (Get (Val, "Capacity"), Get (Val, "Modulus")) do
+      return Ret : Set (Capacity, Modulus) do
          for I in 1 .. Length (L) loop
             Ret.Include (Element_Type'(Get (Get (L, I))));
          end loop;

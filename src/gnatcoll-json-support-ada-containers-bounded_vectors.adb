@@ -5,15 +5,11 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Bounded_Vectors is
 
    function Create (Val : Vector) return JSON_Value is
       Data : JSON_Array;
-
    begin
-      return Ret : constant JSON_Value := Create_Object do
-         for I of Val  loop
-            Append (Data, Create (I));
-         end loop;
-         Set_Field (Ret, "Capacity", Val.Capacity);
-         Set_Field (Ret, "Data", Data);
-      end return;
+      for I of Val  loop
+         Append (Data, Create (I));
+      end loop;
+      return Create (Data);
    end Create;
 
    ---------
@@ -21,9 +17,9 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Bounded_Vectors is
    ---------
 
    function Get (Val : JSON_Value) return Vector is
-      L : constant JSON_Array := Val.Get ("Data");
+      L : constant JSON_Array := Val.Get;
    begin
-      return Ret : Vector (Get (Val, "Capacity")) do
+      return Ret : Vector (Standard.Ada.Containers.Count_Type (Length (L))) do
          for I in 1 .. Length (L) loop
             Ret.Append (Element_Type'(Get ((Get (L, I)))));
          end loop;
