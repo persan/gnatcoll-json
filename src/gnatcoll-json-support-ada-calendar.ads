@@ -3,9 +3,17 @@ package GNATCOLL.JSON.Support.Ada.Calendar is
    use Standard.Ada.Calendar;
 
    function Create (Val : Time) return JSON_Value with Inline_Always;
+
    function Get (Val : JSON_Value) return Time with Inline_Always;
-   function Get (Val : JSON_Value; Field : UTF8_String) return Time with Inline_Always;
-   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Time) with Inline_Always;
+
+   function Get
+     (Val   : JSON_Value;
+      Field : UTF8_String) return Time with Inline_Always;
+
+   procedure Set_Field
+     (Val        : JSON_Value;
+      Field_Name : UTF8_String;
+      Field      : Time) with Inline_Always;
 private
 
    type Internal_Time is record
@@ -17,8 +25,11 @@ private
 
    function Create (Val : Internal_Time) return JSON_Value with Inline_Always;
    function Get (Val : JSON_Value) return Internal_Time with Inline_Always;
-   function Get (Val : JSON_Value; Field : UTF8_String) return Internal_Time with Inline_Always;
-   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Internal_Time) with Inline_Always;
+   function Get (Val   : JSON_Value;
+                 Field : UTF8_String) return Internal_Time with Inline_Always;
+   procedure Set_Field
+     (Val        : JSON_Value;
+      Field_Name : UTF8_String; Field  : Internal_Time) with Inline_Always;
 
    function To_Time (Src : Internal_Time) return Time;
    function To_Internal_Time (Src : Time) return Internal_Time;
