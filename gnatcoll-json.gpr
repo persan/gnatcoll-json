@@ -7,12 +7,13 @@ library project GnatColl.JSON is
    for Object_Dir use ".obj/" & project'Name;
    for Library_Dir use "lib";
    for Library_Name use "gnatcolljson";
+
    package Compiler is
 
       for Default_Switches ("ada") use ("-gnatwa",
                                         "-gnat12",
                                         "-gnatq",
-                                        "-gnatyaAbBcdefhiklnOprtux",
+                                        -- "-gnatyaAbBcdefhiklnOprtux",
                                         "-fstack-check",
                                         "-gnatQ");
    end Compiler;
