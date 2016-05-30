@@ -72,7 +72,7 @@ package body GNATCOLL.JSON.Support.GNAT.SPitbol is
       begin
          return Ret : V.Table_Entry do
             Ret.Name := Get (Val, "Key");
-            Ret.Value := Get (Val, "Element");
+            Ret.Value := Get (Get (Val, "Element"));
          end return;
       end Get;
 

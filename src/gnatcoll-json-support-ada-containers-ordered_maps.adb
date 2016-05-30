@@ -11,8 +11,8 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Ordered_Maps is
    function Get (Val : JSON_Value) return Map_Entry is
    begin
       return Ret : Map_Entry do
-         Ret.Key := Get_Name (Val, "Key");
-         Ret.Element := Get_Name (Val, "Element");
+         Ret.Key := Get (Get (Val, "Key"));
+         Ret.Element := Get (Get (Val, "Element"));
       end return;
    end Get;
 

@@ -12,8 +12,8 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Hashed_Maps is
          declare
             O : constant JSON_Value := Create_Object;
          begin
-            O.Set_Field ("Key", Create_Key (Key (I)));
-            O.Set_Field ("Element", Create_Element (Element (I)));
+            O.Set_Field ("Key", Create (Key (I)));
+            O.Set_Field ("Element", Create (Element (I)));
             Append (Data, O);
          end;
       end loop;
@@ -32,8 +32,8 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Hashed_Maps is
             declare
                O : constant JSON_Value := Get (L, I);
             begin
-               Ret.Insert (Key      => Key_Type'(Get_Name_Key (O, "Key")),
-                           New_Item => Element_Type'(Get_Name_Element (O, "Element")));
+               Ret.Insert (Key      => Key_Type'(Get (Get (O, "Key"))),
+                           New_Item => Element_Type'(Get (Get (O, "Element"))));
             end;
          end loop;
       end return;

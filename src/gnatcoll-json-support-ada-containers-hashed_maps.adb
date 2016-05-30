@@ -31,8 +31,8 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Hashed_Maps is
             declare
                O : constant JSON_Value := Get (L, I);
             begin
-               Ret.Insert (Key      => Key_Type'(Get_Name (O, "Key")),
-                           New_Item => Element_Type'(Get_Name (O, "Element")));
+               Ret.Insert (Key      => Key_Type'(Get (Get (O, "Key"))),
+                           New_Item => Element_Type'(Get (Get (O, "Element"))));
             end;
          end loop;
       end return;
