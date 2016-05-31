@@ -1,25 +1,30 @@
 with "gnatcoll";
-
 library project GnatColl.JSON is
+
+   VERSION  := "1.0.0";
 
    for Languages use ("ada");
    for Source_Dirs use ("src");
-   for Object_Dir use ".obj/" & project'Name;
+   for Object_Dir use ".obj/"  & project'Name & "/" & Gnatcoll.BUILD;
    for Library_Dir use "lib";
    for Library_Name use "gnatcolljson";
+   for Library_Kind use Gnatcoll.BUILD;
+   for Library_Dir use "lib/" & Gnatcoll.BUILD;
+   for Library_Version use
+     "lib" &  --  project'Shared_Library_Prefix &
+     project'Library_Name &
+     ".so" &  --  project'Shared_Library_Suffix &
+     "." & VERSION;
 
    package Compiler is
 
       for Default_Switches ("ada") use ("-gnatwa",
                                         "-gnat12",
                                         "-gnatq",
-                                        -- "-gnatyaAbBcdefhiklnOprtux",
+                                        -- "-gnatyaAbBcdefhiklnOprtux", --< Triggers a compiler bug in 17.0w 20160503>
                                         "-fstack-check",
                                         "-gnatQ");
    end Compiler;
 
-   package Naming is
-      for Body_Suffix ("test") use ".test";
-   end Naming;
 
 end GnatColl.JSON;

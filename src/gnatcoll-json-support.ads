@@ -23,4 +23,5 @@
 --------------------------------------------------------------------------------
 
 package GNATCOLL.JSON.Support is
+   VERSION : constant String := "1.0.0";
 end GNATCOLL.JSON.Support;

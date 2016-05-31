@@ -5,3 +5,4 @@ Makefile.conf
 _
 *.json
 x
+lib/*
