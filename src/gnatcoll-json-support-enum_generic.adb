@@ -7,7 +7,7 @@ package body GNATCOLL.JSON.Support.Enum_Generic is
    function Create (Val : Enum) return JSON_Value is
       Img : constant String := Val'Img;
    begin
-      return Create (Img (Img'First + Prefix'Length .. Img'Last - Suffix'Length));
+      return Create (Link_Prefix & Img (Img'First + Code_Prefix'Length .. Img'Last - Code_Suffix'Length) & Link_Suffix);
    end Create;
 
    ---------
@@ -15,9 +15,9 @@ package body GNATCOLL.JSON.Support.Enum_Generic is
    ---------
 
    function Get (Val : JSON_Value) return Enum is
-
+      Img : constant String := Get (Val);
    begin
-      return Enum'Value (Prefix & Val.Get & Suffix);
+      return Enum'Value (Code_Prefix & Img (Img'First + Link_Prefix'Length .. Img'Last - Link_Suffix'Length) & Code_Suffix);
    end Get;
 
    ---------
