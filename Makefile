@@ -12,7 +12,7 @@ compile:
 
 test:
 	gnatcoll-json-support-test-main
-	check_version
+	@check_version >/dev/null
 
 install:
 	gprinstall -p gnatcoll-json.gpr
@@ -21,7 +21,8 @@ uninstall:
 	gprinstall -p gnatcoll-json.gpr --uninstall
 
 check_clean:
-	if [ -n "`git status`" ] ; then git status ; exit -1 ; fi
+	@if [ -n "`git status --porcelain`" ] ; then git status ; exit -1 ; fi
 
 tag:all check_clean
 	check_version
+	git tag -f "gnatcoll-JSON-v`check_version`"
