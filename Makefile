@@ -26,4 +26,5 @@ check_clean:
 tag:all check_clean
 	check_version
 	git tag -f "gnatcoll-JSON-v`check_version`"
-	git push --tags --all
+	git push --all
+	git push --tags
