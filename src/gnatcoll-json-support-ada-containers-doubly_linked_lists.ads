@@ -2,12 +2,16 @@
 with Ada.Containers.Doubly_Linked_Lists;
 generic
    with package L is new Standard.Ada.Containers.Doubly_Linked_Lists (<>);
-
    use L;
    with function Create (Val : Element_Type) return JSON_Value is <>;
    with function Get (Val : JSON_Value) return Element_Type is <>;
 
 package GNATCOLL.JSON.Support.Ada.Containers.Doubly_Linked_Lists is
+
+   pragma Compile_Time_Error
+     (not Doubly_Linked_Lists'Library_Level,
+      "Doubly_Linked_Lists can only be instantiated at library level");
+
    function Create (Val : List) return JSON_Value;
    function Get (Val : JSON_Value) return List;
 

@@ -11,6 +11,10 @@ generic
 
 package GNATCOLL.JSON.Support.Ada.Containers.Bounded_Multiway_Trees is
    pragma Obsolescent ("This is not implemented yet");
+
+   pragma Compile_Time_Error
+     (not Bounded_Multiway_Trees'Library_Level,
+      "Bounded_Multiway_Trees can only be instantiated at library level");
    function Create (Val : Tree) return JSON_Value;
 
    function Get (Val : JSON_Value) return Tree;

@@ -6,12 +6,12 @@ package body GNATCOLL.JSON.Support.GNAT.SPitbol is
    ----------------
 
    package body JSON_Table is
-      use V;
+
       ------------
       -- Create --
       ------------
 
-      function Create (Val : V.Table) return JSON_Value is
+      function Create (Val : Table) return JSON_Value is
       begin
          return Create (Convert_To_Array (Val));
       end Create;
@@ -20,10 +20,10 @@ package body GNATCOLL.JSON.Support.GNAT.SPitbol is
       -- Get --
       ---------
 
-      function Get (Val : GNATCOLL.JSON.JSON_Value) return V.Table is
+      function Get (Val : GNATCOLL.JSON.JSON_Value) return Table is
          Data : constant JSON_Array := Get (Val);
       begin
-         return Ret : V.Table (Interfaces.Unsigned_32 (Length (Data))) do
+         return Ret : Table (Interfaces.Unsigned_32 (Length (Data))) do
             for E of Table_Array'(Get (Val)) loop
                Set (Ret, E.Name, E.Value);
             end loop;
@@ -34,7 +34,7 @@ package body GNATCOLL.JSON.Support.GNAT.SPitbol is
       -- Get --
       ---------
 
-      function Get (Val : JSON_Value; Field : UTF8_String) return V.Table is
+      function Get (Val : JSON_Value; Field : UTF8_String) return Table is
       begin
          return Get (JSON_Value'(Get (Val, Field)));
       end Get;
@@ -46,7 +46,7 @@ package body GNATCOLL.JSON.Support.GNAT.SPitbol is
       procedure Set_Field
         (Val        : JSON_Value;
          Field_Name : UTF8_String;
-         Field      : V.Table)
+         Field      : Table)
       is
       begin
          Set_Field (Val, Field_Name, Create (Field));
@@ -56,7 +56,7 @@ package body GNATCOLL.JSON.Support.GNAT.SPitbol is
       -- Create --
       ------------
 
-      function Create (Val : V.Table_Entry) return JSON_Value is
+      function Create (Val : Table_Entry) return JSON_Value is
       begin
          return Ret : constant JSON_Value := Create_Object do
             Set_Field (Ret, "Key", Create (Val.Name));
@@ -68,9 +68,9 @@ package body GNATCOLL.JSON.Support.GNAT.SPitbol is
       -- Get --
       ---------
 
-      function Get (Val : GNATCOLL.JSON.JSON_Value) return V.Table_Entry is
+      function Get (Val : GNATCOLL.JSON.JSON_Value) return Table_Entry is
       begin
-         return Ret : V.Table_Entry do
+         return Ret : Table_Entry do
             Ret.Name := Get (Val, "Key");
             Ret.Value := Get (Get (Val, "Element"));
          end return;
@@ -83,7 +83,7 @@ package body GNATCOLL.JSON.Support.GNAT.SPitbol is
       function Get
         (Val   : JSON_Value;
          Field : UTF8_String)
-         return V.Table_Entry
+         return Table_Entry
       is
       begin
          return Get (JSON_Value'(Get (Val, Field)));
@@ -96,7 +96,7 @@ package body GNATCOLL.JSON.Support.GNAT.SPitbol is
       procedure Set_Field
         (Val        : JSON_Value;
          Field_Name : UTF8_String;
-         Field      : V.Table_Entry)
+         Field      : Table_Entry)
       is
       begin
          Set_Field (Val, Field_Name, Create (Field));
@@ -106,7 +106,7 @@ package body GNATCOLL.JSON.Support.GNAT.SPitbol is
       -- Create --
       ------------
 
-      function Create (Val : V.Table_Array) return JSON_Value is
+      function Create (Val : Table_Array) return JSON_Value is
          Data : JSON_Array;
       begin
          for D of   Val loop
@@ -119,10 +119,10 @@ package body GNATCOLL.JSON.Support.GNAT.SPitbol is
       -- Get --
       ---------
 
-      function Get (Val : GNATCOLL.JSON.JSON_Value) return V.Table_Array is
+      function Get (Val : GNATCOLL.JSON.JSON_Value) return Table_Array is
          D : constant JSON_Array := Get (Val);
       begin
-         return Ret : V.Table_Array (1 .. Length (D)) do
+         return Ret : Table_Array (1 .. Length (D)) do
             for I in Ret'Range loop
                Ret (I) := Get (Get (D, I));
             end loop;
@@ -136,7 +136,7 @@ package body GNATCOLL.JSON.Support.GNAT.SPitbol is
       function Get
         (Val   : JSON_Value;
          Field : UTF8_String)
-         return V.Table_Array
+         return Table_Array
       is
       begin
          return Get (JSON_Value'(Get (Val, Field)));
@@ -149,7 +149,7 @@ package body GNATCOLL.JSON.Support.GNAT.SPitbol is
       procedure Set_Field
         (Val        : JSON_Value;
          Field_Name : UTF8_String;
-         Field      : V.Table_Array)
+         Field      : Table_Array)
       is
       begin
          Set_Field (Val, Field_Name, Create (Field));

@@ -6,6 +6,11 @@ generic
    with function Get (Val : JSON_Value) return Element_Type is <>;
 
 package GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Vectors is
+
+   pragma Compile_Time_Error
+     (not Indefinite_Vectors'Library_Level,
+      "Indefinite_Vectors can only be instantiated at library level");
+
    function Create (Val : Vector) return JSON_Value;
    function Get (Val : JSON_Value) return Vector;
 

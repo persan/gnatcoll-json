@@ -11,6 +11,10 @@ generic
 
 package GNATCOLL.JSON.Support.Ada.Containers.Bounded_Hashed_Maps is
 
+   pragma Compile_Time_Error
+     (not Bounded_Hashed_Maps'Library_Level,
+      "Bounded_Hashed_Maps can only be instantiated at library level");
+
    function Create (Val : Map) return JSON_Value;
    function Get (Val : JSON_Value) return Map;
 

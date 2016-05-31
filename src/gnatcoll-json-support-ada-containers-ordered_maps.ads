@@ -9,8 +9,12 @@ generic
    with function Get (Val : JSON_Value) return Element_Type is <>;
 
 package GNATCOLL.JSON.Support.Ada.Containers.Ordered_Maps is
-   function Create (Val : Map) return JSON_Value;
 
+   pragma Compile_Time_Error
+     (not Ordered_Maps'Library_Level,
+      "Ordered_Maps can only be instantiated at library level");
+
+   function Create (Val : Map) return JSON_Value;
    function Get (Val : JSON_Value) return Map;
 
    function Get (Val : JSON_Value; Field : UTF8_String) return Map;
