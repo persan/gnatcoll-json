@@ -21,24 +21,28 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 
-with GNATCOLL.JSON.Support.Test.Test_Bounded_Vectors.Integer_Bounded_Vectors_JSON_Tests;
-package body GNATCOLL.JSON.Support.Test.Suits.Test_Bounded_Vectors is
+with AUnit.Test_Cases;
+with GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Vectors;
+with Ada.Containers.Indefinite_Vectors;
 
-   use AUnit.Test_Suites;
+generic
+   type Index_Type is range <>;
+   type Element_Type (<>) is private;
 
-   --  Statically allocate test suite:
-   Result : aliased Test_Suite;
+   with function "=" (Left, Right : Element_Type) return Boolean is <>;
+   with function Create (Val : Element_Type) return JSON_Value is <>;
+   with function Get (Val : JSON_Value) return Element_Type is <>;
+   with package V is new Standard.Ada.Containers.Indefinite_Vectors (Index_Type, Element_Type, "=");
+   with package JSON is new   GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Vectors (V);
+   with function Initialize return V.Vector;
+package GNATCOLL.JSON.Support.Test.Ada.Containers.Indefinite_Vectors is
+   type Test_Case is new AUnit.Test_Cases.Test_Case with  record
+      Test_Data : access V.Vector;
+      Result    : access V.Vector;
+   end record;
 
-   --  Statically allocate test cases:
-   Test_1 : aliased GNATCOLL.JSON.Support.Test.Test_Bounded_Vectors.Integer_Bounded_Vectors_JSON_Tests.Test_Case;
-   -----------
-   -- Suite --
-   -----------
+   overriding procedure Set_Up_Case (Test : in out Test_Case);
+   overriding procedure Register_Tests (Test : in out Test_Case);
+   overriding function Name (Test : Test_Case) return AUnit.Message_String;
 
-   function Suite return AUnit.Test_Suites.Access_Test_Suite is
-   begin
-      Add_Test (Result'Access, Test_1'Access);
-      return Result'Access;
-   end Suite;
-
-end GNATCOLL.JSON.Support.Test.Suits.Test_Bounded_Vectors;
+end  GNATCOLL.JSON.Support.Test.Ada.Containers.Indefinite_Vectors;
