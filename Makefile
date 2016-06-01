@@ -2,7 +2,7 @@
 SHELL=/bin/bash
 .DEFAULT_GOAL:=all
 
-Makefile.conf:Makefile
+Makefile.conf:Makefile # IGNORE
 	@echo "export PATH:=${CURDIR}/bin:${PATH}" >${@}
 
 all:compile test
@@ -12,7 +12,6 @@ compile:
 
 test:
 	gnatcoll-json-support-test-main
-	@check_version >/dev/null
 
 install:
 	gprinstall -p gnatcoll-json.gpr
@@ -20,11 +19,11 @@ install:
 uninstall:
 	gprinstall -p gnatcoll-json.gpr --uninstall
 
-check_clean:
+check_clean: # IGNORE
 	@if [ -n "`git status --porcelain`" ] ; then git status ; exit -1 ; fi
 
 tag:all check_clean
-	check_version
+	@check_version >/dev/null
 	git tag -f "gnatcoll-JSON-v`check_version`"
 	git push --all
 	git push --tags

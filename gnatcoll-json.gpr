@@ -19,6 +19,10 @@ library project GnatColl.JSON is
      ".so" &  --  project'Shared_Library_Suffix &
      "." & VERSION;
 
+   package Builder is
+      for Default_Switches ("ada") use ("-j0", "-k", "-s");
+   end Builder;
+
    package Compiler is
 
       for Default_Switches ("ada") use ("-gnatwa",
