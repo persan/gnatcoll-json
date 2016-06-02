@@ -1,12 +1,11 @@
 -include Makefile.conf
 SHELL=/bin/bash
+export PATH:=${CURDIR}/bin:${PATH}
 .DEFAULT_GOAL:=all
 ifdef PREFIX
 INSTALLFLAGS:=--prefix=$(shell readlink -f ${PREFIX})
 endif
 
-Makefile.conf:Makefile # IGNORE
-	@echo "export PATH:=${CURDIR}/bin:${PATH}" >${@}
 
 all:compile test
 compile:
@@ -24,7 +23,7 @@ uninstall:
 
 check_clean: # IGNORE
 	@if [ -n "`git status --porcelain`" ] ; then git status ; exit -1 ; fi
-tag:TAG=
+
 tag:all check_clean
 	@check_version >/dev/null
 	@check_tags gnatcoll-JSON-v`check_version`
