@@ -46,7 +46,7 @@
 --------------------------------------------------------------------------------
 
 package GNATCOLL.JSON.Support is
-   VERSION : constant String := "0.0.5";
+   VERSION : constant String := "0.0.6";
    -- Note Tha above version shall be in sync with
    -- gnatcoll-jison.gpr  file and the README.md file
 end GNATCOLL.JSON.Support;

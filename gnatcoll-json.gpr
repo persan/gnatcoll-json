@@ -1,7 +1,7 @@
 with "gnatcoll";
 library project GnatColl.JSON is
 
-   VERSION  := "0.0.5";
+   VERSION  := "0.0.6";
    -- VERSION shall be in sync with:
    --   GNATCOLL.JSON.Support.VERSION
    --   The the README.md file
