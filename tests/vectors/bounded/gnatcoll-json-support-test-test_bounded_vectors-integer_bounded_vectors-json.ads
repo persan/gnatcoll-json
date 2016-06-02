@@ -21,10 +21,11 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 
-with GNATCOLL.JSON.Support.Ada.Containers.Vectors;
-with GNATCOLL.JSON.Support.Test.Test_Vectors.Integer_Vectors;
-package GNATCOLL.JSON.Support.Test.Test_Vectors.Integer_Vectors_JSON is new
-  GNATCOLL.JSON.Support.Ada.Containers.Vectors
-    (V                     => GNATCOLL.JSON.Support.Test.Test_Vectors.Integer_Vectors,
-     Create                => GNATCOLL.JSON.Create,
-     Get                   => GNATCOLL.JSON.Get);
+with GNATCOLL.JSON.Support.Ada.Containers.Bounded_Vectors;
+with GNATCOLL.JSON.Support.Test.Test_Bounded_Vectors.Integer_Bounded_Vectors;
+with GNATCOLL.JSON;
+package GNATCOLL.JSON.Support.Test.Test_Bounded_Vectors.Integer_Bounded_Vectors.JSON is new
+  GNATCOLL.JSON.Support.Ada.Containers.Bounded_Vectors
+    (V       => GNATCOLL.JSON.Support.Test.Test_Bounded_Vectors.Integer_Bounded_Vectors,
+     Create  => Create,
+     Get     => Get);

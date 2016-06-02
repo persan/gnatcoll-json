@@ -21,8 +21,8 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 
-with GNATCOLL.JSON.Support.Test.Test_Vectors.Integer_Vectors_JSON_Tests;
-with GNATCOLL.JSON.Support.Test.Test_Bounded_Vectors.Integer_Bounded_Vectors_JSON_Tests;
+with GNATCOLL.JSON.Support.Test.Test_Vectors.Integer_Vectors.JSON.Tests;
+with GNATCOLL.JSON.Support.Test.Test_Bounded_Vectors.Integer_Bounded_Vectors.JSON.Tests;
 package body GNATCOLL.JSON.Support.Test.Suits.Test_Vectors is
 
    use AUnit.Test_Suites;
@@ -31,8 +31,8 @@ package body GNATCOLL.JSON.Support.Test.Suits.Test_Vectors is
    Result : aliased Test_Suite;
 
    --  Statically allocate test cases:
-   Test_1 : aliased GNATCOLL.JSON.Support.Test.Test_Vectors.Integer_Vectors_JSON_Tests.Test_Case;
-   Test_2 : aliased GNATCOLL.JSON.Support.Test.Test_Bounded_Vectors.Integer_Bounded_Vectors_JSON_Tests.Test_Case;
+   Test_1 : aliased GNATCOLL.JSON.Support.Test.Test_Vectors.Integer_Vectors.JSON.Tests.Test_Case;
+   Test_2 : aliased GNATCOLL.JSON.Support.Test.Test_Bounded_Vectors.Integer_Bounded_Vectors.JSON.Tests.Test_Case;
    -----------
    -- Suite --
    -----------
