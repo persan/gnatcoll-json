@@ -27,7 +27,7 @@ with GNATCOLL.JSON.Support.Ada.Containers.Ordered_Sets;
 generic
    with package S is new Standard.Ada.Containers.Ordered_Set  (<>);
    use S;
-   with package Sets_JSON is new   GNATCOLL.JSON.Support.Ada.Containers.Ordered_Sets     (S  => S);
+   with package Sets_JSON is new GNATCOLL.JSON.Support.Ada.Containers.Ordered_Sets     (S  => S);
    use J
    with procedure Initialize (Data : in out S.Set);
 package GNATCOLL.JSON.Support.Test.Ada.Containers.Ordered_Sets is
