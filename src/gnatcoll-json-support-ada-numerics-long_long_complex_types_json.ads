@@ -21,5 +21,7 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 
-package GNATCOLL.JSON.Support.Ada.Numerics is
-end GNATCOLL.JSON.Support.Ada.Numerics;
+with Ada.Numerics.Long_Long_Complex_Types;
+with GNATCOLL.JSON.Support.Ada.Numerics.Generic_Complex_Types;
+package GNATCOLL.JSON.Support.Ada.Numerics.Long_Long_Complex_Types_JSON is new
+  GNATCOLL.JSON.Support.Ada.Numerics.Generic_Complex_Types (Standard.Ada.Numerics.Long_Long_Complex_Types);
