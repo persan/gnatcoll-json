@@ -21,8 +21,14 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 
-package GNATCOLL.JSON.Support.Test.Utilities is
-   procedure Write (Path : String ; Item : String);
-   function Read (Path : String) return String;
-   function Ada2file (Item : String) return String;
-end GNATCOLL.JSON.Support.Test.Utilities;
+with GNATCOLL.JSON.Support.Ada.Numerics.Generic_Complex_Arrays;
+with GNATCOLL.JSON.Support.Ada.Numerics.Complex_Types_JSON;
+with GNATCOLL.JSON.Support.Ada.Numerics.Real_Arrays_JSON;
+with Ada.Numerics.Complex_Arrays;
+
+
+package GNATCOLL.JSON.Support.Ada.Numerics.Complex_Arrays_JSON is new
+  GNATCOLL.JSON.Support.Ada.Numerics.Generic_Complex_Arrays
+    (Complex_Arrays     => Standard.Ada.Numerics.Complex_Arrays,
+     Real_Arrays_JSON   => GNATCOLL.JSON.Support.Ada.Numerics.Real_Arrays_JSON,
+     Complex_Types_JSON => GNATCOLL.JSON.Support.Ada.Numerics.Complex_Types_JSON);

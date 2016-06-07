@@ -21,8 +21,7 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 
-package GNATCOLL.JSON.Support.Test.Utilities is
-   procedure Write (Path : String ; Item : String);
-   function Read (Path : String) return String;
-   function Ada2file (Item : String) return String;
-end GNATCOLL.JSON.Support.Test.Utilities;
+with Ada.Numerics.Real_Arrays;
+with GNATCOLL.JSON.Support.Ada.Numerics.Generic_Real_Arrays;
+package GNATCOLL.JSON.Support.Ada.Numerics.Real_Arrays_JSON is new
+  GNATCOLL.JSON.Support.Ada.Numerics.Generic_Real_Arrays (Standard.Ada.Numerics.Real_Arrays);

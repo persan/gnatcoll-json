@@ -21,8 +21,7 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 
-package GNATCOLL.JSON.Support.Test.Utilities is
-   procedure Write (Path : String ; Item : String);
-   function Read (Path : String) return String;
-   function Ada2file (Item : String) return String;
-end GNATCOLL.JSON.Support.Test.Utilities;
+with Ada.Numerics.Complex_Types;
+with GNATCOLL.JSON.Support.Ada.Numerics.Generic_Complex_Types;
+package GNATCOLL.JSON.Support.Ada.Numerics.Complex_Types_JSON is new
+  GNATCOLL.JSON.Support.Ada.Numerics.Generic_Complex_Types (Standard.Ada.Numerics.Complex_Types);
