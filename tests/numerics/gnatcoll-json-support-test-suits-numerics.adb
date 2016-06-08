@@ -21,29 +21,24 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 
-with GNATCOLL.JSON.Support.Test.Suits.Test_Vectors;
-with GNATCOLL.JSON.Support.Test.Suits.Test_Orderd_Sets;
-with GNATCOLL.JSON.Support.Test.Suits.Numerics;
-with GNATCOLL.JSON.Support.Test.Check_Golden;
-package body GNATCOLL.JSON.Support.Test.Suits.All_Tests is
+with GNATCOLL.JSON.Support.Test.Ada.Numerics.Test_Complex_Arrays;
+package body GNATCOLL.JSON.Support.Test.Suits.Numerics is
+
    use AUnit.Test_Suites;
 
    --  Statically allocate test suite:
    Result : aliased Test_Suite;
 
    --  Statically allocate test cases:
-   Golden : aliased GNATCOLL.JSON.Support.Test.Check_Golden.Test_Case;
+   Test_1 : aliased GNATCOLL.JSON.Support.Test.Ada.Numerics.Test_Complex_Arrays.Test_Case;
    -----------
    -- Suite --
    -----------
 
    function Suite return AUnit.Test_Suites.Access_Test_Suite is
    begin
-      Add_Test (Result'Access, GNATCOLL.JSON.Support.Test.Suits.Test_Orderd_Sets.Suite);
-      Add_Test (Result'Access, GNATCOLL.JSON.Support.Test.Suits.Test_Vectors.Suite);
-      Add_Test (Result'Access, GNATCOLL.JSON.Support.Test.Suits.Numerics.Suite);
-      Add_Test (Result'Access, Golden'Access);
+      Add_Test (Result'Access, Test_1'Access);
       return Result'Access;
    end Suite;
 
-end GNATCOLL.JSON.Support.Test.Suits.All_Tests;
+end GNATCOLL.JSON.Support.Test.Suits.Numerics;

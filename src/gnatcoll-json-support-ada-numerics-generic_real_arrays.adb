@@ -87,7 +87,7 @@ package body GNATCOLL.JSON.Support.Ada.Numerics.Generic_Real_Arrays is
          declare
             Dx   : JSON_Array;
          begin
-            for Y in Val'First (1) .. Val'Last (1) loop
+            for Y in Val'First (2) .. Val'Last (2) loop
                Append (Dx, Create (Long_Float (Val (X, Y))));
             end loop;
             Append (Data , Create (Dx));

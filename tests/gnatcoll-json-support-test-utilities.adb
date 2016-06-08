@@ -34,7 +34,7 @@ package body GNATCOLL.JSON.Support.Test.Utilities is
       F   : Ada.Text_IO.File_Type;
    begin
       return Item : String (1 .. Natural (Size (Path))) do
-         Create (F, Out_File, Path);
+         OPen (F, In_File, Path);
          String'Read (Text_Streams.Stream (F), Item);
          Close (F);
       end return;
