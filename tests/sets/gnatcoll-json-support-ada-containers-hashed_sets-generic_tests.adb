@@ -25,31 +25,28 @@ with GNAT;
 with GNAT.Source_Info;
 with AUnit.Assertions;
 with GNATCOLL.JSON.Support.Test.Utilities;
-package body GNATCOLL.JSON.Support.Test.Ada.Containers.Bounded_Vectors is
+package body GNATCOLL.JSON.Support.Ada.Containers.Hashed_Sets.Generic_Tests is
 
    use AUnit;
    use AUnit.Assertions;
-   use V;
-   use JSON;
    use GNATCOLL.JSON.Support.Test.Utilities;
    Unit_Name : constant String := GNAT.Source_Info.Enclosing_Entity;
-
 
    -----------------
    -- Set_Up_Case --
    -----------------
+
    overriding procedure Set_Up_Case (Test : in out Test_Case) is
    begin
-      Test.Test_Data := new V.Vector'(Initialize);
+      Initialize (Test.Test_Data);
    end Set_Up_Case;
-
    ----------------
    -- Test_Write --
    ----------------
    procedure Test_Write (Test : in out AUnit.Test_Cases.Test_Case'Class)  is
       Td   : Test_Case renames Test_Case (Test);
    begin
-      Write (Ada2file (Unit_Name), GNATCOLL.JSON.Write (Create (Td.Test_Data.all), Compact => False));
+      Write (Ada2file (Unit_Name), GNATCOLL.JSON.Write (Create (Td.Test_Data), Compact => False));
    end Test_Write;
 
    ---------------
@@ -58,14 +55,14 @@ package body GNATCOLL.JSON.Support.Test.Ada.Containers.Bounded_Vectors is
    procedure Test_Read (Test : in out AUnit.Test_Cases.Test_Case'Class)  is
       Td   : Test_Case renames Test_Case (Test);
    begin
-
-      Td.Result := new V.Vector'(Get (GNATCOLL.JSON.Read (Read (Ada2file (Unit_Name)))));
-      Assert (Td.Result.all = Td.Test_Data.all, "data mismatch");
+      Td.Result := Get (GNATCOLL.JSON. Read (Read (Ada2file (Unit_Name)), Filename => Ada2file (Unit_Name)));
+      Assert (Td.Result = Td.Test_Data, "data mismatch");
    end Test_Read;
 
    --------------------
    -- Register_Tests --
    --------------------
+
    overriding procedure Register_Tests (Test : in out Test_Case) is
       use AUnit.Test_Cases.Registration;
    begin
@@ -88,4 +85,4 @@ package body GNATCOLL.JSON.Support.Test.Ada.Containers.Bounded_Vectors is
       return Format (Unit_Name);
    end Name;
 
-end GNATCOLL.JSON.Support.Test.Ada.Containers.Bounded_Vectors;
+end GNATCOLL.JSON.Support.Ada.Containers.Hashed_Sets.Generic_Tests;

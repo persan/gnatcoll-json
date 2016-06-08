@@ -41,7 +41,7 @@ package body GNATCOLL.JSON.Support.Test.Utilities is
    end Read;
    function Ada2file (Item : String) return String is
    begin
-      return Translate (Item, Ada2file_Mapping);
+      return Translate (Item, Ada2file_Mapping) & ".json";
    end;
 
 

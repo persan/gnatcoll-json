@@ -22,7 +22,7 @@
 ------------------------------------------------------------------------------
 
 with GNATCOLL.JSON.Support.Test.Suits.Test_Vectors;
-with GNATCOLL.JSON.Support.Test.Suits.Test_Orderd_Sets;
+with GNATCOLL.JSON.Support.Test.Test_Sets.Suites;
 with GNATCOLL.JSON.Support.Test.Suits.Numerics;
 with GNATCOLL.JSON.Support.Test.Check_Golden;
 package body GNATCOLL.JSON.Support.Test.Suits.All_Tests is
@@ -39,8 +39,8 @@ package body GNATCOLL.JSON.Support.Test.Suits.All_Tests is
 
    function Suite return AUnit.Test_Suites.Access_Test_Suite is
    begin
-      Add_Test (Result'Access, GNATCOLL.JSON.Support.Test.Suits.Test_Orderd_Sets.Suite);
-      Add_Test (Result'Access, GNATCOLL.JSON.Support.Test.Suits.Test_Vectors.Suite);
+      Add_Test (Result'Access, Test_Sets.Suites.Suite);
+      Add_Test (Result'Access, Test_Vectors.Suite);
       Add_Test (Result'Access, GNATCOLL.JSON.Support.Test.Suits.Numerics.Suite);
       Add_Test (Result'Access, Golden'Access);
       return Result'Access;

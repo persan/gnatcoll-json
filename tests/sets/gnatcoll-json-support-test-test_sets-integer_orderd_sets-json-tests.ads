@@ -21,20 +21,12 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 
-with AUnit.Test_Cases;
-with GNATCOLL.JSON.Support.Ada.Containers.Ordered_Sets;
-generic
-   with package Sets_JSON is new GNATCOLL.JSON.Support.Ada.Containers.Ordered_Sets (<>);
-   use Sets_JSON;
-   with procedure Initialize (Data : in out S.Set);
-package GNATCOLL.JSON.Support.Test.Ada.Containers.Ordered_Sets is
-   type Test_Case is new AUnit.Test_Cases.Test_Case with  record
-      Test_Data : S.Set;
-      Result    : S.Set;
-   end record;
+with GNATCOLL.JSON.Support.Test.Ada.Containers.Ordered_Sets;
+with GNATCOLL.JSON.Support.Test.Test_Sets.Integer_Orderd_Sets_Initialize;
+with GNATCOLL.JSON.Support.Test.Test_Sets.Integer_Orderd_Sets.JSON;
+with GNATCOLL.JSON.Support.Test.Test_Sets.Integer_Orderd_Sets;
 
-   overriding procedure Set_Up_Case (Test : in out Test_Case);
-   overriding procedure Register_Tests (Test : in out Test_Case);
-   overriding function Name (Test : Test_Case) return AUnit.Message_String;
-
-end  GNATCOLL.JSON.Support.Test.Ada.Containers.Ordered_Sets;
+package GNATCOLL.JSON.Support.Test.Test_Sets.Integer_Orderd_Sets.JSON.Tests is new
+  Standard.GNATCOLL.JSON.Support.Test.Ada.Containers.Ordered_Sets
+    (Sets_JSON  => Standard.GNATCOLL.JSON.Support.Test.Test_Sets.Integer_Orderd_Sets.JSON,
+     Initialize => GNATCOLL.JSON.Support.Test.Test_Sets.Integer_Orderd_Sets_Initialize);

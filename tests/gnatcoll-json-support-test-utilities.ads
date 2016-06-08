@@ -20,9 +20,12 @@
 -- <http://www.gnu.org/licenses/>.                                          --
 --                                                                          --
 ------------------------------------------------------------------------------
-
+with Ada.Containers;
 package GNATCOLL.JSON.Support.Test.Utilities is
+   use Ada.Containers;
    procedure Write (Path : String ; Item : String);
    function Read (Path : String) return String;
    function Ada2file (Item : String) return String;
+   function Hash (Element : Integer) return Hash_Type is
+     (Hash_Type (Element));
 end GNATCOLL.JSON.Support.Test.Utilities;

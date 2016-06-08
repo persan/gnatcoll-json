@@ -21,17 +21,17 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 
-with GNATCOLL.JSON.Support.Test.Ada.Containers.Vectors;
-with GNATCOLL.JSON.Support.Test.Test_Orderd_Sets.Integer_Orderd_Sets_Initialize;
-with GNATCOLL.JSON.Support.Test.Test_Orderd_Sets.Integer_Orderd_Sets.JSON;
-with GNATCOLL.JSON.Support.Test.Test_Orderd_Sets.Integer_Orderd_Sets;
-package GNATCOLL.JSON.Support.Test.Test_Orderd_Sets.Integer_Orderd_Sets.JSON.Tests is new
-  Standard.GNATCOLL.JSON.Support.Test.Ada.Containers.Vectors
-    (Index_Type   => Natural,
-     Element_Type => Integer,
-     "="          => "=",
-     Create       => Create,
-     Get          => Get,
-     V            => Integer_Orderd_Sets,
-     JSON         => Standard.GNATCOLL.JSON.Support.Test.Test_Orderd_Sets.Integer_Orderd_Sets.JSON,
-     Initialize   => Integer_Orderd_Sets_Initialize);
+with AUnit.Test_Cases;
+generic
+   with procedure Initialize (Data : in out Set);
+package GNATCOLL.JSON.Support.Ada.Containers.Hashed_Sets.Generic_Tests is
+   type Test_Case is new AUnit.Test_Cases.Test_Case with  record
+      Test_Data : S.Set;
+      Result    : S.Set;
+   end record;
+
+   overriding procedure Set_Up_Case (Test : in out Test_Case);
+   overriding procedure Register_Tests (Test : in out Test_Case);
+   overriding function Name (Test : Test_Case) return AUnit.Message_String;
+
+end  GNATCOLL.JSON.Support.Ada.Containers.Hashed_Sets.Generic_Tests;

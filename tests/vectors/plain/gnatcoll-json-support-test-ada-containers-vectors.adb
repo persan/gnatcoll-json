@@ -34,8 +34,6 @@ package body GNATCOLL.JSON.Support.Test.Ada.Containers.Vectors is
    use AUnit;
    use AUnit.Assertions;
    use Standard.Ada.Text_IO;
-   use V;
-   use JSON;
    use Standard.Ada.Strings;
 
    Unit_Name : constant String := GNAT.Source_Info.Enclosing_Entity;

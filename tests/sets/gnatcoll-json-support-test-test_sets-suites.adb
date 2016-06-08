@@ -20,7 +20,30 @@
 -- <http://www.gnu.org/licenses/>.                                          --
 --                                                                          --
 ------------------------------------------------------------------------------
+with GNATCOLL.JSON.Support.Test.Test_Sets.Integer_Hashed_Sets.JSON.Tests;
+with GNATCOLL.JSON.Support.Test.Test_Sets.Integer_Orderd_Sets.JSON.Tests;
 
-with GNATCOLL.JSON.Support.Test.Test_Orderd_Sets.Integer_Orderd_Sets;
-procedure GNATCOLL.JSON.Support.Test.Test_Orderd_Sets.Integer_Orderd_Sets_Initialize
-  (Item : in out GNATCOLL.JSON.Support.Test.Test_Orderd_Sets.Integer_Orderd_Sets.Vector);
+package body GNATCOLL.JSON.Support.Test.Test_Sets.Suites is
+
+   use AUnit.Test_Suites;
+
+   --  Statically allocate test suite:
+   Result : aliased Test_Suite;
+
+   --  Statically allocate test cases:
+
+   Test_1 : aliased Integer_Orderd_Sets.JSON.Tests.Test_Case;
+   Test_2 : aliased Integer_Hashed_Sets.JSON.Tests.Test_Case;
+
+   -----------
+   -- Suite --
+   -----------
+
+   function Suite return AUnit.Test_Suites.Access_Test_Suite is
+   begin
+      Add_Test (Result'Access, Test_1'Access);
+      Add_Test (Result'Access, Test_2'Access);
+      return Result'Access;
+   end Suite;
+
+end GNATCOLL.JSON.Support.Test.Test_Sets.Suites;

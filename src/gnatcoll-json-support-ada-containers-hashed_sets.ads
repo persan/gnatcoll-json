@@ -21,7 +21,22 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 
-with Ada.Containers.Vectors;
-package GNATCOLL.JSON.Support.Test.Test_Orderd_Sets.Integer_Orderd_Sets is new
-  Ada.Containers.Vectors (Index_Type   => Natural,
-                          Element_Type => Integer);
+
+with Ada.Containers.Hashed_Sets;
+generic
+   with package S is new Standard.Ada.Containers.Hashed_Sets (<>);
+   use S;
+
+   with function Create (Val : Element_Type) return JSON_Value is <>;
+   with function Get (Val : JSON_Value) return Element_Type is <>;
+
+package GNATCOLL.JSON.Support.Ada.Containers.Hashed_Sets is
+
+
+   function Create (Val : Set) return JSON_Value;
+   function Get (Val : JSON_Value) return Set;
+
+   function Get (Val : JSON_Value; Field : UTF8_String) return Set;
+   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Set);
+
+end GNATCOLL.JSON.Support.Ada.Containers.Hashed_Sets;

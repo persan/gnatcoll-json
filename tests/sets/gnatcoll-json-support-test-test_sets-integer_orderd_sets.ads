@@ -21,7 +21,6 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 
-with AUnit.Test_Suites;
-package GNATCOLL.JSON.Support.Test.Suits.Test_Orderd_Sets is
-   function Suite return AUnit.Test_Suites.Access_Test_Suite;
-end GNATCOLL.JSON.Support.Test.Suits.Test_Orderd_Sets;
+with Ada.Containers.Ordered_Sets;
+package GNATCOLL.JSON.Support.Test.Test_Sets.Integer_Orderd_Sets is new
+  Ada.Containers.Ordered_Sets (Element_Type => Integer);

@@ -13,6 +13,8 @@ package body GNATCOLL.JSON.Support.Test.Ada.Numerics.Generic_Complex_Arrays.Gene
    use Real_Arrays_JSON;
    use Complex_Types_JSON;
 
+   Test_Name : constant String := GNAT.Source_Info.Enclosing_Entity;
+
    -----------------
    -- Set_Up_Case --
    -----------------
@@ -25,30 +27,61 @@ package body GNATCOLL.JSON.Support.Test.Ada.Numerics.Generic_Complex_Arrays.Gene
       end loop;
    end Set_Up_Case;
 
+   Vector_File_Name : constant String := Ada2file (Test_Name & ".Vector") & ".json";
+   Matrix_File_Name : constant String := Ada2file (Test_Name & ".Matrix") & ".json";
    procedure Write_Vector (Tc : in out AUnit.Test_Cases.Test_Case'Class) is
       T : Test_Case renames Test_Case (Tc);
    begin
-      Write ("Test_Vector", Write (Create (T.Test_Vector)));
+      Write ( Vector_File_Name, Write (Create (T.Test_Vector)));
    end;
 
    procedure Write_Matrix (Tc : in out AUnit.Test_Cases.Test_Case'Class) is
       T : Test_Case renames Test_Case (Tc);
    begin
-      Write ("Test_Matrix", Write (Create (T.Test_Matrix)));
+      Write (Matrix_File_Name, Write (Create (T.Test_Matrix)));
    end;
 
    procedure Read_Vector (Tc : in out AUnit.Test_Cases.Test_Case'Class) is
       T           : Test_Case renames Test_Case (Tc);
-      Test_Vector : constant Complex_Arrays.Complex_Vector := Get (Read (Read ("Test_Vector")));
+      Test_Vector : constant Complex_Arrays.Complex_Vector := Get (Read (Read (Vector_File_Name)));
    begin
       Assert (Test_Vector = T.Test_Vector, "Vector missmatch");
    end;
 
    procedure Read_Matrix (Tc : in out AUnit.Test_Cases.Test_Case'Class) is
       T           : Test_Case renames Test_Case (Tc);
-      Test_Matrix : constant Complex_Arrays.Complex_Matrix := Get (Read (Read ("Test_Matrix")));
+      Test_Matrix : constant Complex_Arrays.Complex_Matrix := Get (Read (Read (Matrix_File_Name)));
    begin
       Assert (Test_Matrix = T.Test_Matrix, "Matrix missmatch");
+   end;
+
+   procedure Empty_Matrix_1 (Tc : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Unreferenced (Tc);
+      Test_Matrix : Complex_Arrays.Complex_Matrix (1 .. 0, 1 .. 0);
+      J           : constant JSON_Value := Create (Test_Matrix);
+      Result      : constant Complex_Arrays.Complex_Matrix := Get (J);
+   begin
+
+      Assert (Test_Matrix = Result, "Matrix missmatch");
+   end;
+   procedure Empty_Matrix_2 (Tc : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Unreferenced (Tc);
+      Test_Matrix : Complex_Arrays.Complex_Matrix (1 .. 1, 1 .. 0);
+      J           : constant JSON_Value := Create (Test_Matrix);
+      Result      : constant Complex_Arrays.Complex_Matrix := Get (J);
+   begin
+      Assert (Test_Matrix = Result, "Matrix missmatch");
+   end;
+
+
+   procedure Empty_Vector (Tc : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Unreferenced (Tc);
+      Test_Vector : Complex_Arrays.Complex_Vector (1 .. 0);
+      J           : constant JSON_Value := Create (Test_Vector);
+      Result      : constant Complex_Arrays.Complex_Vector := Get (J);
+   begin
+
+      Assert (Test_Vector = Result, "Vector missmatch");
    end;
 
    --------------------
@@ -62,17 +95,19 @@ package body GNATCOLL.JSON.Support.Test.Ada.Numerics.Generic_Complex_Arrays.Gene
       Register_Routine (Test, Write_Matrix'Unrestricted_Access, "Write_Matrix");
       Register_Routine (Test, Read_Vector'Unrestricted_Access, "Read_Vector");
       Register_Routine (Test, Read_Matrix'Unrestricted_Access, "Read_Matrix");
+      Register_Routine (Test, Empty_Matrix_1'Unrestricted_Access, "Empty_Matrix_1");
+      Register_Routine (Test, Empty_Matrix_2'Unrestricted_Access, "Empty_Matrix_2");
+      Register_Routine (Test, Empty_Vector'Unrestricted_Access, "Empty_Vector");
 
    end Register_Tests;
 
    ----------
    -- Name --
    ----------
-
    overriding function Name (Test : Test_Case) return AUnit.Message_String is
       pragma Unreferenced (Test);
    begin
-      return Format (GNAT.Source_Info.Enclosing_Entity);
+      return Format (Test_Name);
    end Name;
 
 end GNATCOLL.JSON.Support.Test.Ada.Numerics.Generic_Complex_Arrays.Generic_Tests;

@@ -23,17 +23,10 @@
 
 with AUnit.Test_Cases;
 with GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Vectors;
-with Ada.Containers.Indefinite_Vectors;
 
 generic
-   type Index_Type is range <>;
-   type Element_Type (<>) is private;
-
-   with function "=" (Left, Right : Element_Type) return Boolean is <>;
-   with function Create (Val : Element_Type) return JSON_Value is <>;
-   with function Get (Val : JSON_Value) return Element_Type is <>;
-   with package V is new Standard.Ada.Containers.Indefinite_Vectors (Index_Type, Element_Type, "=");
-   with package JSON is new   GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Vectors (V);
+   with package JSON is new   GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Vectors (<>);
+   use JSON;
    with function Initialize return V.Vector;
 package GNATCOLL.JSON.Support.Test.Ada.Containers.Indefinite_Vectors is
    type Test_Case is new AUnit.Test_Cases.Test_Case with  record
