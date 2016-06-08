@@ -32,9 +32,6 @@ generic
 
 package GNATCOLL.JSON.Support.Ada.Containers.Ordered_Sets is
 
-   pragma Compile_Time_Error
-     (not Ordered_Sets'Library_Level,
-      "Ordered_Sets can only be instantiated at library level");
 
    function Create (Val : Set) return JSON_Value;
    function Get (Val : JSON_Value) return Set;

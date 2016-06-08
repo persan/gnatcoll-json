@@ -22,6 +22,8 @@
 ------------------------------------------------------------------------------
 
 with GNATCOLL.JSON.Support.Test.Ada.Numerics.Test_Complex_Arrays;
+with GNATCOLL.JSON.Support.Test.Ada.Numerics.Test_Long_Complex_Arrays;
+with GNATCOLL.JSON.Support.Test.Ada.Numerics.Test_Long_Long_Complex_Arrays;
 package body GNATCOLL.JSON.Support.Test.Suits.Numerics is
 
    use AUnit.Test_Suites;
@@ -30,7 +32,9 @@ package body GNATCOLL.JSON.Support.Test.Suits.Numerics is
    Result : aliased Test_Suite;
 
    --  Statically allocate test cases:
-   Test_1 : aliased GNATCOLL.JSON.Support.Test.Ada.Numerics.Test_Complex_Arrays.Test_Case;
+   Test_1 : aliased Test.Ada.Numerics.Test_Complex_Arrays.Test_Case;
+   Test_2 : aliased Test.Ada.Numerics.Test_Long_Complex_Arrays.Test_Case;
+   Test_3 : aliased Test.Ada.Numerics.Test_Long_Long_Complex_Arrays.Test_Case;
    -----------
    -- Suite --
    -----------
@@ -38,6 +42,8 @@ package body GNATCOLL.JSON.Support.Test.Suits.Numerics is
    function Suite return AUnit.Test_Suites.Access_Test_Suite is
    begin
       Add_Test (Result'Access, Test_1'Access);
+      Add_Test (Result'Access, Test_2'Access);
+      Add_Test (Result'Access, Test_3'Access);
       return Result'Access;
    end Suite;
 

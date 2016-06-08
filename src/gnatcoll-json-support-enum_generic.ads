@@ -30,9 +30,6 @@ generic
 
 package GNATCOLL.JSON.Support.Enum_Generic is
 
-   pragma Compile_Time_Error
-     (not Enum_Generic'Library_Level,
-      "Enum_Generic can only be instantiated at library level");
 
    function Create (Val : Enum) return JSON_Value;
    function Get (Val : JSON_Value) return Enum;

@@ -33,15 +33,13 @@ generic
 
 package GNATCOLL.JSON.Support.Ada.Containers.Ordered_Maps is
 
-   pragma Compile_Time_Error
-     (not Ordered_Maps'Library_Level,
-      "Ordered_Maps can only be instantiated at library level");
 
    function Create (Val : Map) return JSON_Value;
    function Get (Val : JSON_Value) return Map;
 
    function Get (Val : JSON_Value; Field : UTF8_String) return Map;
    procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Map);
+
 private
    type Map_Entry is record
       Key     : Key_Type;

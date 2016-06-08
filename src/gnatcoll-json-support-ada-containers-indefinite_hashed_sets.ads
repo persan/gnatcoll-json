@@ -21,23 +21,22 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 
-with AUnit.Test_Cases;
-with GNATCOLL.JSON.Support.Ada.Containers.Vectors;
+
+with Ada.Containers.Indefinite_Hashed_Sets;
 generic
+   with package S is new Standard.Ada.Containers.Indefinite_Hashed_Sets (<>);
+   use S;
+
+   with function Create (Val : Element_Type) return JSON_Value is <>;
+   with function Get (Val : JSON_Value) return Element_Type is <>;
+
+package GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Hashed_Sets is
 
 
-   with package JSON is new   GNATCOLL.JSON.Support.Ada.Containers.Vectors (<>);
-   use JSON; use JSON.V;
+   function Create (Val : Set) return JSON_Value;
+   function Get (Val : JSON_Value) return Set;
 
-   with procedure Initialize (Data : in out V.Vector);
-package GNATCOLL.JSON.Support.Test.Ada.Containers.Vectors is
-   type Test_Case is new AUnit.Test_Cases.Test_Case with  record
-      Test_Data : V.Vector;
-      Result    : V.Vector;
-   end record;
+   function Get (Val : JSON_Value; Field : UTF8_String) return Set;
+   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Set);
 
-   overriding procedure Set_Up_Case (Test : in out Test_Case);
-   overriding procedure Register_Tests (Test : in out Test_Case);
-   overriding function Name (Test : Test_Case) return AUnit.Message_String;
-
-end  GNATCOLL.JSON.Support.Test.Ada.Containers.Vectors;
+end GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Hashed_Sets;

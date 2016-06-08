@@ -31,10 +31,6 @@ generic
 
 package GNATCOLL.JSON.Support.Ada.Containers.Bounded_Vectors is
 
-   pragma Compile_Time_Error
-     (not Bounded_Vectors'Library_Level,
-      "Bounded_Vectors can only be instantiated at library level");
-
    function Create (Val : Vector) return JSON_Value;
    function Get (Val : JSON_Value) return Vector;
 

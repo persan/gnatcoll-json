@@ -35,21 +35,24 @@ package body GNATCOLL.JSON.Support.Test.Check_Golden is
    ---------------
    procedure Check_Golden (Test : in out AUnit.Test_Cases.Test_Case'Class)  is
       pragma Unreferenced (Test);
-      Ok     : Boolean := True;
+      Ok            : Boolean := True;
       procedure Process (Directory_Entry : Directory_Entry_Type) is
-         Name   : constant String := Ada.Directories.Simple_Name (Directory_Entry);
-         F1, F2 : Ada.Text_IO.File_Type;
+
+         Result_Path   : constant String := Ada.Directories.Compose ("output", Ada.Directories.Simple_Name (Directory_Entry));
+
+         Golden_Path   : constant String := Ada.Directories.Full_Name (Directory_Entry);
+         F1, F2        : Ada.Text_IO.File_Type;
          use Ada.Text_IO;
       begin
-         if not Exists (Name) then
-            Assert (False, Name & " Does not exist");
+         if not Exists (Result_Path) then
+            Assert (False, Result_Path & " Does not exist");
          end if;
          begin
-            Open (F1, In_File, Name);
-            Open (F2, In_File, Compose ("golden", Name));
+            Open (F1, In_File, Result_Path);
+            Open (F2, In_File, Golden_Path);
             while not (End_Of_File (F1) or else End_Of_File (F2)) loop
                if Get_Line (F1) /= Get_Line (F2) then
-                  Assert (False, "Contents of " & Name & " missmatch");
+                  Assert (False, "Contents of " & Result_Path & " missmatch");
                end if;
             end loop;
          exception

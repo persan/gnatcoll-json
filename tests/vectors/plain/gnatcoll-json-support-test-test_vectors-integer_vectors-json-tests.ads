@@ -21,11 +21,9 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 
-with GNATCOLL.JSON.Support.Test.Ada.Containers.Vectors;
+with GNATCOLL.JSON.Support.Ada.Containers.Vectors.Generic_Test;
 with GNATCOLL.JSON.Support.Test.Test_Vectors.Integer_Vectors_Initialize;
-with GNATCOLL.JSON.Support.Test.Test_Vectors.Integer_Vectors.JSON;
-with GNATCOLL.JSON.Support.Test.Test_Vectors.Integer_Vectors;
+
 package GNATCOLL.JSON.Support.Test.Test_Vectors.Integer_Vectors.JSON.Tests is new
-  Standard.GNATCOLL.JSON.Support.Test.Ada.Containers.Vectors
-    (JSON         => Standard.GNATCOLL.JSON.Support.Test.Test_Vectors.Integer_Vectors.JSON,
-     Initialize   => Integer_Vectors_Initialize);
+  GNATCOLL.JSON.Support.Test.Test_Vectors.Integer_Vectors.JSON.Generic_Test
+    (Initialize   => Integer_Vectors_Initialize);

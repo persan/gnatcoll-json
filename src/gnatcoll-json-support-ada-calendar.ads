@@ -25,7 +25,8 @@ with Ada.Calendar;
 package GNATCOLL.JSON.Support.Ada.Calendar is
    use Standard.Ada.Calendar;
 
-   function Create (Val : Time) return JSON_Value with Inline_Always;
+   function Create (Val : Time) return JSON_Value  with
+     Inline_Always => True;
 
    function Get (Val : JSON_Value) return Time with Inline_Always;
 

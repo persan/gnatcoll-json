@@ -30,9 +30,7 @@ package GNATCOLL.JSON.Support.GNAT.SPitbol is
       with function Create (Val : Value_Type) return JSON_Value is <>;
       with function Get (Val : JSON_Value) return Value_Type is <>;
    package JSON_Table is
-      pragma Compile_Time_Error
-        (not JSON_Table'Library_Level,
-         "JSON_Table can only be instantiated at library level");
+
 
       function Create (Val : Table) return JSON_Value;
       function Get (Val : GNATCOLL.JSON.JSON_Value) return Table;

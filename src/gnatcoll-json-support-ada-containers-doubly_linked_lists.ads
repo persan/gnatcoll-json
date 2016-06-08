@@ -31,9 +31,6 @@ generic
 
 package GNATCOLL.JSON.Support.Ada.Containers.Doubly_Linked_Lists is
 
-   pragma Compile_Time_Error
-     (not Doubly_Linked_Lists'Library_Level,
-      "Doubly_Linked_Lists can only be instantiated at library level");
 
    function Create (Val : List) return JSON_Value;
    function Get (Val : JSON_Value) return List;
