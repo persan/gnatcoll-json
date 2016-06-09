@@ -1,8 +1,6 @@
-bug
-.obj
+.obj/*
 bin/*
 Makefile.conf
 _
-*.json
-x
+output/*.json
 lib/*

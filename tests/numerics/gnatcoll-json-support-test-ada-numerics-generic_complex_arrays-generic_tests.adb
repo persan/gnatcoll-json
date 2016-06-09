@@ -27,8 +27,8 @@ package body GNATCOLL.JSON.Support.Test.Ada.Numerics.Generic_Complex_Arrays.Gene
       end loop;
    end Set_Up_Case;
 
-   Vector_File_Name : constant String := Ada2file (Test_Name & ".Vector") & ".json";
-   Matrix_File_Name : constant String := Ada2file (Test_Name & ".Matrix") & ".json";
+   Vector_File_Name : constant String := Ada2file (Test_Name & ".Vector");
+   Matrix_File_Name : constant String := Ada2file (Test_Name & ".Matrix");
    procedure Write_Vector (Tc : in out AUnit.Test_Cases.Test_Case'Class) is
       T : Test_Case renames Test_Case (Tc);
    begin
