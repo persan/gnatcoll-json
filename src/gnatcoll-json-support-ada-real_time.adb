@@ -1,22 +1,5 @@
-with Ada.Calendar;
-with GNATCOLL.JSON.Support.Ada.Calendar;
 
 package body GNATCOLL.JSON.Support.Ada.Real_Time is
-
-   use Standard.Ada.Calendar;
-
-   Real_Time_Epoc : constant Standard.Ada.Real_Time.Time := Standard.Ada.Real_Time.Clock;
-   Calendar_Epoc  : constant Standard.Ada.Calendar.Time  := Standard.Ada.Calendar.Clock;
-
-   function To_Calendar_Time ( T : Standard.Ada.Real_Time.Time) return Standard.Ada.Calendar.Time is
-   begin
-      return Calendar_Epoc + To_Duration (T - Real_Time_Epoc);
-   end;
-
-   function To_Real_Time_Time ( T : Standard.Ada.Calendar.Time) return Standard.Ada.Real_Time.Time is
-   begin
-      return Real_Time_Epoc + To_Time_Span (T - Calendar_Epoc);
-   end;
 
 
    ------------
@@ -26,8 +9,14 @@ package body GNATCOLL.JSON.Support.Ada.Real_Time is
      (Val : Standard.Ada.Real_Time.Time)
       return JSON_Value
    is
+      SC : Seconds_Count;
+      TS : Time_Span;
    begin
-      return GNATCOLL.JSON.Support.Ada.Calendar.Create (To_Calendar_Time (Val));
+      Split (Val, SC, TS);
+      return Ret : constant JSON_Value := Create_Object do
+         Set_Field (Ret, "Seconds_Count", Long_Integer (SC));
+         Set_Field (Ret, "Time_Span", TS);
+      end return;
    end Create;
 
    ---------
@@ -35,8 +24,11 @@ package body GNATCOLL.JSON.Support.Ada.Real_Time is
    ---------
 
    function Get (Val : JSON_Value) return Standard.Ada.Real_Time.Time is
+      SC : constant Seconds_Count := Seconds_Count (Long_Integer'(Get (Val, "Seconds_Count")));
+      TS : constant Time_Span := Get (Val, "Time_Span");
    begin
-      return To_Real_Time_Time (GNATCOLL.JSON.Support.Ada.Calendar.Get (Val));
+
+      return Time_Of (SC, TS);
    end Get;
 
    ---------

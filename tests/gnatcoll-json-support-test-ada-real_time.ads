@@ -21,42 +21,16 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 
-with GNATCOLL.JSON.Support.Test.Suits.Test_Vectors;
-with GNATCOLL.JSON.Support.Test.Test_Sets.Suites;
-with GNATCOLL.JSON.Support.Test.Test_Maps.Suites;
-with GNATCOLL.JSON.Support.Test.Suits.Numerics;
-with GNATCOLL.JSON.Support.Test.Ada.Containers;
-with GNATCOLL.JSON.Support.Test.Check_Golden;
-with GNATCOLL.JSON.Support.Test.Ada.Calendar;
-with GNATCOLL.JSON.Support.Test.Ada.Real_Time;
-package body GNATCOLL.JSON.Support.Test.Suits.All_Tests is
-   use AUnit.Test_Suites;
+with AUnit.Test_Cases;
+with Ada.Real_Time;
+package GNATCOLL.JSON.Support.Test.Ada.Real_Time is
+   type Test_Case is new AUnit.Test_Cases.Test_Case with record
+      T  : Standard.Ada.Real_Time.Time;
+      Ts : Standard.Ada.Real_Time.Time_Span;
+   end record;
 
-   --  Statically allocate test suite:
-   Result : aliased Test_Suite;
+   overriding procedure Set_Up_Case (Test : in out Test_Case);
+   overriding procedure Register_Tests (Test : in out Test_Case);
+   overriding function Name (Test : Test_Case) return AUnit.Message_String;
 
-   --  Statically allocate test cases:
-   Test_1 : aliased GNATCOLL.JSON.Support.Test.Ada.Containers.Test_Case;
-   Test_2 : aliased GNATCOLL.JSON.Support.Test.Ada.Calendar.Test_Case;
-   Test_3 : aliased GNATCOLL.JSON.Support.Test.Ada.Real_Time.Test_Case;
-   Golden : aliased GNATCOLL.JSON.Support.Test.Check_Golden.Test_Case;
-
-   -----------
-   -- Suite --
-   -----------
-
-   function Suite return AUnit.Test_Suites.Access_Test_Suite is
-   begin
-      Add_Test (Result'Access, Test_1'Access);
-      Add_Test (Result'Access, Test_2'Access);
-      Add_Test (Result'Access, Test_3'Access);
-
-      Add_Test (Result'Access, Test_Sets.Suites.Suite);
-      Add_Test (Result'Access, Test_Maps.Suites.Suite);
-      Add_Test (Result'Access, Test_Vectors.Suite);
-      Add_Test (Result'Access, GNATCOLL.JSON.Support.Test.Suits.Numerics.Suite);
-      Add_Test (Result'Access, Golden'Access);
-      return Result'Access;
-   end Suite;
-
-end GNATCOLL.JSON.Support.Test.Suits.All_Tests;
+end GNATCOLL.JSON.Support.Test.Ada.Real_Time;
