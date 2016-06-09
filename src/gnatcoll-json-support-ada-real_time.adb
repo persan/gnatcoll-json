@@ -6,7 +6,7 @@ package body GNATCOLL.JSON.Support.Ada.Real_Time is
    use Standard.Ada.Calendar;
 
    Real_Time_Epoc : constant Standard.Ada.Real_Time.Time := Standard.Ada.Real_Time.Clock;
-   Calendar_Epoc  : constant Standard.Ada.Calendar.Time := Standard.Ada.Calendar.Clock;
+   Calendar_Epoc  : constant Standard.Ada.Calendar.Time  := Standard.Ada.Calendar.Clock;
 
    function To_Calendar_Time ( T : Standard.Ada.Real_Time.Time) return Standard.Ada.Calendar.Time is
    begin
@@ -74,10 +74,7 @@ package body GNATCOLL.JSON.Support.Ada.Real_Time is
       return JSON_Value
    is
    begin
-      --  Generated stub: replace with real body!
-      pragma Compile_Time_Warning (Standard.True, "Create unimplemented");
-      raise Program_Error with "Unimplemented function Create";
-      return Create (Val => Val);
+      return Create (Long_Float (To_Duration (Val)));
    end Create;
 
    ---------
@@ -86,10 +83,7 @@ package body GNATCOLL.JSON.Support.Ada.Real_Time is
 
    function Get (Val : JSON_Value) return Time_Span is
    begin
-      --  Generated stub: replace with real body!
-      pragma Compile_Time_Warning (Standard.True, "Get unimplemented");
-      raise Program_Error with "Unimplemented function Get";
-      return Get (Val => Val);
+      return To_Time_Span (Duration (Get_Long_Float (Val)));
    end Get;
 
    ---------
