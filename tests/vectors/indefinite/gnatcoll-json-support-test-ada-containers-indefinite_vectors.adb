@@ -61,6 +61,20 @@ package body GNATCOLL.JSON.Support.Test.Ada.Containers.Indefinite_Vectors is
       Assert (Td.Result.all = Td.Test_Data.all, "data mismatch");
    end Test_Read;
 
+
+   procedure Test_Get_Set (Test : in out AUnit.Test_Cases.Test_Case'Class)  is
+      Td   : Test_Case renames Test_Case (Test);
+
+      D    : constant JSON_Value := Create_Object;
+   begin
+      Set_Field (D, "D1", Td.Test_Data.all);
+      declare
+         Res : constant V.Vector := Get (D, "D1");
+      begin
+         Assert (Res = Td.Test_Data.all, "data mismatch");
+      end;
+   end;
+
    --------------------
    -- Register_Tests --
    --------------------
@@ -69,11 +83,14 @@ package body GNATCOLL.JSON.Support.Test.Ada.Containers.Indefinite_Vectors is
    begin
       Register_Routine (Test    => Test,
                         Routine => Test_Write'Unrestricted_Access,
-                        Name    =>  "Test_Write:1");
+                        Name    =>  "Test_Write");
 
       Register_Routine (Test    => Test,
                         Routine => Test_Read'Unrestricted_Access,
-                        Name    =>  "Test_Read:1");
+                        Name    =>  "Test_Read");
+      Register_Routine (Test    => Test,
+                        Routine => Test_Get_Set'Unrestricted_Access,
+                        Name    =>  "Test_Get_Set");
    end Register_Tests;
 
    ----------

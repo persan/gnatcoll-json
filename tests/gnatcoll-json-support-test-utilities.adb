@@ -1,6 +1,5 @@
 with Ada.Text_IO.Text_Streams;
 with Ada.Directories;
-with Ada.Strings.Fixed;
 with Ada.Strings.Maps;
 package body GNATCOLL.JSON.Support.Test.Utilities is
 
@@ -31,7 +30,7 @@ package body GNATCOLL.JSON.Support.Test.Utilities is
       F   : Ada.Text_IO.File_Type;
    begin
       return Item : String (1 .. Natural (Size (Path))) do
-         OPen (F, In_File, Path);
+         Open (F, In_File, Path);
          String'Read (Text_Streams.Stream (F), Item);
          Close (F);
       end return;

@@ -21,5 +21,17 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 
+with AUnit.Test_Cases;
+with Ada.Containers;
 package GNATCOLL.JSON.Support.Test.Ada.Containers is
+   use Standard.Ada.Containers;
+   type Test_Case is new AUnit.Test_Cases.Test_Case with record
+      Hash  : Hash_Type;
+      Count : Count_Type;
+   end record;
+
+   overriding procedure Set_Up_Case (Test : in out Test_Case);
+   overriding procedure Register_Tests (Test : in out Test_Case);
+   overriding function Name (Test : Test_Case) return AUnit.Message_String;
+
 end GNATCOLL.JSON.Support.Test.Ada.Containers;

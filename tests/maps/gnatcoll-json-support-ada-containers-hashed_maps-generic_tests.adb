@@ -68,11 +68,11 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Hashed_Maps.Generic_Tests is
    begin
       Register_Routine (Test    => Test,
                         Routine => Test_Write'Unrestricted_Access,
-                        Name    =>  "Test_Write:1");
+                        Name    =>  "Test_Write");
 
       Register_Routine (Test    => Test,
                         Routine => Test_Read'Unrestricted_Access,
-                        Name    =>  "Test_Read:1");
+                        Name    =>  "Test_Read");
    end Register_Tests;
 
    ----------

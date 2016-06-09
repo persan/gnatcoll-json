@@ -20,49 +20,16 @@
 -- <http://www.gnu.org/licenses/>.                                          --
 --                                                                          --
 ------------------------------------------------------------------------------
-with Ada.Strings.Fixed;
-package body GNATCOLL.JSON.Support.Enum_Generic is
 
-   ------------
-   -- Create --
-   ------------
+with AUnit.Test_Cases;
+with Ada.Calendar;
+package GNATCOLL.JSON.Support.Test.Ada.Calendar is
+   type Test_Case is new AUnit.Test_Cases.Test_Case with record
+      T  : Standard.Ada.Calendar.Time;
+   end record;
 
-   function Create (Val : Enum) return JSON_Value is
-      Img : constant String := Ada.Strings.Fixed.Trim (Val'Img, Ada.Strings.Both);
-   begin
-      return Create (Link_Prefix & Img (Img'First + Code_Prefix'Length .. Img'Last - Code_Suffix'Length) & Link_Suffix);
-   end Create;
+   overriding procedure Set_Up_Case (Test : in out Test_Case);
+   overriding procedure Register_Tests (Test : in out Test_Case);
+   overriding function Name (Test : Test_Case) return AUnit.Message_String;
 
-   ---------
-   -- Get --
-   ---------
-
-   function Get (Val : JSON_Value) return Enum is
-      Img : constant String := Get (Val);
-   begin
-      return Enum'Value (Code_Prefix & Img (Img'First + Link_Prefix'Length .. Img'Last - Link_Suffix'Length) & Code_Suffix);
-   end Get;
-
-   ---------
-   -- Get --
-   ---------
-
-   function Get (Val : JSON_Value; Field : UTF8_String) return Enum is
-   begin
-      return Enum'Value (Val.Get (Field));
-   end Get;
-
-   ---------------
-   -- Set_Field --
-   ---------------
-
-   procedure Set_Field
-     (Val        : JSON_Value;
-      Field_Name : UTF8_String;
-      Field      : Enum)
-   is
-   begin
-      Set_Field (Val, Field_Name, Field'Img);
-   end Set_Field;
-
-end GNATCOLL.JSON.Support.Enum_Generic;
+end GNATCOLL.JSON.Support.Test.Ada.Calendar;
