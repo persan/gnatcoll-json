@@ -21,30 +21,13 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 
-with GNATCOLL.JSON.Support.Test.Test_Vectors.Integer_Vectors.JSON.Tests;
-with GNATCOLL.JSON.Support.Test.Test_Bounded_Vectors.Integer_Bounded_Vectors.JSON.Tests;
-with GNATCOLL.JSON.Support.Test.Test_Vectors.Integer_Bounded_Doubly_Linked_Lists.JSON.Test;
-package body GNATCOLL.JSON.Support.Test.Suits.Test_Vectors is
-
-   use AUnit.Test_Suites;
-
-   --  Statically allocate test suite:
-   Result : aliased Test_Suite;
-
-   --  Statically allocate test cases:
-   Test_1 : aliased GNATCOLL.JSON.Support.Test.Test_Vectors.Integer_Vectors.JSON.Tests.Test_Case;
-   Test_2 : aliased GNATCOLL.JSON.Support.Test.Test_Bounded_Vectors.Integer_Bounded_Vectors.JSON.Tests.Test_Case;
-   Test_3 : aliased GNATCOLL.JSON.Support.Test.Test_Vectors.Integer_Bounded_Doubly_Linked_Lists.JSON.Test.Test_Case;
-   -----------
-   -- Suite --
-   -----------
-
-   function Suite return AUnit.Test_Suites.Access_Test_Suite is
-   begin
-      Add_Test (Result'Access, Test_1'Access);
-      Add_Test (Result'Access, Test_2'Access);
-      Add_Test (Result'Access, Test_3'Access);
-      return Result'Access;
-   end Suite;
-
-end GNATCOLL.JSON.Support.Test.Suits.Test_Vectors;
+function GNATCOLL.JSON.Support.Test.Test_Vectors.Integer_Bounded_Doubly_Linked_Lists_Initialize
+  return GNATCOLL.JSON.Support.Test.Test_Vectors.Integer_Bounded_Doubly_Linked_Lists.List
+is
+begin
+   return Ret : GNATCOLL.JSON.Support.Test.Test_Vectors.Integer_Bounded_Doubly_Linked_Lists.List (10) do
+      for I in 1 .. 10 loop
+         Ret.Append (I);
+      end loop;
+   end return;
+end GNATCOLL.JSON.Support.Test.Test_Vectors.Integer_Bounded_Doubly_Linked_Lists_Initialize;

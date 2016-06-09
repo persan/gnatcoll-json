@@ -21,30 +21,17 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 
-with GNATCOLL.JSON.Support.Test.Test_Vectors.Integer_Vectors.JSON.Tests;
-with GNATCOLL.JSON.Support.Test.Test_Bounded_Vectors.Integer_Bounded_Vectors.JSON.Tests;
-with GNATCOLL.JSON.Support.Test.Test_Vectors.Integer_Bounded_Doubly_Linked_Lists.JSON.Test;
-package body GNATCOLL.JSON.Support.Test.Suits.Test_Vectors is
+with AUnit.Test_Cases;
+generic
+   with function Initialize return  List;
+package GNATCOLL.JSON.Support.Ada.Containers.Bounded_Doubly_Linked_Lists.Generic_Test is
+   type Test_Case is new AUnit.Test_Cases.Test_Case with  record
+      Test_Data : access List;
+      Result    : access List;
+   end record;
 
-   use AUnit.Test_Suites;
+   overriding procedure Set_Up_Case (Test : in out Test_Case);
+   overriding procedure Register_Tests (Test : in out Test_Case);
+   overriding function Name (Test : Test_Case) return AUnit.Message_String;
 
-   --  Statically allocate test suite:
-   Result : aliased Test_Suite;
-
-   --  Statically allocate test cases:
-   Test_1 : aliased GNATCOLL.JSON.Support.Test.Test_Vectors.Integer_Vectors.JSON.Tests.Test_Case;
-   Test_2 : aliased GNATCOLL.JSON.Support.Test.Test_Bounded_Vectors.Integer_Bounded_Vectors.JSON.Tests.Test_Case;
-   Test_3 : aliased GNATCOLL.JSON.Support.Test.Test_Vectors.Integer_Bounded_Doubly_Linked_Lists.JSON.Test.Test_Case;
-   -----------
-   -- Suite --
-   -----------
-
-   function Suite return AUnit.Test_Suites.Access_Test_Suite is
-   begin
-      Add_Test (Result'Access, Test_1'Access);
-      Add_Test (Result'Access, Test_2'Access);
-      Add_Test (Result'Access, Test_3'Access);
-      return Result'Access;
-   end Suite;
-
-end GNATCOLL.JSON.Support.Test.Suits.Test_Vectors;
+end  GNATCOLL.JSON.Support.Ada.Containers.Bounded_Doubly_Linked_Lists.Generic_Test;
