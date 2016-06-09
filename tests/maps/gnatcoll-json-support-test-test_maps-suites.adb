@@ -21,58 +21,30 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 
-package body GNATCOLL.JSON.Support.Ada.Containers.Hashed_Maps_Simple is
+with GNATCOLL.JSON.Support.Test.Test_Maps.Integer_Hashed_Maps.JSON.Tests;
+with GNATCOLL.JSON.Support.Test.Test_Maps.Integer_Hashed_Maps.Simple_JSON.Tests;
 
-   ------------
-   -- Create --
-   ------------
+package body GNATCOLL.JSON.Support.Test.Test_Maps.Suites is
 
-   function Create (Val : Map) return JSON_Value is
-      Data : JSON_Array;
+   use AUnit.Test_Suites;
+
+   --  Statically allocate test suite:
+   Result : aliased Test_Suite;
+
+   --  Statically allocate test cases:
+
+   Test_1 : aliased Integer_Hashed_Maps.JSON.Tests.Test_Case;
+   Test_2 : aliased Integer_Hashed_Maps.Simple_JSON.Tests.Test_Case;
+
+   -----------
+   -- Suite --
+   -----------
+
+   function Suite return AUnit.Test_Suites.Access_Test_Suite is
    begin
-      for I in Val.Iterate loop
-         declare
-            O : constant JSON_Value := Create_Object;
-            K : constant String := Image (Key (I));
-            E : constant JSON_Value := Create (Element (I));
-         begin
-            O.Set_Field (K, E);
-            Append (Data, O);
-         end;
-      end loop;
-      return Create (Data);
-   end Create;
+      Add_Test (Result'Access, Test_1'Access);
+      Add_Test (Result'Access, Test_2'Access);
+      return Result'Access;
+   end Suite;
 
-   ---------
-   -- Get --
-   ---------
-
-   function Get (Val : JSON_Value) return Map is
-      L : constant JSON_Array := Val.Get;
-   begin
-      return Ret : Map do
-         for I in 1 .. Length (L) loop
-            declare
-               O : constant JSON_Value := Get (L, I);
-               procedure CB (Name : UTF8_String; Val : JSON_Value) is
-               begin
-                  Ret.Include (Value (Name), Get (Val));
-               end;
-            begin
-               Map_JSON_Object (O, CB'Access);
-            end;
-         end loop;
-      end return;
-   end Get;
-
-   function Get (Val : JSON_Value; Field : UTF8_String) return Map is
-   begin
-      return Get (JSON_Value'(Val.Get (Field)));
-   end Get;
-
-   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Map) is
-   begin
-      Set_Field (Val, Field_Name, Create (Field));
-   end Set_Field;
-
-end GNATCOLL.JSON.Support.Ada.Containers.Hashed_Maps_Simple;
+end GNATCOLL.JSON.Support.Test.Test_Maps.Suites;

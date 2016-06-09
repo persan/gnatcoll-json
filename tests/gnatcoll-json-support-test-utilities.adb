@@ -27,9 +27,6 @@ package body GNATCOLL.JSON.Support.Test.Utilities is
    ----------
    -- Read --
    ----------
-   Ada2file_Mapping : constant Character_Mapping :=
-                        To_Mapping ("ABCDEFGHIJKLMNOPQRSTUVWXYZ.",
-                                    "abcdefghijklmnopqrstuvwxyz-");
    function Read (Path : String) return String is
       F   : Ada.Text_IO.File_Type;
    begin
@@ -39,6 +36,11 @@ package body GNATCOLL.JSON.Support.Test.Utilities is
          Close (F);
       end return;
    end Read;
+
+
+   Ada2file_Mapping : constant Character_Mapping :=
+                        To_Mapping ("ABCDEFGHIJKLMNOPQRSTUVWXYZ.",
+                                    "abcdefghijklmnopqrstuvwxyz-");
 
    function Ada2file (Item : String) return String is
    begin

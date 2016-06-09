@@ -62,11 +62,16 @@ pragma Warnings (On);
 
 with AUnit.Run;
 with AUnit.Reporter.Text;
+-- with AUnit.Reporter.GNATtest;
+-- with AUnit.Reporter.XML;
+
 with GNATCOLL.JSON.Support.Test.Suits.All_Tests;
 
 procedure GNATCOLL.JSON.Support.Test.Main is
    procedure Run is new AUnit.Run.Test_Runner (GNATCOLL.JSON.Support.Test.Suits.All_Tests.Suite);
    Reporter : AUnit.Reporter.Text.Text_Reporter;
+   -- Reporter : AUnit.Reporter.GNATtest.GNATtest_Reporter;
+   -- Reporter : AUnit.Reporter.XML.XML_Reporter;
 begin
    Run (Reporter);
 end GNATCOLL.JSON.Support.Test.Main;

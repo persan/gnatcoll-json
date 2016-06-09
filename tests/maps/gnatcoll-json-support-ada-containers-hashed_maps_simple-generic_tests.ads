@@ -21,58 +21,17 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 
-package body GNATCOLL.JSON.Support.Ada.Containers.Hashed_Maps_Simple is
+with AUnit.Test_Cases;
+generic
+   with procedure Initialize (Data : in out Map);
+package GNATCOLL.JSON.Support.Ada.Containers.Hashed_Maps_Simple.Generic_Tests is
+   type Test_Case is new AUnit.Test_Cases.Test_Case with  record
+      Test_Data : Map;
+      Result    : Map;
+   end record;
 
-   ------------
-   -- Create --
-   ------------
+   overriding procedure Set_Up_Case (Test : in out Test_Case);
+   overriding procedure Register_Tests (Test : in out Test_Case);
+   overriding function Name (Test : Test_Case) return AUnit.Message_String;
 
-   function Create (Val : Map) return JSON_Value is
-      Data : JSON_Array;
-   begin
-      for I in Val.Iterate loop
-         declare
-            O : constant JSON_Value := Create_Object;
-            K : constant String := Image (Key (I));
-            E : constant JSON_Value := Create (Element (I));
-         begin
-            O.Set_Field (K, E);
-            Append (Data, O);
-         end;
-      end loop;
-      return Create (Data);
-   end Create;
-
-   ---------
-   -- Get --
-   ---------
-
-   function Get (Val : JSON_Value) return Map is
-      L : constant JSON_Array := Val.Get;
-   begin
-      return Ret : Map do
-         for I in 1 .. Length (L) loop
-            declare
-               O : constant JSON_Value := Get (L, I);
-               procedure CB (Name : UTF8_String; Val : JSON_Value) is
-               begin
-                  Ret.Include (Value (Name), Get (Val));
-               end;
-            begin
-               Map_JSON_Object (O, CB'Access);
-            end;
-         end loop;
-      end return;
-   end Get;
-
-   function Get (Val : JSON_Value; Field : UTF8_String) return Map is
-   begin
-      return Get (JSON_Value'(Val.Get (Field)));
-   end Get;
-
-   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Map) is
-   begin
-      Set_Field (Val, Field_Name, Create (Field));
-   end Set_Field;
-
-end GNATCOLL.JSON.Support.Ada.Containers.Hashed_Maps_Simple;
+end  GNATCOLL.JSON.Support.Ada.Containers.Hashed_Maps_Simple.Generic_Tests;

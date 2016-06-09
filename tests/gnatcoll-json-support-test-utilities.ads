@@ -21,11 +21,21 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 with Ada.Containers;
+with Ada.Strings.Fixed;
 package GNATCOLL.JSON.Support.Test.Utilities is
    use Ada.Containers;
+
    procedure Write (Path : String ; Item : String);
    function Read (Path : String) return String;
+
    function Ada2file (Item : String) return String;
-   function Hash (Element : Integer) return Hash_Type is
-     (Hash_Type (Element));
+
+   function Hash (Element : Integer) return Hash_Type is (Hash_Type (Element));
+
+   function Image (Item : String) return String is (Item);
+   function Value (Item : String) return String is (Item);
+
+   function Image (Item : Integer) return String is (Ada.Strings.Fixed.Trim (Item'Img, Ada.Strings.Both));
+   function Value (Item : String) return Integer is (Integer'Value (Item));
+
 end GNATCOLL.JSON.Support.Test.Utilities;
