@@ -25,7 +25,7 @@ procedure GNATCOLL.JSON.Support.Test.Test_Sets.Integer_Orderd_Sets_Initialize
   (Item : in out GNATCOLL.JSON.Support.Test.Test_Sets.Integer_Orderd_Sets.Set)
 is
 begin
-   for I in 1 .. 20 loop
+   for I in 1 .. 10 loop
       Item.Include (I);
    end loop;
 end GNATCOLL.JSON.Support.Test.Test_Sets.Integer_Orderd_Sets_Initialize;
