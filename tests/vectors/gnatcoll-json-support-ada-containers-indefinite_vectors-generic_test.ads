@@ -22,13 +22,10 @@
 ------------------------------------------------------------------------------
 
 with AUnit.Test_Cases;
-with GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Vectors;
-
+with GNAT.Source_Info;
 generic
-   with package JSON is new   GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Vectors (<>);
-   use JSON;
    with function Initialize return V.Vector;
-package GNATCOLL.JSON.Support.Test.Ada.Containers.Indefinite_Vectors is
+package GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Vectors.Generic_Test is
    type Test_Case is new AUnit.Test_Cases.Test_Case with  record
       Test_Data : access V.Vector;
       Result    : access V.Vector;
@@ -37,5 +34,6 @@ package GNATCOLL.JSON.Support.Test.Ada.Containers.Indefinite_Vectors is
    overriding procedure Set_Up_Case (Test : in out Test_Case);
    overriding procedure Register_Tests (Test : in out Test_Case);
    overriding function Name (Test : Test_Case) return AUnit.Message_String;
+   Unit_Name : constant String := GNAT.Source_Info.Enclosing_Entity;
 
-end  GNATCOLL.JSON.Support.Test.Ada.Containers.Indefinite_Vectors;
+end  GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Vectors.Generic_Test;

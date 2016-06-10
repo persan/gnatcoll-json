@@ -25,12 +25,10 @@ with GNAT;
 with GNAT.Source_Info;
 with AUnit.Assertions;
 with GNATCOLL.JSON.Support.Test.Utilities;
-package body GNATCOLL.JSON.Support.Test.Ada.Containers.Bounded_Vectors is
+package body GNATCOLL.JSON.Support.Ada.Containers.Bounded_Vectors.Generic_Test is
 
    use AUnit;
    use AUnit.Assertions;
-   use V;
-   use JSON;
    use GNATCOLL.JSON.Support.Test.Utilities;
    Unit_Name : constant String := GNAT.Source_Info.Enclosing_Entity;
 
@@ -104,4 +102,4 @@ package body GNATCOLL.JSON.Support.Test.Ada.Containers.Bounded_Vectors is
       return Format (Unit_Name);
    end Name;
 
-end GNATCOLL.JSON.Support.Test.Ada.Containers.Bounded_Vectors;
+end GNATCOLL.JSON.Support.Ada.Containers.Bounded_Vectors.Generic_Test;

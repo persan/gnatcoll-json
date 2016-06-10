@@ -25,14 +25,13 @@ with GNAT;
 with GNAT.Source_Info;
 with AUnit.Assertions;
 with GNATCOLL.JSON.Support.Test.Utilities;
-package body GNATCOLL.JSON.Support.Test.Ada.Containers.Indefinite_Vectors is
+package body GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Vectors.Generic_Test is
 
    use AUnit;
    use AUnit.Assertions;
    use V;
    use Standard.Ada.Strings;
    use GNATCOLL.JSON.Support.Test.Utilities;
-   Unit_Name : constant String := GNAT.Source_Info.Enclosing_Entity;
 
    -----------------
    -- Set_Up_Case --
@@ -103,4 +102,4 @@ package body GNATCOLL.JSON.Support.Test.Ada.Containers.Indefinite_Vectors is
       return Format (Unit_Name);
    end Name;
 
-end GNATCOLL.JSON.Support.Test.Ada.Containers.Indefinite_Vectors;
+end GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Vectors.Generic_Test;

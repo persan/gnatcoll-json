@@ -36,14 +36,6 @@ with Ada.Containers.Bounded_Ordered_Sets; --@ Impl
 with Ada.Containers.Bounded_Vectors; --@ Impl-> TestOK
 with Ada.Containers.Doubly_Linked_Lists; --@ Impl-> TestOK
 
-with Ada.Containers.Formal_Doubly_Linked_Lists;
-with Ada.Containers.Formal_Hashed_Maps;
-with Ada.Containers.Formal_Hashed_Sets;
-with Ada.Containers.Formal_Indefinite_Vectors;
-with Ada.Containers.Formal_Ordered_Maps;
-with Ada.Containers.Formal_Ordered_Sets;
-with Ada.Containers.Formal_Vectors;
-
 with Ada.Containers.Hashed_Maps; --@ Impl-> TestOK/Simple-> TestOK
 with Ada.Containers.Hashed_Sets; --@ Impl-> TestOK
 with Ada.Containers.Indefinite_Doubly_Linked_Lists; --@ Impl-> TestOK
@@ -77,10 +69,9 @@ with Ada.Numerics.Long_Long_Complex_Types; --@ Impl -> TestOK
 with Ada.Numerics.Long_Long_Real_Arrays; --@ Impl -> TestOK
 with Ada.Numerics.Long_Real_Arrays; --@ Impl -> TestOK
 
-with Ada.Numerics.Real_Arrays;
+with Ada.Numerics.Real_Arrays; --@ Impl -> TestOK
 
-with Ada.Numerics.Short_Complex_Types;
-with Ada.Numerics.Short_Elementary_Functions;
+with Ada.Numerics.Short_Complex_Types; --@ Impl -> TestOK
 
 
 pragma Warnings (On, "unit * is never instantiated");
