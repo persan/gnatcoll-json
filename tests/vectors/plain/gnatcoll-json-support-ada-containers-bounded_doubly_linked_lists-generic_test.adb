@@ -22,7 +22,6 @@
 ------------------------------------------------------------------------------
 
 with GNAT;
-with GNAT.Source_Info;
 with AUnit.Assertions;
 with GNATCOLL.JSON.Support.Test.Utilities;
 package body GNATCOLL.JSON.Support.Ada.Containers.Bounded_Doubly_Linked_Lists.Generic_Test is
@@ -30,7 +29,6 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Bounded_Doubly_Linked_Lists.Ge
    use AUnit;
    use AUnit.Assertions;
    use GNATCOLL.JSON.Support.Test.Utilities;
-   Unit_Name : constant String := GNAT.Source_Info.Enclosing_Entity;
 
    -----------------
    -- Set_Up_Case --

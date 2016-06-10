@@ -23,7 +23,7 @@
 
 with AUnit.Test_Cases;
 generic
-   with procedure Initialize (Data : in out V.Vector);
+   with function Initialize return V.Vector;
 package GNATCOLL.JSON.Support.Ada.Containers.Vectors.Generic_Test is
    type Test_Case is new AUnit.Test_Cases.Test_Case with  record
       Test_Data : V.Vector;

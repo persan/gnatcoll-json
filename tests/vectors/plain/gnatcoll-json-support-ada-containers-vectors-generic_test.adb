@@ -37,7 +37,7 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Vectors.Generic_Test is
    -----------------
    overriding procedure Set_Up_Case (Test : in out Test_Case) is
    begin
-      Initialize (Test.Test_Data);
+      Test.Test_Data := Initialize;
    end Set_Up_Case;
 
    ----------------

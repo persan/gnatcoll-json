@@ -23,6 +23,10 @@
 
 package body GNATCOLL.JSON.Support.Ada.Containers.Ordered_Maps is
 
+   ------------
+   -- Create --
+   ------------
+
    function Create (Val : Map_Entry) return JSON_Value is
    begin
       return Ret : constant JSON_Value := Create_Object do
@@ -30,6 +34,10 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Ordered_Maps is
          Ret.Set_Field ("Element", Create (Val.Element));
       end return;
    end Create;
+
+   ---------
+   -- Get --
+   ---------
 
    function Get (Val : JSON_Value) return Map_Entry is
    begin

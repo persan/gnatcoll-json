@@ -21,11 +21,13 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 
-procedure GNATCOLL.JSON.Support.Test.Test_Vectors.Integer_Vectors_Initialize
-  (Item : in out GNATCOLL.JSON.Support.Test.Test_Vectors.Integer_Vectors.Vector)
+function GNATCOLL.JSON.Support.Test.Test_Vectors.Integer_Vectors_Initialize
+  return GNATCOLL.JSON.Support.Test.Test_Vectors.Integer_Vectors.Vector
 is
 begin
-   for I in 1 .. 20 loop
-      Item.Append (I);
-   end loop;
+   return Item : GNATCOLL.JSON.Support.Test.Test_Vectors.Integer_Vectors.Vector do
+      for I in 1 .. 20 loop
+         Item.Append (I);
+      end loop;
+   end return;
 end GNATCOLL.JSON.Support.Test.Test_Vectors.Integer_Vectors_Initialize;

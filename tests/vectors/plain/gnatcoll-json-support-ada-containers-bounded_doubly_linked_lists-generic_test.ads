@@ -20,7 +20,7 @@
 -- <http://www.gnu.org/licenses/>.                                          --
 --                                                                          --
 ------------------------------------------------------------------------------
-
+with GNAT.Source_Info;
 with AUnit.Test_Cases;
 generic
    with function Initialize return  List;
@@ -33,5 +33,7 @@ package GNATCOLL.JSON.Support.Ada.Containers.Bounded_Doubly_Linked_Lists.Generic
    overriding procedure Set_Up_Case (Test : in out Test_Case);
    overriding procedure Register_Tests (Test : in out Test_Case);
    overriding function Name (Test : Test_Case) return AUnit.Message_String;
+
+   Unit_Name : constant String := GNAT.Source_Info.Enclosing_Entity;
 
 end  GNATCOLL.JSON.Support.Ada.Containers.Bounded_Doubly_Linked_Lists.Generic_Test;

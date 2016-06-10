@@ -22,9 +22,10 @@
 ------------------------------------------------------------------------------
 
 package body GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Doubly_Linked_Lists is
-------------
--- Create --
-------------
+
+   ------------
+   -- Create --
+   ------------
 
    function Create (Val : List) return JSON_Value is
       Data : JSON_Array;
