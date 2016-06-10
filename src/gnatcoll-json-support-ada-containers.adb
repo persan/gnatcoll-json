@@ -51,7 +51,7 @@ package body GNATCOLL.JSON.Support.Ada.Containers is
       return Hash_Type
    is
    begin
-      return Hash_Type (Long_Integer'(Get (Val, Field)));
+      return Get (Get (Val, Field));
    end Get;
 
    ---------------
@@ -64,7 +64,7 @@ package body GNATCOLL.JSON.Support.Ada.Containers is
       Field      : Hash_Type)
    is
    begin
-      Set_Field (Val, Field_Name, Long_Integer (Field));
+      Set_Field (Val, Field_Name, Create (Field));
    end Set_Field;
 
    ------------
@@ -95,7 +95,7 @@ package body GNATCOLL.JSON.Support.Ada.Containers is
       return Count_Type
    is
    begin
-      return Count_Type (Long_Integer'(Get (Val, Field)));
+      return Get (Get (Val, Field));
    end Get;
 
    ---------------
@@ -108,7 +108,7 @@ package body GNATCOLL.JSON.Support.Ada.Containers is
       Field      : Count_Type)
    is
    begin
-      Set_Field (Val, Field_Name, Long_Integer (Field));
+      Set_Field (Val, Field_Name, Create (Field));
    end Set_Field;
 
 end GNATCOLL.JSON.Support.Ada.Containers;
