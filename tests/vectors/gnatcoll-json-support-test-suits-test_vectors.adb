@@ -24,6 +24,8 @@
 with GNATCOLL.JSON.Support.Test.Test_Vectors.Integer_Vectors.JSON.Tests;
 with GNATCOLL.JSON.Support.Test.Test_Bounded_Vectors.Integer_Bounded_Vectors.JSON.Tests;
 with GNATCOLL.JSON.Support.Test.Test_Vectors.Integer_Bounded_Doubly_Linked_Lists.JSON.Test;
+with GNATCOLL.JSON.Support.Test.Test_Vectors.Integer_Indefinite_Doubly_Linked_Lists.JSON.Test;
+with GNATCOLL.JSON.Support.Test.Test_Vectors.Integer_Doubly_Linked_Lists.JSON.Test;
 package body GNATCOLL.JSON.Support.Test.Suits.Test_Vectors is
 
    use AUnit.Test_Suites;
@@ -35,6 +37,8 @@ package body GNATCOLL.JSON.Support.Test.Suits.Test_Vectors is
    Test_1 : aliased GNATCOLL.JSON.Support.Test.Test_Vectors.Integer_Vectors.JSON.Tests.Test_Case;
    Test_2 : aliased GNATCOLL.JSON.Support.Test.Test_Bounded_Vectors.Integer_Bounded_Vectors.JSON.Tests.Test_Case;
    Test_3 : aliased GNATCOLL.JSON.Support.Test.Test_Vectors.Integer_Bounded_Doubly_Linked_Lists.JSON.Test.Test_Case;
+   Test_4 : aliased GNATCOLL.JSON.Support.Test.Test_Vectors.Integer_Doubly_Linked_Lists.JSON.Test.Test_Case;
+   Test_5 : aliased GNATCOLL.JSON.Support.Test.Test_Vectors.Integer_Indefinite_Doubly_Linked_Lists.JSON.Test.Test_Case;
    -----------
    -- Suite --
    -----------
@@ -44,6 +48,8 @@ package body GNATCOLL.JSON.Support.Test.Suits.Test_Vectors is
       Add_Test (Result'Access, Test_1'Access);
       Add_Test (Result'Access, Test_2'Access);
       Add_Test (Result'Access, Test_3'Access);
+      Add_Test (Result'Access, Test_4'Access);
+      Add_Test (Result'Access, Test_5'Access);
       return Result'Access;
    end Suite;
 

@@ -21,13 +21,6 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 
-function GNATCOLL.JSON.Support.Test.Test_Bounded_Vectors.Integer_Bounded_Vectors_Initialize return
-  GNATCOLL.JSON.Support.Test.Test_Bounded_Vectors.Integer_Bounded_Vectors.Vector is
-
-begin
-   return Item : GNATCOLL.JSON.Support.Test.Test_Bounded_Vectors.Integer_Bounded_Vectors.Vector (10) do
-      for I in 1 .. 10 loop
-         Item.Append (I);
-      end loop;
-   end return;
-end GNATCOLL.JSON.Support.Test.Test_Bounded_Vectors.Integer_Bounded_Vectors_Initialize;
+with GNATCOLL.JSON.Support.Test.Test_Vectors.Integer_Indefinite_Doubly_Linked_Lists;
+function GNATCOLL.JSON.Support.Test.Test_Vectors.Integer_Indefinite_Doubly_Linked_Lists_Initialize return
+  GNATCOLL.JSON.Support.Test.Test_Vectors.Integer_Indefinite_Doubly_Linked_Lists.List;

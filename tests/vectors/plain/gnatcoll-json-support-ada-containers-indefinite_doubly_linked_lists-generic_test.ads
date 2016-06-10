@@ -21,13 +21,17 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 
-function GNATCOLL.JSON.Support.Test.Test_Bounded_Vectors.Integer_Bounded_Vectors_Initialize return
-  GNATCOLL.JSON.Support.Test.Test_Bounded_Vectors.Integer_Bounded_Vectors.Vector is
+with AUnit.Test_Cases;
+generic
+   with function Initialize return  List;
+package GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Doubly_Linked_Lists.Generic_Test is
+   type Test_Case is new AUnit.Test_Cases.Test_Case with  record
+      Test_Data : access List;
+      Result    : access List;
+   end record;
 
-begin
-   return Item : GNATCOLL.JSON.Support.Test.Test_Bounded_Vectors.Integer_Bounded_Vectors.Vector (10) do
-      for I in 1 .. 10 loop
-         Item.Append (I);
-      end loop;
-   end return;
-end GNATCOLL.JSON.Support.Test.Test_Bounded_Vectors.Integer_Bounded_Vectors_Initialize;
+   overriding procedure Set_Up_Case (Test : in out Test_Case);
+   overriding procedure Register_Tests (Test : in out Test_Case);
+   overriding function Name (Test : Test_Case) return AUnit.Message_String;
+
+end  GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Doubly_Linked_Lists.Generic_Test;

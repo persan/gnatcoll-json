@@ -21,13 +21,22 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 
-function GNATCOLL.JSON.Support.Test.Test_Bounded_Vectors.Integer_Bounded_Vectors_Initialize return
-  GNATCOLL.JSON.Support.Test.Test_Bounded_Vectors.Integer_Bounded_Vectors.Vector is
 
-begin
-   return Item : GNATCOLL.JSON.Support.Test.Test_Bounded_Vectors.Integer_Bounded_Vectors.Vector (10) do
-      for I in 1 .. 10 loop
-         Item.Append (I);
-      end loop;
-   end return;
-end GNATCOLL.JSON.Support.Test.Test_Bounded_Vectors.Integer_Bounded_Vectors_Initialize;
+with Ada.Containers.Indefinite_Doubly_Linked_Lists;
+generic
+   with package L is new Standard.Ada.Containers.Indefinite_Doubly_Linked_Lists (<>);
+   use L;
+   with function Create (Val : Element_Type) return JSON_Value is <>;
+   with function Get (Val : JSON_Value) return Element_Type is <>;
+package GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Doubly_Linked_Lists is
+
+
+   function Create (Val : List) return JSON_Value with
+     Inline_Always => True;
+
+   function Get (Val : JSON_Value) return List;
+
+   function Get (Val : JSON_Value; Field : UTF8_String) return List;
+   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : List);
+
+end GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Doubly_Linked_Lists;

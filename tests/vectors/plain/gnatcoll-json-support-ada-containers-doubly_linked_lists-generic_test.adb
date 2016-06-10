@@ -25,7 +25,7 @@ with GNAT;
 with GNAT.Source_Info;
 with AUnit.Assertions;
 with GNATCOLL.JSON.Support.Test.Utilities;
-package body GNATCOLL.JSON.Support.Ada.Containers.Bounded_Doubly_Linked_Lists.Generic_Test is
+package body GNATCOLL.JSON.Support.Ada.Containers.Doubly_Linked_Lists.Generic_Test is
 
    use AUnit;
    use AUnit.Assertions;
@@ -102,4 +102,4 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Bounded_Doubly_Linked_Lists.Ge
       return Format (Unit_Name);
    end Name;
 
-end GNATCOLL.JSON.Support.Ada.Containers.Bounded_Doubly_Linked_Lists.Generic_Test;
+end GNATCOLL.JSON.Support.Ada.Containers.Doubly_Linked_Lists.Generic_Test;
