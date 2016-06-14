@@ -18,7 +18,9 @@ project GnatColl.JSON.Tests is
       for Default_Switches ("Ada") use ("-E");
    end  Binder;
    package Compiler is
+
       for Default_Switches ("Ada") use  GnatColl.JSON.Compiler'Default_Switches ("Ada");
+      for Switches ("table_vstring_initialize.adb") use ("-g");
    end Compiler;
 
 end GnatColl.JSON.Tests;

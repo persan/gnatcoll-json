@@ -22,13 +22,8 @@
 ------------------------------------------------------------------------------
 
 with Interfaces;
-package body GNATCOLL.JSON.Support.GNAT.SPitbol is
+package body GNATCOLL.JSON.Support.GNAT.SPitbol.JSON_Table is
 
-   ----------------
-   -- JSON_Table --
-   ----------------
-
-   package body JSON_Table is
 
       ------------
       -- Create --
@@ -178,6 +173,4 @@ package body GNATCOLL.JSON.Support.GNAT.SPitbol is
          Set_Field (Val, Field_Name, Create (Field));
       end Set_Field;
 
-   end JSON_Table;
-
-end GNATCOLL.JSON.Support.GNAT.SPitbol;
+end GNATCOLL.JSON.Support.GNAT.SPitbol.JSON_Table;

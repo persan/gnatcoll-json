@@ -21,8 +21,10 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 
-with GNATCOLL.JSON.Support.GNAT.SPitbol;
+with GNATCOLL.JSON.Support.GNAT.SPitbol.JSON_Table;
 use GNATCOLL.JSON;
 package GNAT.Spitbol.Table_Integer.JSON is
   new GNATCOLL.JSON.Support.GNAT.SPitbol.JSON_Table
-    (V          => GNAT.Spitbol.Table_Integer);
+    (V          => GNAT.Spitbol.Table_Integer,
+     Create     => Create,
+     Get        => Get);
