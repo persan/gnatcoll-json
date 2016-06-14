@@ -23,11 +23,11 @@
 
 with AUnit.Test_Cases;
 generic
-   with procedure Initialize (Data : in out Map);
+   with function Initialize return Map;
 package GNATCOLL.JSON.Support.Ada.Containers.Hashed_Maps_Simple.Generic_Tests is
    type Test_Case is new AUnit.Test_Cases.Test_Case with  record
-      Test_Data : Map;
-      Result    : Map;
+      Test_Data : access Map;
+      Result    : access Map;
    end record;
 
    overriding procedure Set_Up_Case (Test : in out Test_Case);

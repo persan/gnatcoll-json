@@ -41,7 +41,7 @@ with GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Hashed_Maps_Simple;
 with GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Vectors;
 with GNATCOLL.JSON.Support.Ada.Containers.Ordered_Maps;
 with GNATCOLL.JSON.Support.Ada.Containers.Ordered_Sets;
-with GNATCOLL.JSON.Support.Ada.Containers.Orederd_Maps_Simple;
+with GNATCOLL.JSON.Support.Ada.Containers.Ordered_Maps_Simple;
 with GNATCOLL.JSON.Support.Ada.Containers.Vectors;
 with GNATCOLL.JSON.Support.Ada.Numerics;
 with GNATCOLL.JSON.Support.Ada.Numerics.Complex_Arrays_JSON;

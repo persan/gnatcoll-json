@@ -38,7 +38,11 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Bounded_Hashed_Maps is
             Append (Data, O);
          end;
       end loop;
-      return Create (Data);
+      return Ret : constant JSON_Value := Create_Object do
+         Set_Field (Ret, "Data", Create (Data));
+         Set_Field (Ret, "Capacity", Create (Val.Capacity));
+         Set_Field (Ret, "Modulus", Create (Val.Modulus));
+      end return;
    end Create;
 
    ---------
@@ -46,14 +50,14 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Bounded_Hashed_Maps is
    ---------
 
    function Get (Val : JSON_Value) return Map is
-      L        : constant JSON_Array := Val.Get;
-      Capacity : constant Count_Type := Count_Type (Length (L));
-      Modulus  : constant Hash_Type := Default_Modulus (Capacity);
+      Data     : constant JSON_Array := Get (Val, "Data");
+      Capacity : constant Count_Type := Get (Val, "Capacity");
+      Modulus  : constant Hash_Type := Get (Val, "Modulus");
    begin
       return Ret : Map (Capacity, Modulus) do
-         for I in 1 .. Length (L) loop
+         for I in 1 .. Length (Data) loop
             declare
-               O : constant JSON_Value := Get (L, I);
+               O : constant JSON_Value := Get (Data, I);
             begin
                Ret.Insert (Key      => Key_Type'(Get (Get (O, "Key"))),
                            New_Item => Element_Type'(Get (Get (O, "Element"))));

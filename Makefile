@@ -1,7 +1,10 @@
 -include Makefile.conf
+
 SHELL=/bin/bash
-export PATH:=${CURDIR}/bin:${PATH}
+EXEC_DIR := $(shell gprinfo --exec-dir gnatcoll-json-tests.gpr)
+export PATH:=${EXEC_DIR}:${PATH}
 .DEFAULT_GOAL:=all
+
 ifdef PREFIX
 INSTALLFLAGS:=--prefix=$(shell readlink -f ${PREFIX})
 endif
@@ -12,7 +15,7 @@ compile:
 	gprbuild -p -j0 -P gnatcoll-json-tests.gpr
 	gprbuild -p -j0 -P gnatcoll-json-util.gpr
 
-test:
+test:compile
 	gnatcoll-json-support-test-main
 
 install:

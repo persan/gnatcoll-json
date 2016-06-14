@@ -38,7 +38,7 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Hashed_Sets.Generic_Tests is
 
    overriding procedure Set_Up_Case (Test : in out Test_Case) is
    begin
-      Initialize (Test.Test_Data);
+      Test.Test_Data := new Set'(Initialize);
    end Set_Up_Case;
    ----------------
    -- Test_Write --
@@ -46,18 +46,35 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Hashed_Sets.Generic_Tests is
    procedure Test_Write (Test : in out AUnit.Test_Cases.Test_Case'Class)  is
       Td   : Test_Case renames Test_Case (Test);
    begin
-      Write (Ada2file (Unit_Name), GNATCOLL.JSON.Write (Create (Td.Test_Data), Compact => False));
+      Write (Ada2file (Unit_Name), GNATCOLL.JSON.Write (Create (Td.Test_Data.all), Compact => False));
    end Test_Write;
 
    ---------------
    -- Test_Read --
    ---------------
    procedure Test_Read (Test : in out AUnit.Test_Cases.Test_Case'Class)  is
-      Td   : Test_Case renames Test_Case (Test);
+      Td     : Test_Case renames Test_Case (Test);
+      Result : constant Set := Get (GNATCOLL.JSON. Read (Read (Ada2file (Unit_Name)), Filename => Ada2file (Unit_Name)));
    begin
-      Td.Result := Get (GNATCOLL.JSON. Read (Read (Ada2file (Unit_Name)), Filename => Ada2file (Unit_Name)));
-      Assert (Td.Result = Td.Test_Data, "data mismatch");
+      Assert (Result = Td.Test_Data.all, "data mismatch");
    end Test_Read;
+
+   ------------------------
+   -- Test_Get_Set_Filed --
+   ------------------------
+
+   procedure Test_Get_Set_Filed (Test : in out AUnit.Test_Cases.Test_Case'Class)  is
+      Td  : Test_Case renames Test_Case (Test);
+      J   : constant GNATCOLL.JSON.JSON_Value := Create_Object; 
+   begin
+      Set_Field(J,"testData",Td.Test_Data.all);
+      Set_Field(J,"testSting","Dummy");
+      declare
+         Result : constant Set := Get(J,"testData");
+      begin
+         Assert (Result = Td.Test_Data.all, "data mismatch");
+      end;
+   end Test_Get_Set_Filed;
 
    --------------------
    -- Register_Tests --
@@ -66,13 +83,10 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Hashed_Sets.Generic_Tests is
    overriding procedure Register_Tests (Test : in out Test_Case) is
       use AUnit.Test_Cases.Registration;
    begin
-      Register_Routine (Test    => Test,
-                        Routine => Test_Write'Unrestricted_Access,
-                        Name    =>  "Test_Write:1");
+      Register_Routine (Test, Test_Write'Unrestricted_Access,"Test_Write");
+      Register_Routine (Test, Test_Read'Unrestricted_Access, "Test_Read");
+      Register_Routine (Test, Test_Get_Set_Filed'Unrestricted_Access, "Test_Get_Set_Filed");
 
-      Register_Routine (Test    => Test,
-                        Routine => Test_Read'Unrestricted_Access,
-                        Name    =>  "Test_Read:1");
    end Register_Tests;
 
    ----------

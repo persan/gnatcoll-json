@@ -28,12 +28,15 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Bounded_Ordered_Sets is
    ------------
 
    function Create (Val : Set) return JSON_Value is
-      Arr : JSON_Array;
+      Data : JSON_Array;
    begin
       for I of Val loop
-         Append (Arr, Create (I));
+         Append (Data, Create (I));
       end loop;
-      return Create (Arr);
+      return Ret : constant JSON_Value := Create_Object do
+         Set_Field (Ret, "Data", Create (Data));
+         Set_Field (Ret, "Capacity", Create (Val.Capacity));
+      end return;
    end Create;
 
    ---------
@@ -41,12 +44,12 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Bounded_Ordered_Sets is
    ---------
 
    function Get (Val : JSON_Value) return Set is
-      L        : constant JSON_Array := Val.Get;
-      Capacity : constant Count_Type := Count_Type (Length (L));
+      Data     : constant JSON_Array := Get (Val, "Data");
+      Capacity : constant Count_Type := Get (Val, "Capacity");
    begin
       return Ret : Set (Capacity) do
-         for I in 1 .. Length (L) loop
-            Ret.Include (Element_Type'(Get (Get (L, I))));
+         for I in 1 .. Length (Data) loop
+            Ret.Include (Element_Type'(Get (Get (Data, I))));
          end loop;
       end return;
    end Get;

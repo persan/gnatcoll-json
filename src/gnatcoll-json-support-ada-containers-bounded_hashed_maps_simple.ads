@@ -22,9 +22,9 @@
 ------------------------------------------------------------------------------
 
 
-with Ada.Containers.Bounded_Ordered_Maps;
+with Ada.Containers.Bounded_Hashed_Maps;
 generic
-   with package M is new Standard.Ada.Containers.Bounded_Ordered_Maps (<>);
+   with package M is new Standard.Ada.Containers.Bounded_Hashed_Maps (<>);
    use M;
    with function Image (Val : Key_Type) return String is <>;
    with function Value (Val : String) return  Key_Type is <>;

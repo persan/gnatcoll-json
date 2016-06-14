@@ -32,13 +32,18 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Bounded_Hashed_Maps_Simple is
    begin
       for I in Val.Iterate loop
          declare
-            O : constant JSON_Value := JSON_Null;
+            O : constant JSON_Value := Create_Object;
          begin
             O.Set_Field (Image (Key (I)), Create (Element (I)));
             Append (Data, O);
          end;
       end loop;
-      return Create (Data);
+      return Ret : constant JSON_Value := Create_Object do
+
+         Set_Field (Ret, "Data", Create (Data));
+         Set_Field (Ret, "Capacity", Create (Val.Capacity));
+         Set_Field (Ret, "Modulus", Create (Val.Modulus));
+      end return;
    end Create;
 
    ---------
@@ -46,12 +51,14 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Bounded_Hashed_Maps_Simple is
    ---------
 
    function Get (Val : JSON_Value) return Map is
-      L : constant JSON_Array := Val.Get;
+      Data     : constant JSON_Array := Get (Val, "Data");
+      Capacity : constant Count_Type := Get (Val, "Capacity");
+      Modulus  : constant Hash_Type := Get (Val, "Modulus");
    begin
-      return Ret : Map (Count_Type (Length (L)))do
-         for I in 1 .. Length (L) loop
+      return Ret : Map (Capacity, Modulus) do
+         for I in 1 .. Length (Data) loop
             declare
-               O : constant JSON_Value := Get (L, I);
+               O : constant JSON_Value := Get (Data, I);
                procedure CB (Name : UTF8_String; Val : JSON_Value) is
                begin
                   Ret.Include (Value (Name), Get (Val));

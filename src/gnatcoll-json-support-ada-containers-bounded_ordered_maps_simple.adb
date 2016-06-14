@@ -32,7 +32,7 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Bounded_Ordered_Maps_Simple is
    begin
       for I in Val.Iterate loop
          declare
-            O : constant JSON_Value := JSON_Null;
+            O : constant JSON_Value := Create_Object;
          begin
             O.Set_Field (Image (Key (I)), Create (Element (I)));
             Append (Data, O);

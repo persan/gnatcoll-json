@@ -28,7 +28,7 @@ with Ada.Real_Time; --@ Impl -> TestOK
 
 with Ada.Containers; --@ Impl -> TestOK
 with Ada.Containers.Bounded_Doubly_Linked_Lists; --@ Impl
-with Ada.Containers.Bounded_Hashed_Maps; --@ Impl/Simple
+with Ada.Containers.Bounded_Hashed_Maps; --@ Impl/Simple -> TestOK
 with Ada.Containers.Bounded_Hashed_Sets; --@ Impl
 with Ada.Containers.Bounded_Multiway_Trees;
 with Ada.Containers.Bounded_Ordered_Maps; --@ Impl/Simple
@@ -42,36 +42,16 @@ with Ada.Containers.Indefinite_Doubly_Linked_Lists; --@ Impl-> TestOK
 with Ada.Containers.Indefinite_Hashed_Maps; --@ Impl/Simple
 with Ada.Containers.Indefinite_Hashed_Sets; --@ Impl
 with Ada.Containers.Indefinite_Multiway_Trees;
-with Ada.Containers.Indefinite_Ordered_Maps;
-with Ada.Containers.Indefinite_Ordered_Multisets;
-with Ada.Containers.Indefinite_Ordered_Sets;
+with Ada.Containers.Indefinite_Ordered_Maps; --@ Impl
+with Ada.Containers.Indefinite_Ordered_Multisets; --@ Impl
+with Ada.Containers.Indefinite_Ordered_Sets; --@ Impl
 with Ada.Containers.Indefinite_Vectors; --@ Impl
 with Ada.Containers.Multiway_Trees;
 with Ada.Containers.Ordered_Maps; --@ Impl/Simple
-with Ada.Containers.Ordered_Multisets;
+with Ada.Containers.Ordered_Multisets; --@ Impl
 with Ada.Containers.Ordered_Sets; --@ Impl-> TestOK
 with Ada.Containers.Restricted_Doubly_Linked_Lists;
 with Ada.Containers.Vectors; --@ Impl-> TestOK
-
-
-
-with Ada.Numerics.Complex_Arrays; --@ Impl -> TestOK
-with Ada.Numerics.Complex_Types; --@ Impl -> TestOK
-
-with Ada.Numerics.Generic_Complex_Arrays; --@ Impl -> TestOK
-with Ada.Numerics.Generic_Complex_Types; --@ Impl -> TestOK
-with Ada.Numerics.Generic_Real_Arrays; --@ Impl -> TestOK
-
-with Ada.Numerics.Long_Complex_Arrays; --@ Impl -> TestOK
-with Ada.Numerics.Long_Complex_Types; --@ Impl -> TestOK
-with Ada.Numerics.Long_Long_Complex_Arrays; --@ Impl -> TestOK
-with Ada.Numerics.Long_Long_Complex_Types; --@ Impl -> TestOK
-with Ada.Numerics.Long_Long_Real_Arrays; --@ Impl -> TestOK
-with Ada.Numerics.Long_Real_Arrays; --@ Impl -> TestOK
-
-with Ada.Numerics.Real_Arrays; --@ Impl -> TestOK
-
-with Ada.Numerics.Short_Complex_Types; --@ Impl -> TestOK
 
 
 pragma Warnings (On, "unit * is never instantiated");
