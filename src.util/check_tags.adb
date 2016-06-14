@@ -1,8 +1,12 @@
 with Ada.Command_Line;
-with GNAT.Strings; use GNAT.Strings;
+with GNAT.Strings;
 with GNAT.Expect;
-with GNAT.String_Split; use GNAT.String_Split;
+with GNAT.String_Split;
+with Ada.Text_IO;
 procedure Check_Tags is
+   use GNAT.String_Split;
+   use GNAT.Strings;
+   use Ada.Text_IO;
    Args   : String_List_Access := new
      String_List'(new String'("tag"),
                   new String'("-l"));
@@ -13,6 +17,7 @@ begin
    Free (Args);
    for I in 1 .. Slice_Count (S) loop
       if Ada.Command_Line.Argument (1) = Slice (S, I) then
+         Put_Line (Standard_Error, "Tag: '" & Slice (S, I) & "' Already exists.");
          Ada.Command_Line.Set_Exit_Status (Ada.Command_Line.Failure);
       end if;
    end loop;
