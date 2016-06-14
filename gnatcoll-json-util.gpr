@@ -1,7 +1,7 @@
 with "gnatcoll-json.gpr";
 project GnatColl.JSON.Util is
 
-   for Main use ("check_version.adb");
+   for Main use ("check_version.adb", "check_tags.adb");
 
    for Languages use ("ada");
    for Source_Dirs use ("src.util/**");
