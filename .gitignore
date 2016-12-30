@@ -10,4 +10,5 @@ lib/*
 **/*.ali
 **/.obj
 **/main
+**/*.orig
 
