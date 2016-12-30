@@ -4,3 +4,10 @@ Makefile.conf
 _
 output/*.json
 lib/*
+**/b__*
+**/*.o
+**/*.so
+**/*.ali
+**/.obj
+**/main
+

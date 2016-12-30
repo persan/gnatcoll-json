@@ -10,9 +10,14 @@ project GnatColl.JSON.Builder extends "asis-tool_utils"is
    package Builder is
       for Executable ("gnatcoll-json-support-builder-driver.adb")use "ada2json";
    end  Builder;
+
    package Compiler is
+      for Default_Switches("Ada") use ("-g");
    end Compiler;
 
+   package Binder is
+      for Default_Switches("Ada") use ("-E");
+   end Binder;
 
    for Main use ("gnatcoll-json-support-builder-driver.adb");
 

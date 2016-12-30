@@ -50,13 +50,14 @@ with Gnat.Exception_Traces;
 procedure GNATCOLL.JSON.Support.Builder.Driver is
    use type Asis.Errors.Error_Kinds;
 begin
-   Gnat.Exception_Traces.Trace_On (GNAT.Exception_Traces.Every_Raise);
-   Gnat.Exception_Traces.Set_Trace_Decorator (GNAT.Traceback.Symbolic.Symbolic_Traceback'Access);
    Initialize;
 
    if not Initialized then
       return;
    end if;
+
+   Gnat.Exception_Traces.Trace_On (GNAT.Exception_Traces.Every_Raise);
+   Gnat.Exception_Traces.Set_Trace_Decorator (GNAT.Traceback.Symbolic.Symbolic_Traceback'Access);
 
    Create_Sample;
    Clean_Up;

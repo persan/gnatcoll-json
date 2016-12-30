@@ -202,23 +202,6 @@ package body GNATCOLL.JSON.Support.Builder.Projects is
                      else
                         Indent_Level := Nat;
                      end if;
-
-                  elsif Full_Switch (Parser => Parser) = "gnat83" then
-                     Opt.Ada_Version     := Ada_83;
-                     Ada_Version_Changed := True;
-                  elsif Full_Switch (Parser => Parser) = "gnat95" then
-                     Opt.Ada_Version     := Ada_95;
-                     Ada_Version_Changed := True;
-                  elsif Full_Switch (Parser => Parser) in
-                    "gnat05" | "gnat2005"
-                  then
-                     Opt.Ada_Version     := Ada_2005;
-                     Ada_Version_Changed := True;
-                  elsif Full_Switch (Parser => Parser) in
-                    "gnat12" | "gnat2012"
-                  then
-                     Opt.Ada_Version     := Ada_2012;
-                     Ada_Version_Changed := True;
                   end if;
                end if;
 
@@ -233,9 +216,6 @@ package body GNATCOLL.JSON.Support.Builder.Projects is
                      Header_File_Name :=
                        new String'(Parameter (Parser => Parser));
                      Header           := From_File;
-   --               elsif Full_Switch (Parser => Parser) = "-header_file" then
-   --                  Header_File_Name := new String'(Parameter);
-   --                  Header           := From_File;
                   end if;
                end if;
 

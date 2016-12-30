@@ -1,0 +1,27 @@
+project Codegen is
+
+   for Object_Dir use ".obj";
+   for Exec_Dir use "bin";
+
+   package Compiler is
+      for Switches ("ada") use ("-gnatwa", "-g", "-O2", "-gnatf", "-fstack-check");
+   end Compiler;
+
+   package Make is
+      for Makefile use "Makefile";
+   end Make;
+
+   package Binder is
+      for Switches ("ada") use ("-E");
+   end Binder;
+
+   package Ide is
+      for Vcs_Kind use "Git";
+   end Ide;
+
+   package Gnattest is
+   end Gnattest;
+
+   for Main use ("main.adb");
+
+end Codegen;

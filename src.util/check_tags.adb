@@ -13,7 +13,14 @@ procedure Check_Tags is
    Status : aliased Integer;
    S      : GNAT.String_Split.Slice_Set;
 begin
-   Create (S, GNAT.Expect.Get_Command_Output (Command => "git", Arguments => Args.all, Status => Status'Access, Input => "", Err_To_Out => True), ASCII.LF & ASCII.CR);
+   Create (S => S,
+           From => GNAT.Expect.Get_Command_Output
+             (Command    => "git",
+              Arguments  => Args.all,
+              Status     => Status'Access,
+              Input      => "",
+              Err_To_Out => True),
+           Separators => ASCII.LF & ASCII.CR);
    Free (Args);
    for I in 1 .. Slice_Count (S) loop
       if Ada.Command_Line.Argument (1) = Slice (S, I) then
@@ -21,5 +28,4 @@ begin
          Ada.Command_Line.Set_Exit_Status (Ada.Command_Line.Failure);
       end if;
    end loop;
-
 end Check_Tags;

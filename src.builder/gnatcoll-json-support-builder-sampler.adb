@@ -44,6 +44,10 @@ with ASIS_UL.Utilities;            use ASIS_UL.Utilities;
 with GNATCOLL.JSON.Support.Builder.Options;             use GNATCOLL.JSON.Support.Builder.Options;
 with GNATCOLL.JSON.Support.Builder.Projects;
 
+with Ada.Text_Io;
+with Ada.Strings.Maps;
+with Ada.Characters.Handling;
+
 package body GNATCOLL.JSON.Support.Builder.Sampler is
 
    use type Asis.Errors.Error_Kinds;
@@ -333,7 +337,7 @@ package body GNATCOLL.JSON.Support.Builder.Sampler is
    begin
       pragma Style_Checks (Off);
 
-      Info ("Usage: gnatstub [options] filename [-cargs gcc_switches]");
+      Info ("Usage: ada2json [options] filename [-cargs gcc_switches]");
       Info ("");
       Info ("  filename               Ada source file");
       Info ("");
@@ -445,9 +449,6 @@ package body GNATCOLL.JSON.Support.Builder.Sampler is
          raise Parameter_Error;
       end if;
 
-      if not Ada_Version_Changed then
-         Opt.Ada_Version := Opt.Ada_Version_Default;
-      end if;
 
       if Test_Mode then
          Alphabetical_Ordering := True;
@@ -768,7 +769,12 @@ package body GNATCOLL.JSON.Support.Builder.Sampler is
    -------------------
    -- Create_Sample --
    -------------------
-
+   function Ada2file ( Name : String) return String is
+      Map : constant Ada.Strings.Maps.Character_Mapping := Ada.Strings.Maps.To_Mapping ("ABCDEFGHIJKLMNOPQRSTuvwxyz.",
+                                                                                        "abcdefghijklmnopqrstuvwxyz-");
+   begin
+      return Ada.Strings.Fixed.Translate (Name, Map);
+   end;
    procedure Create_Sample is
       CU         : Asis.Compilation_Unit;
       CU_Kind    : Unit_Kinds;
@@ -776,7 +782,7 @@ package body GNATCOLL.JSON.Support.Builder.Sampler is
       My_Control     : Traverse_Control := Continue;
       My_State       : Body_State;
       Header_Created : Boolean;
-
+      Subunit_Name   : String_Access;
    begin
 
       CU := Main_Unit_In_Current_Tree (My_Context);
@@ -794,6 +800,10 @@ package body GNATCOLL.JSON.Support.Builder.Sampler is
 
       --  and here we have to do the job:
 
+      Subunit_Name :=  new String'(Ada.Characters.Handling.To_String(Unit_Full_Name (CU)) & ".JSON");
+      Ada.Text_IO.Put_Line (Subunit_Name.all);
+      Body_Name := new String'(Ada2file (Subunit_Name.all) & ".adb");
+      Spec_O_Name := new String'(Ada2file (Subunit_Name.all) & ".ads");
       begin
          Create (Body_File, Out_File, Body_Name.all, Body_Form.all);
          Create (Spec_O_File, Out_File, Spec_O_Name.all, Body_Form.all);
@@ -815,9 +825,10 @@ package body GNATCOLL.JSON.Support.Builder.Sampler is
       if Header_Created then
          Generate_Body_Structure;
          Close (Body_File);
+         Close (Spec_O_File);
 
          if not Quiet_Mode then
-            Info ("body is created for " &
+            Info ("JSON body is created for " &
                     GNATCOLL.JSON.Support.Builder.Options.File_Name.all);
          end if;
 
@@ -1647,11 +1658,16 @@ package body GNATCOLL.JSON.Support.Builder.Sampler is
       Put_Line (Body_File, "package body " & Node.Spec_Name.all & ".JSON is");
       New_Line (Body_File);
 
+      Set_Col  (Spec_O_File, Positive_Count (1 + Level * Indent_Level));
+      Put_Line (Spec_O_File, "package " & Node.Spec_Name.all & ".JSON is");
+      New_Line (Spec_O_File);
+
       if Node = Body_Structure'Access and then Node.Down = null then
          --  this is a special case: an argument unit is a library [generic]
          --  package which requires a body but which does not contain any
          --  local declaration which itself requires a completion:
          Put_Line (Body_File, "end " & Node.Spec_Name.all & ".JSON;");
+         Put_Line (Spec_O_File, "end " & Node.Spec_Name.all & ".JSON;");
       end if;
    end Generate_Package_Body;
 
@@ -2000,7 +2016,7 @@ package body GNATCOLL.JSON.Support.Builder.Sampler is
 
    procedure Initialize is
    begin
-      ASIS_UL.Environment.Scan_Parameters_New (Builder_Prj);
+      ASIS_UL.Environment.Scan_Parameters (Builder_Prj);
       Check_Parameters;
       Prepare_Context;
 
