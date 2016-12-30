@@ -69,9 +69,8 @@ package body GNATCOLL.JSON.Support.Test.Check_Golden is
       if Exists ("golden") then
          Ada.Directories.Search (Directory => "golden", Pattern => "*.json", Process => Process'Access);
       end if;
-      if not Ok then
-         Assert (Ok, " Goldend check failed");
-      end if;
+
+      Assert (Ok, " Goldend check failed");
    end Check_Golden;
 
    -----------------

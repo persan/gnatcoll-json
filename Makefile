@@ -20,10 +20,10 @@ test:compile
 	gnatcoll-json-support-test-main
 
 install:
-	gprinstall ${INSTALLFLAGS} -p gnatcoll-json.gpr
+	sudo `which gprinstall` ${INSTALLFLAGS} -p gnatcoll-json.gpr
 
 uninstall:
-	gprinstall ${INSTALLFLAGS} -p gnatcoll-json.gpr --uninstall
+	sudo `which gprinstall` ${INSTALLFLAGS} -p gnatcoll-json.gpr --uninstall
 
 check_clean: # IGNORE
 	@if [ -n "`git status --porcelain`" ] ; then git status ; exit -1 ; fi
@@ -35,7 +35,5 @@ tag:all check_clean
 	git push --all
 	git push --tags
 clean:
-	git clean -fd
-builder:
-	gprbuild -p -j0 -P gnatcoll-json-builder.gpr
-	bin/ada2json -P tests.codegen/codegen.gpr simple.ads
+	git clean -fdx
+	
