@@ -22,18 +22,20 @@
 ------------------------------------------------------------------------------
 
 generic
-   type Enum is (<>);
-   Link_Prefix : String := ""; -- Prepend to the Enum before sending
-   Link_Suffix : String := ""; -- Appended to the Enum before sending
-   Code_Prefix : String := ""; -- Prepended to the data before mapping to enum
-   Code_Suffix : String := ""; -- Appended to the data before mapping to enum
+   type Index_Type is (<>);
+   type Element_Type is private;
+   type Array_Type is array (Index_Type range <>) of Element_Type;
 
-package GNATCOLL.JSON.Support.Enum_Generic is
+   with function Create (Val : Element_Type) return JSON_Value is <>;
+   with function Get (Val : JSON_Value) return Element_Type is <>;
+
+package GNATCOLL.JSON.Support.Simple_Arrays_Generic is
+   function Create (Val : Array_Type) return JSON_Array;
+
+   function Get (Val : JSON_Array) return Array_Type;
 
 
-   function Create (Val : Enum) return JSON_Value;
-   function Get (Val : JSON_Value) return Enum;
-   function Get (Val : JSON_Value; Field : UTF8_String) return Enum;
-   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Enum);
+   -- Stored as JSON_Array
+   -- [Val(Val'First..Val'Last)]
 
-end GNATCOLL.JSON.Support.Enum_Generic;
+end GNATCOLL.JSON.Support.Simple_Arrays_Generic;

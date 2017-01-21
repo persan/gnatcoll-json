@@ -20,49 +20,20 @@
 -- <http://www.gnu.org/licenses/>.                                          --
 --                                                                          --
 ------------------------------------------------------------------------------
-with Ada.Strings.Fixed;
-package body GNATCOLL.JSON.Support.Enum_Generic is
 
-   ------------
-   -- Create --
-   ------------
+generic
+   type Enum is (<>);
+   Link_Prefix : String := ""; -- Prepend to the Enum before sending
+   Link_Suffix : String := ""; -- Appended to the Enum before sending
+   Code_Prefix : String := ""; -- Prepended to the data before mapping to enum
+   Code_Suffix : String := ""; -- Appended to the data before mapping to enum
 
-   function Create (Val : Enum) return JSON_Value is
-      Img : constant String := Ada.Strings.Fixed.Trim (Val'Img, Ada.Strings.Both);
-   begin
-      return Create (Link_Prefix & Img (Img'First + Code_Prefix'Length .. Img'Last - Code_Suffix'Length) & Link_Suffix);
-   end Create;
+package GNATCOLL.JSON.Support.Enumeration_Generic is
 
-   ---------
-   -- Get --
-   ---------
 
-   function Get (Val : JSON_Value) return Enum is
-      Img : constant String := Get (Val);
-   begin
-      return Enum'Value (Code_Prefix & Img (Img'First + Link_Prefix'Length .. Img'Last - Link_Suffix'Length) & Code_Suffix);
-   end Get;
+   function Create (Val : Enum) return JSON_Value;
+   function Get (Val : JSON_Value) return Enum;
+   function Get (Val : JSON_Value; Field : UTF8_String) return Enum;
+   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Enum);
 
-   ---------
-   -- Get --
-   ---------
-
-   function Get (Val : JSON_Value; Field : UTF8_String) return Enum is
-   begin
-      return Enum'Value (Val.Get (Field));
-   end Get;
-
-   ---------------
-   -- Set_Field --
-   ---------------
-
-   procedure Set_Field
-     (Val        : JSON_Value;
-      Field_Name : UTF8_String;
-      Field      : Enum)
-   is
-   begin
-      Set_Field (Val, Field_Name, Field'Img);
-   end Set_Field;
-
-end GNATCOLL.JSON.Support.Enum_Generic;
+end GNATCOLL.JSON.Support.Enumeration_Generic;
