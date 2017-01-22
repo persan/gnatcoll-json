@@ -24,7 +24,7 @@ package body GNATCOLL.JSON.Support.Integer_Generic is
 
    function Get (Val : JSON_Value; Field : UTF8_String) return Num is
    begin
-      return Get (Val => Long_Integer'(Get (Val)), Field => Field);
+      return Num (Integer'(Get (Val =>  Val, Field => Field)));
    end Get;
 
    ---------------
@@ -37,7 +37,7 @@ package body GNATCOLL.JSON.Support.Integer_Generic is
       Field  : Num)
    is
    begin
-      Set_Field (Val, Field_Name, Long_Long_Integer (Field));
+      Set_Field (Val, Field_Name, Long_Integer (Field));
    end Set_Field;
 
 end GNATCOLL.JSON.Support.Integer_Generic;
