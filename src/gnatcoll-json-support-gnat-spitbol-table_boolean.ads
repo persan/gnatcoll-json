@@ -20,13 +20,7 @@
 -- <http://www.gnu.org/licenses/>.                                          --
 --                                                                          --
 ------------------------------------------------------------------------------
-
-
-with GNAT.Spitbol.Table_VString; use GNAT.Spitbol;
-with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
-with GNATCOLL.JSON.Support.GNAT.SPitbol.JSON_Table;
-package GNATCOLL.JSON.Support.GNAT.Spitbol.Table_VString.JSON is
-  new GNATCOLL.JSON.Support.GNAT.SPitbol.JSON_Table
-    (V          => Standard.GNAT.Spitbol.Table_VString,
-     Create     => Create ,
-     Get        => Get);
+with GNAT.Spitbol.Table_Boolean;
+package GNATCOLL.JSON.Support.GNAT.SPitbol.Table_Boolean is
+  new GNATCOLL.JSON.Support.GNAT.SPitbol.Table
+    (Standard.GNAT.Spitbol.Table_Boolean);

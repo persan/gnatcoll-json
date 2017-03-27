@@ -21,9 +21,9 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 pragma Warnings (Off);
-with GNAT.Spitbol.Table_Boolean.JSON;
-with GNAT.Spitbol.Table_Integer.JSON;
-with GNAT.Spitbol.Table_VString.JSON;
+with GNATCOLL.JSON.Support.GNAT.Spitbol.Table_Boolean;
+with GNATCOLL.JSON.Support.GNAT.Spitbol.Table_Integer;
+with GNATCOLL.JSON.Support.GNAT.Spitbol.Table_VString;
 with GNATCOLL.JSON.Support.Ada.Calendar;
 with GNATCOLL.JSON.Support.Ada.Containers.Bounded_Doubly_Linked_Lists;
 with GNATCOLL.JSON.Support.Ada.Containers.Bounded_Hashed_Maps;

@@ -21,5 +21,8 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 
+with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
+with GNAT.Spitbol.Table_VString;
 package GNATCOLL.JSON.Support.GNAT.Spitbol.Table_VString is
-end GNATCOLL.JSON.Support.GNAT.SPitbol.Table_VString;
+  new GNATCOLL.JSON.Support.GNAT.SPitbol.Table
+    (V      => Standard.GNAT.Spitbol.Table_VString);

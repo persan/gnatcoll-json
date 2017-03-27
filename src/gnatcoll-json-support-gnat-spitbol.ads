@@ -20,7 +20,29 @@
 -- <http://www.gnu.org/licenses/>.                                          --
 --                                                                          --
 ------------------------------------------------------------------------------
-
+with GNAT.Spitbol;
 package GNATCOLL.JSON.Support.GNAT.SPitbol is
+
+   generic
+      with package V is new Standard.GNAT.Spitbol.Table (<>);
+      use V;
+      with function Create (Val : Value_Type) return JSON_Value is <>;
+      with function Get (Val : JSON_Value) return Value_Type is <>;
+   package Table is
+      function Create (Val : V.Table) return JSON_Value;
+      function Get (Val : GNATCOLL.JSON.JSON_Value) return V.Table;
+      function Get (Val : JSON_Value; Field : UTF8_String) return V.Table;
+      procedure Set_Field  (Val        : JSON_Value;  Field_Name : UTF8_String; Field  : V.Table);
+
+      function Create (Val : V.Table_Entry) return JSON_Value;
+      function Get (Val : GNATCOLL.JSON.JSON_Value) return V.Table_Entry;
+      function Get (Val : JSON_Value; Field : UTF8_String) return V.Table_Entry;
+      procedure Set_Field  (Val  : JSON_Value;  Field_Name : UTF8_String; Field  : V.Table_Entry);
+
+      function Create (Val : V.Table_Array) return JSON_Value;
+      function Get (Val : GNATCOLL.JSON.JSON_Value) return V.Table_Array;
+      function Get (Val : JSON_Value; Field : UTF8_String) return V.Table_Array;
+      procedure Set_Field  (Val        : JSON_Value;  Field_Name : UTF8_String; Field  : V.Table_Array);
+   end Table;
 
 end GNATCOLL.JSON.Support.GNAT.SPitbol;

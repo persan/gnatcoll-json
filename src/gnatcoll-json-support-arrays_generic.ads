@@ -29,8 +29,8 @@ generic
    with function Create (Val : Element_Type) return JSON_Value is <>;
    with function Get (Val : JSON_Value) return Element_Type is <>;
 
-   with function Create_Index (Val : Element_Type) return JSON_Value is <>;
-   with function Get_Index (Val : JSON_Value) return Element_Type is <>;
+   with function Create (Val : Index_Type) return JSON_Value is <>;
+   with function Get (Val : JSON_Value) return Index_Type is <>;
 package GNATCOLL.JSON.Support.Arrays_Generic is
    function Create (Val : Array_Type) return JSON_Value;
 

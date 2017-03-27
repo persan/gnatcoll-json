@@ -20,9 +20,22 @@
 -- <http://www.gnu.org/licenses/>.                                          --
 --                                                                          --
 ------------------------------------------------------------------------------
+with GNAT.Source_Info;
+with AUnit.Test_Cases;
+with GNATCOLL.JSON.Support.GNAT.SPitbol;
+generic
+   with package V is new GNATCOLL.JSON.Support.GNAT.SPitbol.Table (<>);
+   use V ;
+   with function Initialize return V.Table;
+package GNATCOLL.JSON.Support.GNAT.SPitbol.Test_Generic is
+   type Test_Case is new AUnit.Test_Cases.Test_Case with  record
+      Test_Data : access V.V.Table;
+   end record;
 
-with GNATCOLL.JSON.Support.GNAT.SPitbol.JSON_Table;
-use GNATCOLL.JSON;
-package GNAT.Spitbol.Table_Boolean.JSON is
-  new GNATCOLL.JSON.Support.GNAT.SPitbol.JSON_Table
-    (GNAT.Spitbol.Table_Boolean, Create, Get);
+   overriding procedure Set_Up_Case (Test : in out Test_Case);
+   overriding procedure Register_Tests (Test : in out Test_Case);
+   overriding function Name (Test : Test_Case) return AUnit.Message_String;
+
+   Unit_Name : constant String := Standard.GNAT.Source_Info.Enclosing_Entity;
+
+end GNATCOLL.JSON.Support.GNAT.SPitbol.Test_Generic;

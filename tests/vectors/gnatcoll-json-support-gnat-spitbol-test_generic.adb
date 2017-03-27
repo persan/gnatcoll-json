@@ -23,18 +23,18 @@
 
 with AUnit.Assertions;
 with GNATCOLL.JSON.Support.Test.Utilities;
-package body GNATCOLL.JSON.Support.GNAT.SPitbol.JSON_Table.Test_Generic is
+package body GNATCOLL.JSON.Support.GNAT.SPitbol.Test_Generic is
 
    use AUnit;
    use AUnit.Assertions;
    use GNATCOLL.JSON.Support.Test.Utilities;
-
+   use V.V;
    -----------------
    -- Set_Up_Case --
    -----------------
    overriding procedure Set_Up_Case (Test : in out Test_Case) is
    begin
-      Test.Test_Data := new Table'(Initialize);
+      Test.Test_Data := new V.V.Table'(Initialize);
    end Set_Up_Case;
 
    ----------------
@@ -51,7 +51,7 @@ package body GNATCOLL.JSON.Support.GNAT.SPitbol.JSON_Table.Test_Generic is
    ---------------
    procedure Test_Read (Test : in out AUnit.Test_Cases.Test_Case'Class)  is
       Td      : Test_Case renames Test_Case (Test);
-      Result  : constant Table := Get (GNATCOLL.JSON. Read (Read (Ada2file (Unit_Name)),
+      Result  : constant V.V.Table := Get (GNATCOLL.JSON. Read (Read (Ada2file (Unit_Name)),
                                        Filename => Ada2file (Unit_Name)));
 
    begin
@@ -66,7 +66,7 @@ package body GNATCOLL.JSON.Support.GNAT.SPitbol.JSON_Table.Test_Generic is
    begin
       Set_Field (D, "D1", Td.Test_Data.all);
       declare
-         Res : constant Table := Get (D, "D1");
+         Res : constant V.V.Table := Get (D, "D1");
       begin
          Assert (Convert_To_Array (Res) = Convert_To_Array (Td.Test_Data.all), "data mismatch");
       end;
@@ -100,4 +100,4 @@ package body GNATCOLL.JSON.Support.GNAT.SPitbol.JSON_Table.Test_Generic is
       return Format (Unit_Name);
    end Name;
 
-end GNATCOLL.JSON.Support.GNAT.SPitbol.JSON_Table.Test_Generic;
+end GNATCOLL.JSON.Support.GNAT.SPitbol.Test_Generic;

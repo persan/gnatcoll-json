@@ -1,35 +1,17 @@
-------------------------------------------------------------------------------
---                             G N A T C O L L . J S O N                    --
---                                                                          --
---    Copyright (C) 2016-2025, Per Sandberg <per.s.sandberg@bahnhof.se>     --
---                                                                          --
--- This library is free software;  you can redistribute it and/or modify it --
--- under terms of the  GNU General Public License  as published by the Free --
--- Software  Foundation;  either version 3,  or (at your  option) any later --
--- version. This library is distributed in the hope that it will be useful, --
--- but WITHOUT ANY WARRANTY;  without even the implied warranty of MERCHAN- --
--- TABILITY or FITNESS FOR A PARTICULAR PURPOSE.                            --
---                                                                          --
--- As a special exception under Section 7 of GPL version 3, you are granted --
--- additional permissions described in the GCC Runtime Library Exception,   --
--- version 3.1, as published by the Free Software Foundation.               --
---                                                                          --
--- You should have received a copy of the GNU General Public License and    --
--- a copy of the GCC Runtime Library Exception along with this program;     --
--- see the files COPYING3 and COPYING.RUNTIME respectively.  If not, see    --
--- <http://www.gnu.org/licenses/>.                                          --
---                                                                          --
-------------------------------------------------------------------------------
-
 with Interfaces;
-package body GNATCOLL.JSON.Support.GNAT.SPitbol.JSON_Table is
+package body GNATCOLL.JSON.Support.GNAT.SPitbol is
 
+   -----------
+   -- Table --
+   -----------
+
+   package body Table is
 
       ------------
       -- Create --
       ------------
 
-      function Create (Val : Table) return JSON_Value is
+      function Create (Val : V.Table) return JSON_Value is
       begin
          return Create (Convert_To_Array (Val));
       end Create;
@@ -38,10 +20,10 @@ package body GNATCOLL.JSON.Support.GNAT.SPitbol.JSON_Table is
       -- Get --
       ---------
 
-      function Get (Val : GNATCOLL.JSON.JSON_Value) return Table is
+      function Get (Val : GNATCOLL.JSON.JSON_Value) return V.Table is
          Data : constant JSON_Array := Get (Val);
       begin
-         return Ret : Table (Interfaces.Unsigned_32 (Length (Data))) do
+         return Ret : V.Table (Interfaces.Unsigned_32 (Length (Data))) do
             for E of Table_Array'(Get (Val)) loop
                Set (Ret, E.Name, E.Value);
             end loop;
@@ -52,7 +34,7 @@ package body GNATCOLL.JSON.Support.GNAT.SPitbol.JSON_Table is
       -- Get --
       ---------
 
-      function Get (Val : JSON_Value; Field : UTF8_String) return Table is
+      function Get (Val : JSON_Value; Field : UTF8_String) return V.Table is
       begin
          return Get (JSON_Value'(Get (Val, Field)));
       end Get;
@@ -64,7 +46,7 @@ package body GNATCOLL.JSON.Support.GNAT.SPitbol.JSON_Table is
       procedure Set_Field
         (Val        : JSON_Value;
          Field_Name : UTF8_String;
-         Field      : Table)
+         Field      : V.Table)
       is
       begin
          Set_Field (Val, Field_Name, Create (Field));
@@ -172,5 +154,6 @@ package body GNATCOLL.JSON.Support.GNAT.SPitbol.JSON_Table is
       begin
          Set_Field (Val, Field_Name, Create (Field));
       end Set_Field;
+   end Table;
 
-end GNATCOLL.JSON.Support.GNAT.SPitbol.JSON_Table;
+end GNATCOLL.JSON.Support.GNAT.SPitbol;

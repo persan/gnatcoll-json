@@ -10,8 +10,8 @@ package body GNATCOLL.JSON.Support.Arrays_Generic is
 
    begin
       return Ret : constant JSON_Value := Create_Object do
-         Set_Field (Ret, "First", Integer(Index_Type'Pos (Val'First)));
-         Set_Field (Ret, "Last", Integer (Index_Type'Pos (Val'Last)));
+         Set_Field (Ret, "First", Create(Val'First));
+         Set_Field (Ret, "Last", Create (Val'Last));
          Set_Field (Ret, "Data", Create(Create (Val)));
       end return;
    end Create;
