@@ -21,8 +21,13 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 
+----------------------------------------------------------------------------
+-- Stored as JSON_Array
+-- [Element, Element,...]
+----------------------------------------------------------------------------
+
 generic
-   type Index_Type is (<>);
+   type Index_Type is range <>;
    type Element_Type is private;
    type Array_Type is array (Index_Type range <>) of Element_Type;
 
@@ -34,8 +39,5 @@ package GNATCOLL.JSON.Support.Simple_Arrays_Generic is
 
    function Get (Val : JSON_Array) return Array_Type;
 
-
-   -- Stored as JSON_Array
-   -- [Val(Val'First..Val'Last)]
 
 end GNATCOLL.JSON.Support.Simple_Arrays_Generic;

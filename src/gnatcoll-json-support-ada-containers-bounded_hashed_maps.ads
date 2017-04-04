@@ -21,7 +21,14 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 
-
+------------------------------------------------------------------------------
+--  Stores data as a JSON Object:
+--   {"Capacity": Capacity,
+--    "Modulus" : Modulus,
+--    "Data     : [{"Key": Key, "Element": ELement},
+--                 {"Key": Key, "Element": ELement},
+--                  ... ]}
+-------------------------------------------------------------------------------
 with Ada.Containers.Bounded_Hashed_Maps;
 generic
    with package V is new Standard.Ada.Containers.Bounded_Hashed_Maps (<>);

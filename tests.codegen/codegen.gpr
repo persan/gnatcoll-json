@@ -1,7 +1,11 @@
-project Codegen is
+with "gnatcoll.gpr";
+with "../gnatcoll-json.gpr";
 
+library project Codegen is
+
+   for Library_name use "codegen";
+   for Library_dir use "lib";
    for Object_Dir use ".obj";
-   for Exec_Dir use "bin";
 
    package Compiler is
       for Switches ("ada") use ("-gnatwa", "-g", "-O2", "-gnatf", "-fstack-check");
@@ -10,18 +14,5 @@ project Codegen is
    package Make is
       for Makefile use "Makefile";
    end Make;
-
-   package Binder is
-      for Switches ("ada") use ("-E");
-   end Binder;
-
-   package Ide is
-      for Vcs_Kind use "Git";
-   end Ide;
-
-   package Gnattest is
-   end Gnattest;
-
-   for Main use ("main.adb");
 
 end Codegen;

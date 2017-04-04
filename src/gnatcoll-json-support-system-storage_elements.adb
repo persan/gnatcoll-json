@@ -21,11 +21,11 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 
-package body GNATCOLL.JSON.Support.System.Storage_Elements.JSON is
-   function Image (Item : Storage_Element) return String is
+package body GNATCOLL.JSON.Support.System.Storage_Elements is
+   function Image (Item : Storage_Element) return String_2 is
       Map : constant array (Storage_Element'(0) .. Storage_Element'(15)) of Character := "0123456789ABCDEF";
    begin
-      return Ret : String (1 .. 2) do
+      return Ret : String_2 do
          Ret (1) := Map (Item / Storage_Element'(16));
          Ret (2) := Map (Item mod Storage_Element (16));
       end return;
@@ -215,4 +215,4 @@ package body GNATCOLL.JSON.Support.System.Storage_Elements.JSON is
       Set_Field (Val, Field_Name, Image (Field));
    end Set_Field;
 
-end GNATCOLL.JSON.Support.System.Storage_Elements.JSON;
+end GNATCOLL.JSON.Support.System.Storage_Elements;

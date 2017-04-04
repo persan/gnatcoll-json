@@ -22,6 +22,15 @@
 ------------------------------------------------------------------------------
 
 with GNATCOLL.JSON; use GNATCOLL.JSON;
+with System; use System;
 package GNATCOLL.JSON.Support.System is
+
+   function Create (Val : Address) return JSON_Value;
+
+   function Get (Val : JSON_Value) return Address;
+
+   function Get (Val : JSON_Value; Field : UTF8_String) return Address;
+
+   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Address);
 
 end GNATCOLL.JSON.Support.System;

@@ -21,8 +21,15 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 
+------------------------------------------------------------------------------
+--  Stores data as a JSON Object:
+--   {"First": First,
+--    "Last" : Last,
+--    "Data" : [Element, Element,...]}
+------------------------------------------------------------------------------
+
 generic
-   type Index_Type is (<>);
+   type Index_Type is range <>;
    type Element_Type is private;
    type Array_Type is array (Index_Type range <>) of Element_Type;
 

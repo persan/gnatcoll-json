@@ -51,10 +51,32 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Bounded_Hashed_Maps_Simple is
    ---------
 
    function Get (Val : JSON_Value) return Map is
-      Data     : constant JSON_Array := Get (Val, "Data");
-      Capacity : constant Count_Type := Get (Val, "Capacity");
-      Modulus  : constant Hash_Type := Get (Val, "Modulus");
+      Data     : JSON_Array;
+      Capacity : Count_Type := 0;
+      Modulus  : Hash_Type := 0;
+
+      procedure Process (Name : UTF8_String; Value : JSON_Value) is
+      begin
+         if Name = "Data" then
+            Data  := Get (Value);
+         elsif Name = "Capacity" then
+            Capacity := Get (Value);
+         elsif Name = "Modulus" then
+            Modulus := Get (Value);
+         else
+            null;
+         end if;
+      end;
    begin
+      Map_JSON_Object (Val, Process'Access);
+      if Capacity < Count_Type(Length (Data)) then
+         Capacity := Count_Type(Length (Data));
+      end if;
+
+      if Modulus = 0 then
+         Modulus := Hash_Type'Max(Hash_Type(Capacity/31),3);
+      end if;
+
       return Ret : Map (Capacity, Modulus) do
          for I in 1 .. Length (Data) loop
             declare

@@ -22,6 +22,13 @@
 ------------------------------------------------------------------------------
 
 
+------------------------------------------------------------------------------
+--  Stores data as a JSON-Array
+--   [{"Key": Element},
+--    {"Key": Element},
+--      ... ]
+------------------------------------------------------------------------------
+
 with Ada.Containers.Bounded_Ordered_Maps;
 generic
    with package M is new Standard.Ada.Containers.Bounded_Ordered_Maps (<>);

@@ -21,7 +21,13 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 
-
+------------------------------------------------------------------------------
+--  Stores data as a JSON Object:
+--   {"Capacity": Capacity,
+--    "Data     : [ Element,
+--                  Element,
+--                  ... ]
+------------------------------------------------------------------------------
 with Ada.Containers.Bounded_Ordered_Sets;
 generic
    with package S is new Standard.Ada.Containers.Bounded_Ordered_Sets (<>);

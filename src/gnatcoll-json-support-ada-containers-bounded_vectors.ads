@@ -21,6 +21,14 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 
+------------------------------------------------------------------------------
+--  Stores data as a JSON Object:
+--   {"Capacity": Capacity,
+--    "Data     : [ Element,
+--                  Element,
+--                  ... ]
+------------------------------------------------------------------------------
+
 with Ada.Containers.Bounded_Vectors;
 generic
    with package V is new Standard.Ada.Containers.Bounded_Vectors (<>);

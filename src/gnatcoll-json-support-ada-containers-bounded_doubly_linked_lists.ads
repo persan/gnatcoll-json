@@ -21,7 +21,10 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 
-
+------------------------------------------------------------------------------
+-- Stores data as a JSON-Array:
+-- [element, element, ...]
+------------------------------------------------------------------------------
 with Ada.Containers.Bounded_Doubly_Linked_Lists;
 generic
    with package L is new Standard.Ada.Containers.Bounded_Doubly_Linked_Lists (<>);

@@ -21,6 +21,15 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 
+-----------------------------------------------------
+--
+--  Stores data as:
+--     {"Year" : Year,
+--      "Month : Month,
+--      "Day"  : Day,
+--      "Seconds" : Seconds}
+-----------------------------------------------
+
 with Ada.Calendar;
 package GNATCOLL.JSON.Support.Ada.Calendar is
    use Standard.Ada.Calendar;

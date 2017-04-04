@@ -6,17 +6,17 @@ library project GnatColl.JSON is
    --   GNATCOLL.JSON.Support.VERSION
    --   The the README.md file
 
-   for Languages use ("ada");
-   for Source_Dirs use ("src");
+   for Languages use ("ada","Python");
+   for Source_Dirs use ("src", "bin");
    for Object_Dir use ".obj/"  & project'Name & "/" & Gnatcoll.BUILD;
    for Library_Dir use "lib";
+
    for Library_Name use "gnatcolljson";
    for Library_Kind use Gnatcoll.BUILD;
    for Library_Dir use "lib/" & Gnatcoll.BUILD;
-   for Library_Version use
-     "lib" &  --  project'Shared_Library_Prefix &
-     project'Library_Name &
-     ".so" &  --  project'Shared_Library_Suffix &
+
+   for Library_Version use   "lib" &  --  project'Shared_Library_Prefix &
+     project'Library_Name &  ".so" &  --  project'Shared_Library_Suffix &
      "." & VERSION;
 
    package Builder is
@@ -24,7 +24,8 @@ library project GnatColl.JSON is
    end Builder;
 
    package Compiler is
-
+      for Driver("Python") use "";
+      for Driver("Makefile") use "";
       for Default_Switches ("ada") use ("-gnatwa",
                                         "-gnat12",
                                         "-gnatq",
@@ -33,5 +34,8 @@ library project GnatColl.JSON is
                                         "-gnatQ");
    end Compiler;
 
-
+   package Naming is
+      for Body_Suffix ("Python") use ".py";
+      for Body_Suffix ("Makefile") use ".mk";
+   end Naming;
 end GnatColl.JSON;
