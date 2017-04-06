@@ -10,7 +10,7 @@ INSTALLFLAGS:=--prefix=$(shell readlink -f ${PREFIX})
 endif
 
 
-all: builder #compile test
+all: compile test
 
 compile:
 	gprbuild -p -j0 -P gnatcoll-json-tests.gpr
@@ -36,4 +36,3 @@ tag:all check_clean
 	git push --tags
 clean:
 	git clean -fdx
-	
