@@ -27,14 +27,15 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Doubly_Linked_Lists
    -- Create --
    ------------
 
-   function Create (Val : List) return JSON_Value is
-      Data : JSON_Array;
+   function Create (Val : List) return JSON_Array is
+
 
    begin
-      for I of Val loop
-         Append (Data, Create (I));
-      end loop;
-      return Create (Data);
+      return Data : JSON_Array do
+         for I of Val loop
+            Append (Data, Create (I));
+         end loop;
+      end return;
    end Create;
 
    ---------

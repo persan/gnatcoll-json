@@ -27,13 +27,14 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Bounded_Hashed_Sets is
    -- Create --
    ------------
 
-   function Create (Val : Set) return JSON_Value is
-      Arr : JSON_Array;
+   function Create (Val : Set) return JSON_Array is
+
    begin
-      for I of Val loop
-         Append (Arr, Create (I));
-      end loop;
-      return Create (Arr);
+      return Arr : JSON_Array do
+         for I of Val loop
+            Append (Arr, Create (I));
+         end loop;
+      end return;
    end Create;
 
    ---------

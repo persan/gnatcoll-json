@@ -51,7 +51,7 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Ordered_Maps is
    -- Create --
    ------------
 
-   function Create (Val : Map) return JSON_Value is
+   function Create (Val : Map) return JSON_Array is
       V : JSON_Array;
       procedure Process (Position : Cursor) is
       begin
@@ -59,7 +59,7 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Ordered_Maps is
       end Process;
    begin
       Val.Iterate (Process'Access);
-      return Create (V);
+      return V;
    end Create;
 
    ---------

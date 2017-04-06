@@ -24,33 +24,43 @@
 with GNATCOLL.JSON; use GNATCOLL.JSON;
 with System.Storage_Elements; use System.Storage_Elements;
 with GNATCOLL.JSON.Support.Modular_Generic;
-with GNATCOLL.JSON.Support.Arrays_Generic;
-
+with GNATCOLL.JSON.Support.Simple_Arrays_Generic;
+with GNATCOLL.JSON.Support.Integer_Generic;
 package GNATCOLL.JSON.Support.System.Storage_Elements is
-   function Create (Val : Storage_Offset) return JSON_Value;
 
-   function Get (Val : JSON_Value) return Storage_Offset;
+   package Storage_Offset_Impl is new GNATCOLL.JSON.Support.Integer_Generic (Storage_Offset);
 
-   function Get (Val : JSON_Value; Field : UTF8_String) return Storage_Offset;
-   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Storage_Offset);
+   function Create (Val : Storage_Offset) return JSON_Value renames Storage_Offset_Impl.Create;
+   function Get (Val : JSON_Value) return Storage_Offset renames Storage_Offset_Impl.Get;
 
-   function Create (Val : Storage_Element) return JSON_Value;
+   function Get (Val : JSON_Value; Field : UTF8_String) return Storage_Offset renames Storage_Offset_Impl.Get;
+   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Storage_Offset) renames Storage_Offset_Impl.Set_Field;
 
-   function Get (Val : JSON_Value) return Storage_Element;
 
-   function Get (Val : JSON_Value; Field : UTF8_String) return Storage_Element;
-   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Storage_Element);
 
-   function Create (Val : Storage_Array) return JSON_Value;
+   package Storage_Element_Impl is new GNATCOLL.JSON.Support.Modular_Generic (Storage_Element);
 
-   package Storage_Array_Impl is new GNATCOLL.JSON.Support.Arrays_Generic
+   function Create (Val : Storage_Element) return JSON_Value renames Storage_Element_Impl.Create;
+
+   function Get (Val : JSON_Value) return Storage_Element renames Storage_Element_Impl.Get;
+
+   function Get (Val : JSON_Value; Field : UTF8_String) return Storage_Element renames Storage_Element_Impl.Get;
+   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Storage_Element) renames Storage_Element_Impl.Set_Field;
+
+
+   package Storage_Array_Impl is new GNATCOLL.JSON.Support.Simple_Arrays_Generic
      (Index_Type   => Storage_Offset,
       Array_Type   => Storage_Array,
       Element_Type => Storage_Element);
-   function Get (Val : JSON_Value) return Storage_Array;
 
-   function Get (Val : JSON_Value; Field : UTF8_String) return Storage_Array;
-   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Storage_Array);
+   function Create (Val : Storage_Array) return JSON_Array renames Storage_Array_Impl.Create;
+
+   function Get (Val : JSON_Array) return Storage_Array  renames Storage_Array_Impl.Get;
+
+   function Get (Val : JSON_Value; Field : UTF8_String) return Storage_Array  renames Storage_Array_Impl.Get;
+
+   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Storage_Array) renames Storage_Array_Impl.Set_Field;
+
 
    package Integer_Address_Impl is new GNATCOLL.JSON.Support.Modular_Generic (Integer_Address);
 
@@ -59,29 +69,8 @@ package GNATCOLL.JSON.Support.System.Storage_Elements is
    function Get (Val : JSON_Value) return Integer_Address renames Integer_Address_Impl.Get;
 
    function Get (Val : JSON_Value; Field : UTF8_String) return Integer_Address renames Integer_Address_Impl.Get;
+
    procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Integer_Address) renames Integer_Address_Impl.Set_Field;
 
-
-private
-
-   subtype String_2 is String (1 .. 2);
-
-   function Image (Item : Storage_Element) return String_2  with
-     Inline_Always => True;
-
-   function Image (Item : Storage_Array) return String  with
-     Inline_Always => True;
-
-   function Image (Base   : Standard.System.Address;
-                   Length : Storage_Offset) return String
-
-     with Inline_Always => True;
-   function Value (Item : String) return Storage_Element  with
-     Inline => True,
-     Pre  => (for all K in Item'Range => Item (K) in '0' .. '9' | 'A' .. 'F') and  Item'Length = 2;
-
-   function Value (Item : String) return Storage_Array  with
-     Inline => True,
-     Pre  => (for all K in Item'Range => Item (K) in '0' .. '9' | 'A' .. 'F');
 
 end GNATCOLL.JSON.Support.System.Storage_Elements;

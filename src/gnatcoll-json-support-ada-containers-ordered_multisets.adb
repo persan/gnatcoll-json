@@ -27,13 +27,13 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Ordered_Multisets is
    -- Create --
    ------------
 
-   function Create (Val : Set) return JSON_Value is
-      Data : JSON_Array;
+   function Create (Val : Set) return JSON_Array is
    begin
-      for I of Val loop
-         Append (Data, Create (I));
-      end loop;
-      return Create (Data);
+      return Data : JSON_Array do
+         for I of Val loop
+            Append (Data, Create (I));
+         end loop;
+      end return;
    end Create;
 
    ---------

@@ -27,20 +27,19 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Ordered_Maps is
    -- Create --
    ------------
 
-   function Create (Val : Map) return JSON_Value is
-      Data : JSON_Array;
-
+   function Create (Val : Map) return JSON_Array is
    begin
-      for I in Val.Iterate loop
-         declare
-            O : constant JSON_Value := Create_Object;
-         begin
-            O.Set_Field ("Key", Create (Key (I)));
-            O.Set_Field ("Element", Create (Element (I)));
-            Append (Data, O);
-         end;
-      end loop;
-      return Create (Data);
+      return Data : JSON_Array do
+         for I in Val.Iterate loop
+            declare
+               O : constant JSON_Value := Create_Object;
+            begin
+               O.Set_Field ("Key", Create (Key (I)));
+               O.Set_Field ("Element", Create (Element (I)));
+               Append (Data, O);
+            end;
+         end loop;
+      end return;
    end Create;
 
    ---------

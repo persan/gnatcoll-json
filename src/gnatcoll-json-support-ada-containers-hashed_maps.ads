@@ -22,11 +22,10 @@
 ------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------
---  Stores data as a JSON Object:
---   {"Capacity": Capacity,
---    "Data     : {{"Key": Key  , "Element" : Element},
---                 {"Key": Key  , "Element" : Element}.
---                  ... ]}
+--  Stores data as a JSON Array:
+--  [{"Key": Key  , "Element" : Element},
+--   {"Key": Key  , "Element" : Element}.
+--   ... ]
 ------------------------------------------------------------------------------
 
 with Ada.Containers.Hashed_Maps;
@@ -42,7 +41,7 @@ generic
 package GNATCOLL.JSON.Support.Ada.Containers.Hashed_Maps is
 
 
-   function Create (Val : Map) return JSON_Value;
+   function Create (Val : Map) return JSON_Array;
    function Get (Val : JSON_Value) return Map;
 
    function Get (Val : JSON_Value; Field : UTF8_String) return Map;

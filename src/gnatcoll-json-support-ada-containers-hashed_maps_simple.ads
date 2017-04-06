@@ -24,7 +24,12 @@
 
 --------------------------------------------------------------------------------
 -- This package provides a simpler format of the JSON_Value
+--  Stores data as a JSON Object:
+--  {"Key" : Element,
+--   "Key" : Element,
+--   ...}
 --------------------------------------------------------------------------------
+
 with Ada.Containers.Hashed_Maps;
 generic
    with package M is new Standard.Ada.Containers.Hashed_Maps (<>);

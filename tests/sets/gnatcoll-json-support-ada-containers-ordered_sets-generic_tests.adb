@@ -46,7 +46,7 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Ordered_Sets.Generic_Tests is
    procedure Test_Write (Test : in out AUnit.Test_Cases.Test_Case'Class)  is
       Td   : Test_Case renames Test_Case (Test);
    begin
-      Write (Ada2file (Unit_Name), GNATCOLL.JSON.Write (Create (Td.Test_Data.all), Compact => False));
+      Write (Ada2file (Unit_Name), GNATCOLL.JSON.Write (Create(Create (Td.Test_Data.all)), Compact => False));
    end Test_Write;
 
    ---------------
@@ -65,7 +65,7 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Ordered_Sets.Generic_Tests is
 
    procedure Test_Get_Set_Filed (Test : in out AUnit.Test_Cases.Test_Case'Class)  is
       Td  : Test_Case renames Test_Case (Test);
-      J   : constant GNATCOLL.JSON.JSON_Value := Create_Object; 
+      J   : constant GNATCOLL.JSON.JSON_Value := Create_Object;
    begin
       Set_Field(J,"testData",Td.Test_Data.all);
       Set_Field(J,"testSting","Dummy");

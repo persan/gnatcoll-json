@@ -29,6 +29,9 @@ with GNATCOLL.JSON.Support.Test.Ada.Containers;
 with GNATCOLL.JSON.Support.Test.Check_Golden;
 with GNATCOLL.JSON.Support.Test.Ada.Calendar;
 with GNATCOLL.JSON.Support.Test.Ada.Real_Time;
+with GNATCOLL.JSON.Support.Test.System;
+with GNATCOLL.JSON.Support.Test.System.Storage_Elements;
+
 package body GNATCOLL.JSON.Support.Test.Suits.All_Tests is
    use AUnit.Test_Suites;
 
@@ -39,6 +42,9 @@ package body GNATCOLL.JSON.Support.Test.Suits.All_Tests is
    Test_1 : aliased GNATCOLL.JSON.Support.Test.Ada.Containers.Test_Case;
    Test_2 : aliased GNATCOLL.JSON.Support.Test.Ada.Calendar.Test_Case;
    Test_3 : aliased GNATCOLL.JSON.Support.Test.Ada.Real_Time.Test_Case;
+   Test_4 : aliased GNATCOLL.JSON.Support.Test.System.Test_Case;
+   Test_5 : aliased GNATCOLL.JSON.Support.Test.System.Storage_Elements.Test_Case;
+
    Golden : aliased GNATCOLL.JSON.Support.Test.Check_Golden.Test_Case;
 
    -----------
@@ -50,11 +56,14 @@ package body GNATCOLL.JSON.Support.Test.Suits.All_Tests is
       Add_Test (Result'Access, Test_1'Access);
       Add_Test (Result'Access, Test_2'Access);
       Add_Test (Result'Access, Test_3'Access);
+      Add_Test (Result'Access, Test_4'Access);
+      Add_Test (Result'Access, Test_5'Access);
 
       Add_Test (Result'Access, Set_Suites.Suite);
       Add_Test (Result'Access, Map_Suites.Suite);
       Add_Test (Result'Access, Test_Vectors.Suite);
       Add_Test (Result'Access, GNATCOLL.JSON.Support.Test.Suits.Numerics.Suite);
+
       Add_Test (Result'Access, Golden'Access);
       return Result'Access;
    end Suite;

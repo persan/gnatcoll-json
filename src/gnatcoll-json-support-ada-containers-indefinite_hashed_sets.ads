@@ -22,6 +22,10 @@
 ------------------------------------------------------------------------------
 
 
+------------------------------------------------------------------------------
+-- Stores data as s JSON_Array:
+-- [Element,Element,..]
+------------------------------------------------------------------------------
 with Ada.Containers.Indefinite_Hashed_Sets;
 generic
    with package S is new Standard.Ada.Containers.Indefinite_Hashed_Sets (<>);
@@ -32,8 +36,7 @@ generic
 
 package GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Hashed_Sets is
 
-
-   function Create (Val : Set) return JSON_Value;
+   function Create (Val : Set) return JSON_Array;
    function Get (Val : JSON_Value) return Set;
 
    function Get (Val : JSON_Value; Field : UTF8_String) return Set;

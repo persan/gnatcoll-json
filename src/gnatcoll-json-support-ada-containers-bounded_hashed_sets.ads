@@ -36,7 +36,7 @@ generic
 
 package GNATCOLL.JSON.Support.Ada.Containers.Bounded_Hashed_Sets is
 
-   function Create (Val : Set) return JSON_Value;
+   function Create (Val : Set) return JSON_Array;
    function Get (Val : JSON_Value) return Set;
 
    function Get (Val : JSON_Value; Field : UTF8_String) return Set;

@@ -27,14 +27,13 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Bounded_Doubly_Linked_Lists is
    -- Create --
    ------------
 
-   function Create (Val : List) return JSON_Value is
-      Data : JSON_Array;
-
+   function Create (Val : List) return JSON_Array is
    begin
-      for I of Val loop
-         Append (Data, Create (I));
-      end loop;
-      return Create (Data);
+      return Data : JSON_Array do
+         for I of Val loop
+            Append (Data, Create (I));
+         end loop;
+      end return;
    end Create;
 
    ---------
@@ -58,7 +57,7 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Bounded_Doubly_Linked_Lists is
 
    procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : List) is
    begin
-      Set_Field (Val, Field_Name, Create (Field));
+      Set_Field (Val, Field_Name, JSON_Array'(Create (Field)));
    end Set_Field;
 
 end GNATCOLL.JSON.Support.Ada.Containers.Bounded_Doubly_Linked_Lists;

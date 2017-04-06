@@ -35,7 +35,7 @@ generic
 package GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Doubly_Linked_Lists is
 
 
-   function Create (Val : List) return JSON_Value with
+   function Create (Val : List) return JSON_Array with
      Inline_Always => True;
 
    function Get (Val : JSON_Value) return List;

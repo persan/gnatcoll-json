@@ -26,7 +26,7 @@
 --   {"Capacity": Capacity,
 --    "Data     : {"Key": Element,
 --                 "Key": Element,
---                  ... ]}
+--                  ... }
 ------------------------------------------------------------------------------
 with Ada.Containers.Bounded_Ordered_Maps;
 generic

@@ -22,7 +22,7 @@
 ------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------
---  Stores data as a JSON Array:
+--  Stores data as a JSON_Array:
 --   [Element, Element, ..]
 -------------------------------------------------------------------------------
 
@@ -35,7 +35,7 @@ generic
    with function Get (Val : JSON_Value) return Element_Type is <>;
 
 package GNATCOLL.JSON.Support.Ada.Containers.Vectors is
-   function Create (Val : Vector) return JSON_Value;
+   function Create (Val : Vector) return JSON_Array;
 
    function Get (Val : JSON_Value) return Vector;
 

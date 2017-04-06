@@ -27,7 +27,7 @@
 --    "Modulus" : Modulus,
 --    "Data     : {"Key": Element,
 --                 "Key": Element,
---                  ... ]}
+--                  ... }
 ------------------------------------------------------------------------------
 
 with Ada.Containers.Bounded_Hashed_Maps;

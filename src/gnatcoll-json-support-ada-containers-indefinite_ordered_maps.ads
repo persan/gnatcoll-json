@@ -22,6 +22,12 @@
 ------------------------------------------------------------------------------
 
 
+------------------------------------------------------------------------------
+--  Stores data as a JSON_Array:
+--  [{"Key": Key  , "Element" : Element},
+--   {"Key": Key  , "Element" : Element}.
+--   ... ]
+------------------------------------------------------------------------------
 with Ada.Containers.Indefinite_Ordered_Maps;
 generic
    with package M is new Standard.Ada.Containers.Indefinite_Ordered_Maps (<>);
@@ -34,7 +40,7 @@ generic
    with function Get (Val : JSON_Value) return Element_Type is <>;
 
 package GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Ordered_Maps is
-   function Create (Val : Map) return JSON_Value;
+   function Create (Val : Map) return JSON_Array;
    function Get (Val : JSON_Value) return Map;
 
    function Get (Val : JSON_Value; Field : UTF8_String) return Map;

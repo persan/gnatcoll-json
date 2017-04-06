@@ -21,10 +21,12 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 
--- Stores the map as an JSON array of duplets:
---  [ {"Key" : key , "Element" : Element},
---    {"Key" : key , "Element" : Element},
---    ....]
+------------------------------------------------------------------------------
+--  Stores data as a JSON_Array:
+--  [{"Key": Key  , "Element" : Element},
+--   {"Key": Key  , "Element" : Element}.
+--   ... ]
+------------------------------------------------------------------------------
 
 with Ada.Containers.Ordered_Maps;
 generic
@@ -39,7 +41,7 @@ generic
 package GNATCOLL.JSON.Support.Ada.Containers.Ordered_Maps is
 
 
-   function Create (Val : Map) return JSON_Value;
+   function Create (Val : Map) return JSON_Array;
    function Get (Val : JSON_Value) return Map;
 
    function Get (Val : JSON_Value; Field : UTF8_String) return Map;

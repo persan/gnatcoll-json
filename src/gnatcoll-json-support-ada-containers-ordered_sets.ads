@@ -22,7 +22,7 @@
 ------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------
---  Stores data as a JSON Array:
+--  Stores data as a JSON_Array:
 --   [Element, Element, ..]
 -------------------------------------------------------------------------------
 
@@ -37,7 +37,7 @@ generic
 package GNATCOLL.JSON.Support.Ada.Containers.Ordered_Sets is
 
 
-   function Create (Val : Set) return JSON_Value;
+   function Create (Val : Set) return JSON_Array;
    function Get (Val : JSON_Value) return Set;
 
    function Get (Val : JSON_Value; Field : UTF8_String) return Set;

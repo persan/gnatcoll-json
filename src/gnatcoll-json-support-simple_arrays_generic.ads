@@ -36,8 +36,8 @@ generic
 
 package GNATCOLL.JSON.Support.Simple_Arrays_Generic is
    function Create (Val : Array_Type) return JSON_Array;
-
    function Get (Val : JSON_Array) return Array_Type;
-
+   function Get (Val : JSON_Value; Field : UTF8_String) return Array_Type;
+   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Array_Type);
 
 end GNATCOLL.JSON.Support.Simple_Arrays_Generic;

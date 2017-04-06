@@ -21,6 +21,12 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 
+------------------------------------------------------------------------------
+--  Stores data as a JSON Array:
+--  [{"Key": Key  , "Element" : Element},
+--   {"Key": Key  , "Element" : Element}.
+--   ... ]
+------------------------------------------------------------------------------
 
 with Ada.Containers.Indefinite_Hashed_Maps;
 generic
@@ -34,7 +40,7 @@ generic
    with function Get (Val : JSON_Value) return Element_Type is <>;
 
 package GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Hashed_Maps is
-   function Create (Val : Map) return JSON_Value;
+   function Create (Val : Map) return JSON_Array;
    function Get (Val : JSON_Value) return Map;
 
    function Get (Val : JSON_Value; Field : UTF8_String) return Map;

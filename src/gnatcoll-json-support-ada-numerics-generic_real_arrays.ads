@@ -27,7 +27,7 @@ generic
    use A;
 package GNATCOLL.JSON.Support.Ada.Numerics.Generic_Real_Arrays is
 
-   function Create (Val : Real_Vector) return JSON_Value with Inline_Always;
+   function Create (Val : Real_Vector) return JSON_Array with Inline_Always;
 
    function Get (Val : JSON_Value) return Real_Vector with Inline_Always;
 
@@ -42,7 +42,7 @@ package GNATCOLL.JSON.Support.Ada.Numerics.Generic_Real_Arrays is
 
 
 
-   function Create (Val : Real_Matrix) return JSON_Value with Inline_Always;
+   function Create (Val : Real_Matrix) return JSON_Array with Inline_Always;
 
    function Get (Val : JSON_Value) return Real_Matrix with Inline_Always;
 

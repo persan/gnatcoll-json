@@ -27,13 +27,14 @@ package body GNATCOLL.JSON.Support.Ada.Numerics.Generic_Real_Arrays is
    -- Create --
    ------------
 
-   function Create (Val : Real_Vector) return JSON_Value is
-      Data : JSON_Array;
+   function Create (Val : Real_Vector) return JSON_Array is
+
    begin
-      for I of Val loop
-         Append (Data, Create (Long_Float (I)));
-      end loop;
-      return Create (Data);
+      return Data : JSON_Array do
+         for I of Val loop
+            Append (Data, Create (Long_Float (I)));
+         end loop;
+      end return;
    end Create;
 
    ---------
@@ -80,20 +81,21 @@ package body GNATCOLL.JSON.Support.Ada.Numerics.Generic_Real_Arrays is
    -- Create --
    ------------
 
-   function Create (Val : Real_Matrix) return JSON_Value is
-      Data : JSON_Array;
+   function Create (Val : Real_Matrix) return JSON_Array is
+
    begin
-      for X in Val'First (1) .. Val'Last (1) loop
-         declare
-            Dx   : JSON_Array;
-         begin
-            for Y in Val'First (2) .. Val'Last (2) loop
-               Append (Dx, Create (Long_Float (Val (X, Y))));
-            end loop;
-            Append (Data , Create (Dx));
-         end;
-      end loop;
-      return Create (Data);
+      return Data : JSON_Array do
+         for X in Val'First (1) .. Val'Last (1) loop
+            declare
+               Dx   : JSON_Array;
+            begin
+               for Y in Val'First (2) .. Val'Last (2) loop
+                  Append (Dx, Create (Long_Float (Val (X, Y))));
+               end loop;
+               Append (Data , Create (Dx));
+            end;
+         end loop;
+      end return;
    end Create;
 
    ---------
