@@ -42,9 +42,9 @@ package GNATCOLL.JSON.Support.Ada.Containers.Bounded_Multiway_Trees is
 
    function Create (Val : Tree) return JSON_Value;
 
-   function Get (Val : JSON_Value) return Tree;
+   function Get (Val : JSON_Value) return Tree with Obsolescent => "Not implemented yet";
 
-   function Get (Val : JSON_Value; Field : UTF8_String) return Tree;
+   function Get (Val : JSON_Value; Field : UTF8_String) return Tree with Obsolescent => "Not implemented yet";
 
    procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Tree);
 
