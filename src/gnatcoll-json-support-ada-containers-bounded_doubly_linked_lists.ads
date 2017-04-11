@@ -23,7 +23,7 @@
 
 ------------------------------------------------------------------------------
 -- Stores data as a JSON-Array:
--- [element, element, ...]
+-- [Element, Element, ...]
 ------------------------------------------------------------------------------
 with Ada.Containers.Bounded_Doubly_Linked_Lists;
 generic
