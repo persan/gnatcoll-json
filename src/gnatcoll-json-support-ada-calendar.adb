@@ -89,13 +89,22 @@ package body GNATCOLL.JSON.Support.Ada.Calendar is
    ---------
 
    function Get (Val : JSON_Value) return Internal_Time is
+      Ret : Internal_Time := To_Internal_Time (Standard.Ada.Calendar.Clock);
+      procedure Cb (Name : UTF8_String; Value : JSON_Value)  is
+      begin
+         if Name = "Year" then
+            Ret.Year := Get (Value);
+         elsif Name = "Month" then
+            Ret.Month := Get (Value);
+         elsif Name = "Day" then
+            Ret.Day := Get (Value);
+         elsif Name = "Seconds" then
+            Ret.Seconds := Duration (Float'(Get (Value)));
+         end if;
+      end;
    begin
-      return Ret : Internal_Time do
-         Ret.Year := Get (Val, "Year");
-         Ret.Month := Get (Val, "Month");
-         Ret.Day := Get (Val, "Day");
-         Ret.Seconds := Duration (Float'(Get (Val, "Seconds")));
-      end return;
+      Map_JSON_Object (Val, Cb'Access);
+      return Ret;
    end Get;
 
    ---------

@@ -23,7 +23,7 @@
 
 -----------------------------------------------------
 --
---  Stores data as:
+--  Stores Time as:
 --     {"Year" : Year,
 --      "Month : Month,
 --      "Day"  : Day,
@@ -37,7 +37,7 @@ package GNATCOLL.JSON.Support.Ada.Calendar is
    function Create (Val : Time) return JSON_Value  with
      Inline_Always => True;
 
-   function Get (Val : JSON_Value) return Time with Inline_Always;
+   function Get (Val : JSON_Value) return Time;
 
    function Get
      (Val   : JSON_Value;
@@ -57,7 +57,7 @@ private
    end record;
 
    function Create (Val : Internal_Time) return JSON_Value with Inline_Always;
-   function Get (Val : JSON_Value) return Internal_Time with Inline_Always;
+   function Get (Val : JSON_Value) return Internal_Time;
    function Get (Val   : JSON_Value;
                  Field : UTF8_String) return Internal_Time with Inline_Always;
    procedure Set_Field
