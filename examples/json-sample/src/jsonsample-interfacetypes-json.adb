@@ -119,6 +119,7 @@ package body JSONSample.InterfaceTypes.JSON is
    function Get (Val : JSON_Value) return Request is
    begin
       return Ret : Request do
+         Map_Request(Val,Request)
          Ret.Req_State := Get (Val , "Req_State");
          Ret.Args := new String_Maps.Map'(Get (Val , "Args"));
       end return;

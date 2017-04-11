@@ -1,5 +1,5 @@
 with GNATCOLL.JSON; use GNATCOLL.JSON;
-with GNATCOLL.JSON.Support.Enum_Generic;
+with GNATCOLL.JSON.Support.Enumeration_Generic;
 package JSONSample.InterfaceTypes.JSON is
 
    procedure Map_Response (User_Object : in out Response;
