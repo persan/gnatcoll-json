@@ -34,7 +34,7 @@ with GNATCOLL.JSON.Support.Test.Integer_Hashed_Maps.JSON.Tests;
 with GNATCOLL.JSON.Support.Test.Integer_Hashed_Maps.Simple_JSON.Tests;
 with GNATCOLL.JSON.Support.Test.Integer_Ordered_Maps.JSON.Tests;
 with GNATCOLL.JSON.Support.Test.Integer_Ordered_Maps.Simple_JSON.Tests;
-
+with GNATCOLL.JSON.Support.Test.Integer_Bounded_Multiway_Trees.JSON.Test;
 package body GNATCOLL.JSON.Support.Test.Map_Suites is
 
    use AUnit.Test_Suites;
@@ -56,7 +56,7 @@ package body GNATCOLL.JSON.Support.Test.Map_Suites is
    Test_Hashed_Maps_Simple : aliased GNATCOLL.JSON.Support.Test.Integer_Hashed_Maps.Simple_JSON.Tests.Test_Case;
    Test_Ordered_Maps : aliased GNATCOLL.JSON.Support.Test.Integer_Ordered_Maps.JSON.Tests.Test_Case;
    Test_Ordered_Maps_Simple : aliased GNATCOLL.JSON.Support.Test.Integer_Ordered_Maps.Simple_JSON.Tests.Test_Case;
-
+   Test_Multiway_Trees : aliased GNATCOLL.JSON.Support.Test.Integer_Bounded_Multiway_Trees.JSON.Test.Test_Case;
    -----------
    -- Suite --
    -----------
@@ -75,6 +75,7 @@ package body GNATCOLL.JSON.Support.Test.Map_Suites is
       Add_Test (Result'Access, Test_Hashed_Maps_Simple'Access);
       Add_Test (Result'Access, Test_Ordered_Maps'Access);
       Add_Test (Result'Access, Test_Ordered_Maps_Simple'Access);
+      Add_Test (Result'Access, Test_Multiway_Trees'Access);
       return Result'Access;
    end Suite;
 end GNATCOLL.JSON.Support.Test.Map_Suites;

@@ -21,31 +21,16 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 
-------------------------------------------------------------------------------
---  Stores Data as a nested JSON_Object:
---  { "Capacity" => Capacity,
---    "Data"     => [{"Element": Element,
---                    "Children" => [{"Element":Element,
---                                    "Children" => [...], ...]},
---                   {"Element": Element, "Children" => [...]},
---                  ...]}
-------------------------------------------------------------------------------
-with Ada.Containers.Bounded_Multiway_Trees;
+with AUnit.Test_Cases;
 generic
-   with package T is new Standard.Ada.Containers.Bounded_Multiway_Trees (<>);
-   use T;
+   with function Initialize return Tree;
+package GNATCOLL.JSON.Support.Ada.Containers.Bounded_Multiway_Trees.Generic_Tests is
+   type Test_Case is new AUnit.Test_Cases.Test_Case with  record
+      Test_Data : access Tree;
+   end record;
 
-   with function Create (Val : Element_Type) return JSON_Value is <>;
-   with function Get (Val : JSON_Value) return Element_Type is <>;
+   overriding procedure Set_Up_Case (Test : in out Test_Case);
+   overriding procedure Register_Tests (Test : in out Test_Case);
+   overriding function Name (Test : Test_Case) return AUnit.Message_String;
 
-package GNATCOLL.JSON.Support.Ada.Containers.Bounded_Multiway_Trees is
-
-   function Create (Val : Tree) return JSON_Value;
-
-   function Get (Val : JSON_Value) return Tree;
-
-   function Get (Val : JSON_Value; Field : UTF8_String) return Tree;
-
-   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Tree);
-
-end GNATCOLL.JSON.Support.Ada.Containers.Bounded_Multiway_Trees;
+end  GNATCOLL.JSON.Support.Ada.Containers.Bounded_Multiway_Trees.Generic_Tests;

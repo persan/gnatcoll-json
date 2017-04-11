@@ -1,0 +1,55 @@
+{
+  "Capacity": 10,
+  "Data": [
+    {
+      "Element": 100,
+      "Children": [
+        {
+          "Element": 110,
+          "Children": [
+          ]
+        },
+        {
+          "Element": 120,
+          "Children": [
+          ]
+        },
+        {
+          "Element": 130,
+          "Children": [
+          ]
+        }
+      ]
+    },
+    {
+      "Element": 200,
+      "Children": [
+        {
+          "Element": 210,
+          "Children": [
+            {
+              "Element": 211,
+              "Children": [
+              ]
+            }
+          ]
+        },
+        {
+          "Element": 220,
+          "Children": [
+          ]
+        },
+        {
+          "Element": 230,
+          "Children": [
+          ]
+        }
+      ]
+    },
+    {
+      "Element": 300,
+      "Children": [
+      ]
+    }
+  ]
+}
