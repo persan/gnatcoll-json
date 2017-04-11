@@ -2,7 +2,7 @@
 
 SHELL=/bin/bash
 EXEC_DIR := $(shell gprinfo --exec-dir gnatcoll-json-tests.gpr)
-export PATH:=${EXEC_DIR}:${PATH}
+export PATH:=${EXEC_DIR}:${PATH}:/usr/gnat/bin
 .DEFAULT_GOAL:=all
 
 ifdef PREFIX
@@ -20,10 +20,20 @@ test:compile
 	gnatcoll-json-support-test-main
 
 install:
-	sudo `which gprinstall` ${INSTALLFLAGS} -p gnatcoll-json.gpr
+	@echo "export PATH=${PATH}" >.tmp.sh
+	@echo "set -v" >>.tmp.sh
+	@echo `which gprinstall` ${INSTALLFLAGS} -p gnatcoll-json.gpr >>.tmp.sh
+	@chmod +x .tmp.sh
+	@sudo ./.tmp.sh
+	@rm .tmp.sh
 
 uninstall:
-	sudo `which gprinstall` ${INSTALLFLAGS} -p gnatcoll-json.gpr --uninstall
+	@echo "export PATH=${PATH}" >.tmp.sh
+	@echo "set -v" >>.tmp.sh
+	@echo `which gprinstall` ${INSTALLFLAGS} -p gnatcoll-json.gpr --uninstall >>.tmp.sh
+	@chmod +x .tmp.sh
+	@sudo ./.tmp.sh
+	@rm .tmp.sh
 
 check_clean: # IGNORE
 	@if [ -n "`git status --porcelain`" ] ; then git status ; exit -1 ; fi
