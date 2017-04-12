@@ -41,11 +41,22 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Vectors is
    ---------
 
    function Get (Val : JSON_Value) return Vector is
-      L : constant JSON_Array := Val.Get;
+      Data     : JSON_Array;
+      procedure Process (Name : UTF8_String; Value : JSON_Value) is
+      begin
+         if Name = "Data" then
+            Data := Get (Value);
+         end if;
+      end;
    begin
+      if Kind (Val) = JSON_Array_Type then
+         Data := Get (Val);
+      else
+         Map_JSON_Object (Val, Process'Access);
+      end if;
       return Ret : Vector do
-         for I in 1 .. Length (L) loop
-            Ret.Append (Element_Type'(Get (Get (L, I))));
+         for I in 1 .. Length (Data) loop
+            Ret.Append (Element_Type'(Get (Get (Data, I))));
          end loop;
       end return;
    end Get;

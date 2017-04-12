@@ -43,9 +43,27 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Bounded_Vectors is
    ---------
 
    function Get (Val : JSON_Value) return Vector is
-      Data     : constant JSON_Array := Get (Val, "Data");
-      Capacity : constant Count_Type := Get (Val, "Capacity");
+      Data     : JSON_Array;
+      Capacity : Count_Type;
+
+      procedure Process (Name : UTF8_String; Value : JSON_Value) is
+      begin
+         if Name = "Data" then
+            Data := Get (Value);
+         elsif Name = "Capacity" then
+            Capacity := Get (Value);
+         end if;
+      end;
    begin
+      if Kind (Val) = JSON_Array_Type then
+         Data := Get (Val);
+         Capacity := Count_Type (Length (Data));
+      else
+         Map_JSON_Object (Val, Process'Access);
+      end if;
+      if Count_Type (Length (Data)) > Capacity then
+         Capacity := Count_Type (Length (Data));
+      end if;
       return Ret : Vector (Capacity) do
          for I in 1 .. Length (Data) loop
             Ret.Append (Element_Type'(Get ((Get (Data, I)))));

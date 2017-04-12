@@ -27,13 +27,21 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Bounded_Hashed_Sets is
    -- Create --
    ------------
 
-   function Create (Val : Set) return JSON_Array is
-
+   function Create_Array (Val : Set) return JSON_Array is
    begin
-      return Arr : JSON_Array do
+      return Ret : JSON_Array do
          for I of Val loop
-            Append (Arr, Create (I));
+            Append (Ret, Create (I));
          end loop;
+      end return;
+   end;
+
+   function Create (Val : Set) return JSON_Value is
+   begin
+      return Ret : constant JSON_Value := Create_Object do
+         Set_Field (Ret, "Capacity", Create (Val.Capacity));
+         Set_Field (Ret, "Modulus", Create (Val.Modulus));
+         Set_Field (Ret, "Data", Create_Array (Val));
       end return;
    end Create;
 
@@ -42,13 +50,35 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Bounded_Hashed_Sets is
    ---------
 
    function Get (Val : JSON_Value) return Set is
-      L        : constant JSON_Array := Val.Get;
-      Capacity : constant Count_Type := Count_Type (Length (L));
-      Modulus  : constant Hash_Type := Default_Modulus (Capacity);
+      Data     : JSON_Array;
+      Capacity : Count_Type := Count_Type'First;
+      Modulus  : Hash_Type := Hash_Type'First;
+      procedure Cb (Name : UTF8_String; Value : JSON_Value) is
+      begin
+         if Name = "Data" then
+            Data := Get (Value);
+         elsif Name = "Capacity" then
+            Capacity := Get (Value);
+         elsif Name = "Modulus" then
+            Modulus := Get (Value);
+         end if;
+      end;
    begin
+      if Kind (Val) = JSON_Array_Type then
+         Data := Val.Get;
+      else
+         Map_JSON_Object (Val, CB'Access);
+      end if;
+      if Capacity < Count_Type(Length (Data)) then
+         Capacity := Count_Type(Length (Data));
+      end if;
+      if Modulus = Hash_Type'First then
+         Modulus := Default_Modulus (Capacity);
+      end if;
+
       return Ret : Set (Capacity, Modulus) do
-         for I in 1 .. Length (L) loop
-            Ret.Include (Element_Type'(Get (Get (L, I))));
+         for I in 1 .. Length (Data) loop
+            Ret.Include (Element_Type'(Get (Get (Data, I))));
          end loop;
       end return;
    end Get;

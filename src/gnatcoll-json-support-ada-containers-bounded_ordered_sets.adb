@@ -56,7 +56,12 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Bounded_Ordered_Sets is
          end if;
       end;
    begin
-      Map_JSON_Object (Val, Process'Access);
+      if Kind (Val) = JSON_Array_Type then
+         Data := Get (Val);
+         Capacity := Count_Type (Length (Data));
+      else
+         Map_JSON_Object (Val, Process'Access);
+      end if;
       if Count_Type (Length (Data)) > Capacity then
          Capacity := Count_Type (Length (Data));
       end if;

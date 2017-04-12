@@ -22,8 +22,10 @@
 ------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------
---  Stores data as a JSON Array:
---   [Element, Element, ..]
+--  Stores data as a JSON_Object:
+--  { "Capacity" => Capacity,
+--    "Modulus"  => Modulus,
+--    "Data" =>  [Element, Element, ..]}
 -------------------------------------------------------------------------------
 
 with Ada.Containers.Bounded_Hashed_Sets;
@@ -36,7 +38,7 @@ generic
 
 package GNATCOLL.JSON.Support.Ada.Containers.Bounded_Hashed_Sets is
 
-   function Create (Val : Set) return JSON_Array;
+   function Create (Val : Set) return JSON_Value;
    function Get (Val : JSON_Value) return Set;
 
    function Get (Val : JSON_Value; Field : UTF8_String) return Set;

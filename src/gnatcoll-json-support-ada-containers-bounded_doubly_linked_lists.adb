@@ -41,8 +41,19 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Bounded_Doubly_Linked_Lists is
    ---------
 
    function Get (Val : JSON_Value) return List is
-      L : constant JSON_Array := Val.Get;
+      L : JSON_Array;
+      procedure Cb (Name : UTF8_String; Value : JSON_Value) is
+      begin
+         if Name = "Data" then
+            L := Get (Value);
+         end if;
+      end;
    begin
+      if Kind(Val) = JSON_Array_Type then
+         L := Val.Get;
+      else
+         Map_JSON_Object (Val, CB'Access);
+      end if;
       return Ret : List (Count_Type (Length (L))) do
          for I in 1 .. Length (L) loop
             Ret.Append (Element_Type'(Get (Get (L, I))));
