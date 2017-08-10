@@ -21,7 +21,6 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 
-
 with Interfaces;
 with GNATCOLL.JSON.Support.Integer_Generic;
 with GNATCOLL.JSON.Support.Modular_Generic;
@@ -51,8 +50,6 @@ package GNATCOLL.JSON.Support.Interfaces is
    function Get (Val : JSON_Value) return Integer_64 renames Integer_64_Impl.Get;
    function Get (Val : JSON_Value; Field : UTF8_String) return Integer_64 renames Integer_64_Impl.Get;
    procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Integer_64) renames Integer_64_Impl.Set_Field;
-
-
 
    package Unsigned_8_Impl is new GNATCOLL.JSON.Support.Modular_Generic (Unsigned_8);
    function Create (Val : Unsigned_8) return JSON_Value renames Unsigned_8_Impl.Create;

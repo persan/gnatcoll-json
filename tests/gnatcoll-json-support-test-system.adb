@@ -2,16 +2,14 @@ with GNAT;
 with GNAT.Source_Info;
 with AUnit.Assertions;
 with GNATCOLL.JSON.Support.Test.Utilities;
-with GNATCOLL.JSON.Support.System;use GNATCOLL.JSON.Support.System;
-with System.Storage_Elements;use System.Storage_Elements;
+with GNATCOLL.JSON.Support.System; use GNATCOLL.JSON.Support.System;
+with System.Storage_Elements; use System.Storage_Elements;
 package body GNATCOLL.JSON.Support.Test.System is
-
 
    use AUnit;
    use AUnit.Assertions;
    use GNATCOLL.JSON.Support.Test.Utilities;
    Unit_Name : constant String := GNAT.Source_Info.Enclosing_Entity;
-
 
    -----------------
    -- Set_Up_Case --
@@ -21,7 +19,7 @@ package body GNATCOLL.JSON.Support.Test.System is
 
    begin
       Test.S_0 := Null_Address;
-      Test.S_1 := Storage_Elements.To_Address(16#CACAFF11#);
+      Test.S_1 := Storage_Elements.To_Address (16#CACAFF11#);
    end Set_Up_Case;
 
    procedure Test_Write (Test : in out AUnit.Test_Cases.Test_Case'Class)  is
@@ -42,8 +40,8 @@ package body GNATCOLL.JSON.Support.Test.System is
    begin
       S_0 := Get (O, "S_0");
       S_1 := Get (O, "S_1");
-      Assert (S_0 = Td.S_0 , "S_0 missmatch");
-      Assert (S_1 = Td.S_1 , "S_0 missmatch");
+      Assert (S_0 = Td.S_0, "S_0 missmatch");
+      Assert (S_1 = Td.S_1, "S_0 missmatch");
    end Test_Read;
 
    --------------------

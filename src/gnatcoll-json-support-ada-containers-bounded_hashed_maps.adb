@@ -62,16 +62,16 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Bounded_Hashed_Maps is
          elsif Name = "Modulus" then
             Modulus := Get (Value);
          end if;
-      end;
+      end Mapper;
    begin
       if Capacity < Count_Type (Length (Data)) then
          Capacity :=  Count_Type (Length (Data));
       end if;
 
       if Modulus = 0 then
-         Modulus :=  Default_Modulus(Count_Type(Length (Data)));
+         Modulus :=  Default_Modulus (Count_Type (Length (Data)));
       end if;
-      Map_JSON_Object(val,Mapper'Access);
+      Map_JSON_Object (Val, Mapper'Access);
       return Ret : Map (Capacity, Modulus) do
          for I in 1 .. Length (Data) loop
             declare

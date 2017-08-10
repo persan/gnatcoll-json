@@ -34,7 +34,7 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Bounded_Hashed_Sets is
             Append (Ret, Create (I));
          end loop;
       end return;
-   end;
+   end Create_Array;
 
    function Create (Val : Set) return JSON_Value is
    begin
@@ -62,15 +62,15 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Bounded_Hashed_Sets is
          elsif Name = "Modulus" then
             Modulus := Get (Value);
          end if;
-      end;
+      end Cb;
    begin
       if Kind (Val) = JSON_Array_Type then
          Data := Val.Get;
       else
-         Map_JSON_Object (Val, CB'Access);
+         Map_JSON_Object (Val, Cb'Access);
       end if;
-      if Capacity < Count_Type(Length (Data)) then
-         Capacity := Count_Type(Length (Data));
+      if Capacity < Count_Type (Length (Data)) then
+         Capacity := Count_Type (Length (Data));
       end if;
       if Modulus = Hash_Type'First then
          Modulus := Default_Modulus (Capacity);

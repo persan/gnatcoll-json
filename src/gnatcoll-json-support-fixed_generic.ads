@@ -26,7 +26,6 @@ generic
 
 package GNATCOLL.JSON.Support.Fixed_Generic is
 
-
    function Create (Val : Num) return JSON_Value with Inline;
    function Get (Val : JSON_Value) return Num with Inline;
    function Get (Val : JSON_Value; Field : UTF8_String) return Num with Inline;

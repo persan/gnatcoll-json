@@ -21,7 +21,6 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 
-
 with GNATCOLL.JSON.Support.Test.Integer_Bounded_Hashed_Maps.JSON.Tests;
 with GNATCOLL.JSON.Support.Test.Integer_Bounded_Hashed_Maps.Simple_JSON.Tests;
 with GNATCOLL.JSON.Support.Test.Integer_Bounded_Ordered_Maps.JSON.Tests;

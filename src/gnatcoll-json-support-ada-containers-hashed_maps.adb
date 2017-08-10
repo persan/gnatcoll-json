@@ -28,7 +28,6 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Hashed_Maps is
 
    function Create (Val : Map) return JSON_Array is
 
-
    begin
       return Data : JSON_Array do
          for I in Val.Iterate loop

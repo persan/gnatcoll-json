@@ -46,7 +46,7 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Doubly_Linked_Lists.Generic_Te
    procedure Test_Write (Test : in out AUnit.Test_Cases.Test_Case'Class)  is
       Td   : Test_Case renames Test_Case (Test);
    begin
-      Write (Ada2file (Unit_Name), GNATCOLL.JSON.Write (Create(Create (Td.Test_Data.all)), Compact => False));
+      Write (Ada2file (Unit_Name), GNATCOLL.JSON.Write (Create (Create (Td.Test_Data.all)), Compact => False));
    end Test_Write;
 
    ---------------
@@ -60,7 +60,6 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Doubly_Linked_Lists.Generic_Te
       Assert (Td.Result.all = Td.Test_Data.all, "data mismatch");
    end Test_Read;
 
-
    procedure Test_Get_Set (Test : in out AUnit.Test_Cases.Test_Case'Class)  is
       Td   : Test_Case renames Test_Case (Test);
 
@@ -72,7 +71,7 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Doubly_Linked_Lists.Generic_Te
       begin
          Assert (Res = Td.Test_Data.all, "data mismatch");
       end;
-   end;
+   end Test_Get_Set;
 
    --------------------
    -- Register_Tests --

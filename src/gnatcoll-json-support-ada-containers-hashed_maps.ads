@@ -40,7 +40,6 @@ generic
    with function Get (Val : JSON_Value) return Element_Type is <>;
 package GNATCOLL.JSON.Support.Ada.Containers.Hashed_Maps is
 
-
    function Create (Val : Map) return JSON_Array;
    function Get (Val : JSON_Value) return Map;
 

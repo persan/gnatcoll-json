@@ -21,7 +21,6 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 
-
 with GNATCOLL.JSON.Support.Test.Integer_Bounded_Hashed_Sets_Initialize;
 with GNATCOLL.JSON.Support.Ada.Containers.Bounded_Hashed_Sets.Generic_Tests;
 

@@ -21,9 +21,9 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 pragma Warnings (Off);
-with GNATCOLL.JSON.Support.GNAT.Spitbol.Table_Boolean;
-with GNATCOLL.JSON.Support.GNAT.Spitbol.Table_Integer;
-with GNATCOLL.JSON.Support.GNAT.Spitbol.Table_VString;
+with GNATCOLL.JSON.Support.GNAT.SPitbol.Table_Boolean;
+with GNATCOLL.JSON.Support.GNAT.SPitbol.Table_Integer;
+with GNATCOLL.JSON.Support.GNAT.SPitbol.Table_VString;
 with GNATCOLL.JSON.Support.Ada.Calendar;
 with GNATCOLL.JSON.Support.Ada.Containers.Bounded_Doubly_Linked_Lists;
 with GNATCOLL.JSON.Support.Ada.Containers.Bounded_Hashed_Maps;
@@ -56,22 +56,20 @@ with GNATCOLL.JSON.Support.Ada.Numerics.Long_Long_Complex_Types_JSON;
 with GNATCOLL.JSON.Support.Ada.Numerics.Long_Long_Real_Arrays_JSON;
 with GNATCOLL.JSON.Support.Ada.Numerics.Real_Arrays_JSON;
 
-
 pragma Warnings (On);
-
 
 with AUnit.Run;
 with AUnit.Reporter.Text;
--- with AUnit.Reporter.GNATtest;
--- with AUnit.Reporter.XML;
+--  with AUnit.Reporter.GNATtest;
+--  with AUnit.Reporter.XML;
 
 with GNATCOLL.JSON.Support.Test.Suits.All_Tests;
 
 procedure GNATCOLL.JSON.Support.Test.Main is
    procedure Run is new AUnit.Run.Test_Runner (GNATCOLL.JSON.Support.Test.Suits.All_Tests.Suite);
    Reporter : AUnit.Reporter.Text.Text_Reporter;
-   -- Reporter : AUnit.Reporter.GNATtest.GNATtest_Reporter;
-   -- Reporter : AUnit.Reporter.XML.XML_Reporter;
+   --  Reporter : AUnit.Reporter.GNATtest.GNATtest_Reporter;
+   --  Reporter : AUnit.Reporter.XML.XML_Reporter;
 begin
    Run (Reporter);
 end GNATCOLL.JSON.Support.Test.Main;

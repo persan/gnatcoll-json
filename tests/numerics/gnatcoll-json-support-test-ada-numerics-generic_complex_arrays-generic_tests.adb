@@ -23,7 +23,7 @@ package body GNATCOLL.JSON.Support.Test.Ada.Numerics.Generic_Complex_Arrays.Gene
    begin
       for I in Test.Test_Vector'Range loop
          Test.Test_Vector (I) :=  (Re => Real (I),
-                                   Im => Real (I) +1.0);
+                                   Im => Real (I) + 1.0);
       end loop;
    end Set_Up_Case;
 
@@ -32,28 +32,28 @@ package body GNATCOLL.JSON.Support.Test.Ada.Numerics.Generic_Complex_Arrays.Gene
    procedure Write_Vector (Tc : in out AUnit.Test_Cases.Test_Case'Class) is
       T : Test_Case renames Test_Case (Tc);
    begin
-      Write ( Vector_File_Name, Write (Create (T.Test_Vector)));
-   end;
+      Write (Vector_File_Name, Write (Create (T.Test_Vector)));
+   end Write_Vector;
 
    procedure Write_Matrix (Tc : in out AUnit.Test_Cases.Test_Case'Class) is
       T : Test_Case renames Test_Case (Tc);
    begin
       Write (Matrix_File_Name, Write (Create (T.Test_Matrix)));
-   end;
+   end Write_Matrix;
 
    procedure Read_Vector (Tc : in out AUnit.Test_Cases.Test_Case'Class) is
       T           : Test_Case renames Test_Case (Tc);
       Test_Vector : constant Complex_Arrays.Complex_Vector := Get (Read (Read (Vector_File_Name)));
    begin
       Assert (Test_Vector = T.Test_Vector, "Vector missmatch");
-   end;
+   end Read_Vector;
 
    procedure Read_Matrix (Tc : in out AUnit.Test_Cases.Test_Case'Class) is
       T           : Test_Case renames Test_Case (Tc);
       Test_Matrix : constant Complex_Arrays.Complex_Matrix := Get (Read (Read (Matrix_File_Name)));
    begin
       Assert (Test_Matrix = T.Test_Matrix, "Matrix missmatch");
-   end;
+   end Read_Matrix;
 
    procedure Empty_Matrix_1 (Tc : in out AUnit.Test_Cases.Test_Case'Class) is
       pragma Unreferenced (Tc);
@@ -63,7 +63,7 @@ package body GNATCOLL.JSON.Support.Test.Ada.Numerics.Generic_Complex_Arrays.Gene
    begin
 
       Assert (Test_Matrix = Result, "Matrix missmatch");
-   end;
+   end Empty_Matrix_1;
    procedure Empty_Matrix_2 (Tc : in out AUnit.Test_Cases.Test_Case'Class) is
       pragma Unreferenced (Tc);
       Test_Matrix : Complex_Arrays.Complex_Matrix (1 .. 1, 1 .. 0);
@@ -71,8 +71,7 @@ package body GNATCOLL.JSON.Support.Test.Ada.Numerics.Generic_Complex_Arrays.Gene
       Result      : constant Complex_Arrays.Complex_Matrix := Get (J);
    begin
       Assert (Test_Matrix = Result, "Matrix missmatch");
-   end;
-
+   end Empty_Matrix_2;
 
    procedure Empty_Vector (Tc : in out AUnit.Test_Cases.Test_Case'Class) is
       pragma Unreferenced (Tc);
@@ -82,7 +81,7 @@ package body GNATCOLL.JSON.Support.Test.Ada.Numerics.Generic_Complex_Arrays.Gene
    begin
 
       Assert (Test_Vector = Result, "Vector missmatch");
-   end;
+   end Empty_Vector;
 
    --------------------
    -- Register_Tests --

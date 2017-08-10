@@ -30,7 +30,6 @@ generic
 
 package GNATCOLL.JSON.Support.Enumeration_Generic is
 
-
    function Create (Val : Enum) return JSON_Value;
    function Get (Val : JSON_Value) return Enum;
    function Get (Val : JSON_Value; Field : UTF8_String) return Enum;

@@ -27,35 +27,31 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Bounded_Multiway_Trees is
    -- Create --
    ------------
 
-
    function Create (Val : Tree) return JSON_Value is
-
-
-      function Node ( C : Cursor) return JSON_Value;
-      function Children ( C : Cursor) return JSON_Array;
-      function Node ( C : Cursor) return JSON_Value is
+      function Node (C : Cursor) return JSON_Value;
+      function Children (C : Cursor) return JSON_Array;
+      function Node (C : Cursor) return JSON_Value is
       begin
          return Ret : constant JSON_Value := Create_Object do
             Set_Field (Ret, "Element", Create (Element (C)));
             Set_Field (Ret, "Children", Children (C));
          end return;
-      end;
+      end Node;
 
-      function Children ( C : Cursor) return JSON_Array is
+      function Children (C : Cursor) return JSON_Array is
          Ret : JSON_Array;
          procedure Process (Position : Cursor) is
          begin
             Append (Ret, Node (Position));
-         end;
+         end Process;
       begin
          Iterate_Children (C, Process'Access);
          return Ret;
-      end;
-
+      end Children;
    begin
       return Ret : constant JSON_Value := Create_Object do
-         Set_Field (Ret, "Capacity" , Create (Val.Capacity));
-         Set_Field (Ret, "Data" , Children (Val.Root));
+         Set_Field (Ret, "Capacity", Create (Val.Capacity));
+         Set_Field (Ret, "Data", Children (Val.Root));
       end return;
    end Create;
 
@@ -65,45 +61,54 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Bounded_Multiway_Trees is
 
    function Get (Val : JSON_Value) return Tree is
 
-      Element : Element_Type;
-      Children    : JSON_Array;
-      procedure CB (Name : UTF8_String; Value : JSON_Value) is
+      procedure Append_Children (To  : in out Tree; Root : Cursor; Nodes : JSON_Array);
+      procedure Append_Node (To  : in out Tree; Root : Cursor; Node : JSON_Value);
+
+      procedure Append_Node (To  : in out Tree; Root : Cursor; Node : JSON_Value) is
+         Element     : Element_Type;
+         Children    : JSON_Array;
+         Has_Element : Boolean := False;
+         procedure CB_Node (Name : UTF8_String; Value : JSON_Value) is
+         begin
+            if Name = "Element" then
+               Element := Get (Value);
+               Has_Element := True;
+            elsif Name = "Children" then
+               Children := Get (Value);
+            end if;
+         end CB_Node;
       begin
-         if Name = "Element" then
-            Element := Get (Value);
-         elsif Name = "Children" then
-            Children := get(Value);
+         Map_JSON_Object (Node, CB_Node'Access);
+         if Has_Element then
+            To.Append_Child (Root, Element);
+            Append_Children (To, Root, Children);
          end if;
-      end;
+      end Append_Node;
+
+      procedure Append_Children (To  : in out Tree; Root : Cursor; Nodes : JSON_Array) is
+      begin
+         for I in 1 .. Length (Nodes) loop
+            Append_Node (To, Root, Get (Nodes, I));
+         end loop;
+      end Append_Children;
 
       Capacity : Count_Type;
       Data     : JSON_Array;
-      procedure Append_Node (To  : in out Tree; Root : Cursor ; Node : JSON_Value) is
-         procedure CB_Node (Name : UTF8_String; Value : JSON_Value) is
-         begin
-            if Name = "Capacity" then
-               Capacity := Get (Value);
-            elsif Name = "Data" then
-               Data := Get (Value);
-            end if;
-         end;
+      pragma Unreferenced (Data);
+      procedure CB (Name : UTF8_String; Value : JSON_Value) is
       begin
-         for I in 1 .. Length (Data) loop
-            null;
-         end loop;
-      end;
-
-      procedure Append_Children (To  : in out Tree; Root : Cursor ; Nodes : JSON_Array) is
-      begin
-         for I in 1 .. Length (Nodes) loop
-            null; -- Append_Node(
-         end loop;
-      end;
+         if Name = "Capacity" then
+            Capacity := Get (Value);
+         elsif Name = "Data" then
+            Data := Get (Value);
+         end if;
+      end CB;
 
    begin
-      Map_JSON_Object (Val, Cb'Access);
+      Map_JSON_Object (Val, CB'Access);
       return Ret : Tree (Capacity) do
-         Append_Children (Ret, Ret.Root, Data);
+         null;
+         --  Append_Node (Ret, Ret.Root, Data);
       end return;
    end Get;
 

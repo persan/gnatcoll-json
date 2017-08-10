@@ -21,7 +21,6 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 
-
 with GNATCOLL.JSON.Support.Test.Integer_Indefinite_Hashed_Maps_Initialize;
 with GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Hashed_Maps.Generic_Tests;
 

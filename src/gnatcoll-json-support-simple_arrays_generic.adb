@@ -21,7 +21,7 @@ package body GNATCOLL.JSON.Support.Simple_Arrays_Generic is
       Cursor : Index_Type;
       First   : constant Index_Type := Index_Type'First;
       Len     : constant Integer := Length (Val);
-      Last    : constant Index_Type := First+Index_Type'Pred(Index_Type(Len));
+      Last    : constant Index_Type := First + Index_Type'Pred (Index_Type (Len));
    begin
       return Ret : Array_Type (First .. Last) do
          Cursor :=    Ret'First;
@@ -35,10 +35,10 @@ package body GNATCOLL.JSON.Support.Simple_Arrays_Generic is
    function Get (Val : JSON_Value; Field : UTF8_String) return Array_Type is
    begin
       return Get (JSON_Array'(Get (Val, Field)));
-   end;
+   end Get;
    procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Array_Type) is
    begin
       Set_Field (Val, Field_Name, Create (Field));
-   end;
+   end Set_Field;
 
 end GNATCOLL.JSON.Support.Simple_Arrays_Generic;

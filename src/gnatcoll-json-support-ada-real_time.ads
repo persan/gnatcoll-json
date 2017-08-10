@@ -21,6 +21,10 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 
+--  Stores Data as Json_Object:
+--   { "Seconds_Count" : Seconds_Count,
+--     "Time_Span"     : Time_Span }
+--
 with Ada.Real_Time;
 package GNATCOLL.JSON.Support.Ada.Real_Time is
    use Standard.Ada.Real_Time;
@@ -38,7 +42,6 @@ package GNATCOLL.JSON.Support.Ada.Real_Time is
      (Val        : JSON_Value;
       Field_Name : UTF8_String;
       Field      : Time) with Inline_Always;
-
 
    function Create (Val : Time_Span) return JSON_Value  with
      Inline_Always => True;

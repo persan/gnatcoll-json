@@ -5,13 +5,11 @@ with GNATCOLL.JSON.Support.Test.Utilities;
 with GNATCOLL.JSON.Support.Ada.Containers;
 package body GNATCOLL.JSON.Support.Test.Ada.Containers is
 
-
    use AUnit;
    use AUnit.Assertions;
    use GNATCOLL.JSON.Support.Test.Utilities;
    use GNATCOLL.JSON.Support.Ada.Containers;
    Unit_Name : constant String := GNAT.Source_Info.Enclosing_Entity;
-
 
    -----------------
    -- Set_Up_Case --
@@ -42,8 +40,8 @@ package body GNATCOLL.JSON.Support.Test.Ada.Containers is
    begin
       Hash := Get (O, "Hash");
       Count := Get (O, "Count");
-      Assert (Hash = Td.Hash , "Hash missmatch");
-      Assert (Count = Td.Count , "Count missmatch");
+      Assert (Hash = Td.Hash, "Hash missmatch");
+      Assert (Count = Td.Count, "Count missmatch");
    end Test_Read;
 
    --------------------

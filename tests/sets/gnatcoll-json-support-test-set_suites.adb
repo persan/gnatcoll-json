@@ -21,7 +21,6 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 
-
 with GNATCOLL.JSON.Support.Test.Integer_Bounded_Hashed_Sets.JSON.Tests;
 with GNATCOLL.JSON.Support.Test.Integer_Bounded_Ordered_Sets.JSON.Tests;
 with GNATCOLL.JSON.Support.Test.Integer_Indefinite_Hashed_Sets.JSON.Tests;

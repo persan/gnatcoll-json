@@ -24,7 +24,7 @@ package body GNATCOLL.JSON.Support.Fixed_Generic is
 
    function Get (Val : JSON_Value; Field : UTF8_String) return Num is
    begin
-      return Num(Get_Long_Float (Val =>  Val, Field => Field));
+      return Num (Get_Long_Float (Val =>  Val, Field => Field));
    end Get;
 
    ---------------

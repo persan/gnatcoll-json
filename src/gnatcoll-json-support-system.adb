@@ -1,4 +1,4 @@
-with GNATCOLL.JSON.Support.System.Storage_Elements;use GNATCOLL.JSON.Support.System.Storage_Elements;
+with GNATCOLL.JSON.Support.System.Storage_Elements; use GNATCOLL.JSON.Support.System.Storage_Elements;
 with System.Storage_Elements;
 package body GNATCOLL.JSON.Support.System is
    use Standard.System.Storage_Elements;
@@ -17,7 +17,7 @@ package body GNATCOLL.JSON.Support.System is
 
    function Get (Val : JSON_Value) return Address is
    begin
-      return To_Address(get(Val));
+      return To_Address (Get (Val));
    end Get;
 
    ---------
@@ -26,7 +26,7 @@ package body GNATCOLL.JSON.Support.System is
 
    function Get (Val : JSON_Value; Field : UTF8_String) return Address is
    begin
-      return To_Address(get(Val,field));
+      return To_Address (Get (Val, Field));
    end Get;
 
    ---------------

@@ -39,7 +39,6 @@ generic
 
 package GNATCOLL.JSON.Support.Ada.Containers.Bounded_Ordered_Maps is
 
-
    function Create (Val : Map) return JSON_Value;
    function Get (Val : JSON_Value) return Map;
 

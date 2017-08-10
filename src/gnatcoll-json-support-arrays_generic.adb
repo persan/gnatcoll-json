@@ -10,9 +10,9 @@ package body GNATCOLL.JSON.Support.Arrays_Generic is
 
    begin
       return Ret : constant JSON_Value := Create_Object do
-         Set_Field (Ret, "First", Create(Val'First));
+         Set_Field (Ret, "First", Create (Val'First));
          Set_Field (Ret, "Last", Create (Val'Last));
-         Set_Field (Ret, "Data", Create(Create (Val)));
+         Set_Field (Ret, "Data", Create (Create (Val)));
       end return;
    end Create;
 
@@ -35,19 +35,19 @@ package body GNATCOLL.JSON.Support.Arrays_Generic is
          elsif Name = "Data" then
             Data := Get (Value);
          end if;
-      end;
+      end Cb;
 
    begin
-      Map_JSON_Object (Val, CB'Access);
+      Map_JSON_Object (Val, Cb'Access);
       Length := GNATCOLL.JSON.Length (Data);
-      if (First > Last) and Length = 0 then
-         return Ret : Array_Type (Index_Type'SUCC (Index_Type'First) .. Index_Type'First) do
+      if (First > Last) and then Length = 0 then
+         return Ret : Array_Type (Index_Type'Succ (Index_Type'First) .. Index_Type'First) do
             pragma Warnings (Off, Ret); -- Only used to get an empty array.
             null;
          end return;
-      elsif (First > Last) and Length > 0 then
+      elsif (First > Last) and then Length > 0 then
          --         First := Index_Type'First;
-         return Ret : Array_Type (Index_Type'SUCC (Index_Type'First) .. Index_Type'First) do
+         return Ret : Array_Type (Index_Type'Succ (Index_Type'First) .. Index_Type'First) do
             pragma Warnings (Off, Ret); -- Only used to get an empty array.
             null;
          end return;
@@ -55,18 +55,18 @@ package body GNATCOLL.JSON.Support.Arrays_Generic is
          return Ret : Array_Type (First .. Last) do
             for Ix in 1 .. Length loop
                Ret (First) := Get (Get (Data, Ix));
-               if First < Index_Type'last then
+               if First < Index_Type'Last then
                   First := Index_Type'Succ (First);
                end if;
             end loop;
          end return;
       else
-         return Ret : Array_Type (Index_Type'SUCC (Index_Type'First) .. Index_Type'First) do
+         return Ret : Array_Type (Index_Type'Succ (Index_Type'First) .. Index_Type'First) do
             pragma Warnings (Off, Ret); -- Only used to get an empty array.
             null;
          end return;
       end if;
-  end Get;
+   end Get;
 
    ---------
    -- Get --

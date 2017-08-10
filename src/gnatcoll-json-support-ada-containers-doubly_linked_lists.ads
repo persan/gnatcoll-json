@@ -35,7 +35,6 @@ generic
 
 package GNATCOLL.JSON.Support.Ada.Containers.Doubly_Linked_Lists is
 
-
    function Create (Val : List) return JSON_Array;
    function Get (Val : JSON_Value) return List;
 

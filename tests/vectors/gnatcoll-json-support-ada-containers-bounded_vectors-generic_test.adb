@@ -32,7 +32,6 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Bounded_Vectors.Generic_Test i
    use GNATCOLL.JSON.Support.Test.Utilities;
    Unit_Name : constant String := GNAT.Source_Info.Enclosing_Entity;
 
-
    -----------------
    -- Set_Up_Case --
    -----------------
@@ -72,7 +71,7 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Bounded_Vectors.Generic_Test i
       begin
          Assert (Res = Td.Test_Data.all, "data mismatch");
       end;
-   end;
+   end Test_Get_Set;
    --------------------
    -- Register_Tests --
    --------------------

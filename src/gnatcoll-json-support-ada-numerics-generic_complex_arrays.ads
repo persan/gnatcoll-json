@@ -57,5 +57,4 @@ package GNATCOLL.JSON.Support.Ada.Numerics.Generic_Complex_Arrays is
       Field_Name : UTF8_String;
       Field      : Complex_Matrix) with Inline_Always;
 
-
 end GNATCOLL.JSON.Support.Ada.Numerics.Generic_Complex_Arrays;

@@ -23,7 +23,7 @@
 
 with GNATCOLL.JSON.Support.Test.Test_Bounded_Vectors.Integer_Bounded_Vectors_Initialize;
 with GNATCOLL.JSON.Support.Test.Test_Bounded_Vectors.Integer_Bounded_Vectors.JSON;
-with Gnatcoll.Json.Support.Ada.Containers.Bounded_Vectors.Generic_Test;
+with GNATCOLL.JSON.Support.Ada.Containers.Bounded_Vectors.Generic_Test;
 
 package GNATCOLL.JSON.Support.Test.Test_Bounded_Vectors.Integer_Bounded_Vectors.JSON.Tests is new
   GNATCOLL.JSON.Support.Test.Test_Bounded_Vectors.Integer_Bounded_Vectors.JSON.Generic_Test

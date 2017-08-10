@@ -6,7 +6,7 @@ package body GNATCOLL.JSON.Support.Modular_Generic is
 
    function Create (Val : Num) return JSON_Value is
    begin
-      return Create (Long_Long_Integer(Val));
+      return Create (Long_Long_Integer (Val));
    end Create;
 
    ---------

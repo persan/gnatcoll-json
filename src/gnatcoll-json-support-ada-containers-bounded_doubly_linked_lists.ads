@@ -22,8 +22,8 @@
 ------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------
--- Stores data as a JSON_Array:
--- [Element, Element, ...]
+--  Stores data as a JSON_Array:
+--  [Element, Element, ...]
 ------------------------------------------------------------------------------
 with Ada.Containers.Bounded_Doubly_Linked_Lists;
 generic
@@ -32,7 +32,6 @@ generic
    with function Create (Val : Element_Type) return JSON_Value is <>;
    with function Get (Val : JSON_Value) return Element_Type is <>;
 package GNATCOLL.JSON.Support.Ada.Containers.Bounded_Doubly_Linked_Lists is
-
 
    function Create (Val : List) return JSON_Array with
      Inline_Always => True;

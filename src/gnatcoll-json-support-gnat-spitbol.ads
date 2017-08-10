@@ -25,9 +25,8 @@ package GNATCOLL.JSON.Support.GNAT.SPitbol is
 
    generic
       with package V is new Standard.GNAT.Spitbol.Table (<>);
-      use V;
-      with function Create (Val : Value_Type) return JSON_Value is <>;
-      with function Get (Val : JSON_Value) return Value_Type is <>;
+      with function Create (Val : V.Value_Type) return JSON_Value is <>;
+      with function Get (Val : JSON_Value) return V.Value_Type is <>;
    package Table is
       function Create (Val : V.Table) return JSON_Value;
       function Get (Val : GNATCOLL.JSON.JSON_Value) return V.Table;

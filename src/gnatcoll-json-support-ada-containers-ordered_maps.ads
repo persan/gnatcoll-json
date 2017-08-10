@@ -40,7 +40,6 @@ generic
 
 package GNATCOLL.JSON.Support.Ada.Containers.Ordered_Maps is
 
-
    function Create (Val : Map) return JSON_Array;
    function Get (Val : JSON_Value) return Map;
 

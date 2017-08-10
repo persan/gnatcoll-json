@@ -23,40 +23,38 @@
 pragma Warnings (Off, "unit * is never instantiated");
 pragma Warnings (Off, "unit * is not referenced");
 
-with Ada.Calendar; --@ Impl -> TestOK
-with Ada.Real_Time; --@ Impl -> TestOK
+with Ada.Calendar; -- @ Impl -> TestOK
+with Ada.Real_Time; -- @ Impl -> TestOK
 
-with Ada.Containers; --@ Impl -> TestOK
-with Ada.Containers.Bounded_Doubly_Linked_Lists; --@ Impl
-with Ada.Containers.Bounded_Hashed_Maps; --@ Impl/Simple -> TestOK
-with Ada.Containers.Bounded_Hashed_Sets; --@ Impl
+with Ada.Containers; -- @ Impl -> TestOK
+with Ada.Containers.Bounded_Doubly_Linked_Lists; -- @ Impl
+with Ada.Containers.Bounded_Hashed_Maps; -- @ Impl/Simple -> TestOK
+with Ada.Containers.Bounded_Hashed_Sets; -- @ Impl
 with Ada.Containers.Bounded_Multiway_Trees;
-with Ada.Containers.Bounded_Ordered_Maps; --@ Impl/Simple
-with Ada.Containers.Bounded_Ordered_Sets; --@ Impl
-with Ada.Containers.Bounded_Vectors; --@ Impl-> TestOK
-with Ada.Containers.Doubly_Linked_Lists; --@ Impl-> TestOK
+with Ada.Containers.Bounded_Ordered_Maps; -- @ Impl/Simple
+with Ada.Containers.Bounded_Ordered_Sets; -- @ Impl
+with Ada.Containers.Bounded_Vectors; -- @ Impl-> TestOK
+with Ada.Containers.Doubly_Linked_Lists; -- @ Impl-> TestOK
 
-with Ada.Containers.Hashed_Maps; --@ Impl-> TestOK/Simple-> TestOK
-with Ada.Containers.Hashed_Sets; --@ Impl-> TestOK
-with Ada.Containers.Indefinite_Doubly_Linked_Lists; --@ Impl-> TestOK
-with Ada.Containers.Indefinite_Hashed_Maps; --@ Impl/Simple
-with Ada.Containers.Indefinite_Hashed_Sets; --@ Impl
+with Ada.Containers.Hashed_Maps; -- @ Impl-> TestOK/Simple-> TestOK
+with Ada.Containers.Hashed_Sets; -- @ Impl-> TestOK
+with Ada.Containers.Indefinite_Doubly_Linked_Lists; -- @ Impl-> TestOK
+with Ada.Containers.Indefinite_Hashed_Maps; -- @ Impl/Simple
+with Ada.Containers.Indefinite_Hashed_Sets; -- @ Impl
 with Ada.Containers.Indefinite_Multiway_Trees;
-with Ada.Containers.Indefinite_Ordered_Maps; --@ Impl
-with Ada.Containers.Indefinite_Ordered_Multisets; --@ Impl
-with Ada.Containers.Indefinite_Ordered_Sets; --@ Impl
-with Ada.Containers.Indefinite_Vectors; --@ Impl
+with Ada.Containers.Indefinite_Ordered_Maps; -- @ Impl
+with Ada.Containers.Indefinite_Ordered_Multisets; -- @ Impl
+with Ada.Containers.Indefinite_Ordered_Sets; -- @ Impl
+with Ada.Containers.Indefinite_Vectors; -- @ Impl
 with Ada.Containers.Multiway_Trees;
-with Ada.Containers.Ordered_Maps; --@ Impl/Simple
-with Ada.Containers.Ordered_Multisets; --@ Impl
-with Ada.Containers.Ordered_Sets; --@ Impl-> TestOK
+with Ada.Containers.Ordered_Maps; -- @ Impl/Simple
+with Ada.Containers.Ordered_Multisets; -- @ Impl
+with Ada.Containers.Ordered_Sets; -- @ Impl-> TestOK
 with Ada.Containers.Restricted_Doubly_Linked_Lists;
-with Ada.Containers.Vectors; --@ Impl-> TestOK
-
+with Ada.Containers.Vectors; -- @ Impl-> TestOK
 
 pragma Warnings (On, "unit * is never instantiated");
 pragma Warnings (On, "unit * is not referenced");
-
 
 package GNATCOLL.JSON.Support.Test is
 

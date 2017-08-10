@@ -2,15 +2,13 @@ with GNAT;
 with GNAT.Source_Info;
 with AUnit.Assertions;
 with GNATCOLL.JSON.Support.Test.Utilities;
-with GNATCOLL.JSON.Support.System.Storage_Elements;use GNATCOLL.JSON.Support.System.Storage_Elements;
+with GNATCOLL.JSON.Support.System.Storage_Elements; use GNATCOLL.JSON.Support.System.Storage_Elements;
 package body GNATCOLL.JSON.Support.Test.System.Storage_Elements is
-
 
    use AUnit;
    use AUnit.Assertions;
    use GNATCOLL.JSON.Support.Test.Utilities;
    Unit_Name : constant String := GNAT.Source_Info.Enclosing_Entity;
-
 
    -----------------
    -- Set_Up_Case --
@@ -21,7 +19,7 @@ package body GNATCOLL.JSON.Support.Test.System.Storage_Elements is
    begin
       Test.T_0 := 16#1234AFFE#;
       Test.T_1 := 16#87#;
-      Test.T_2 := (1,2,3,4,5,6,7,8,9,10);
+      Test.T_2 := (1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
       Test.T_3 := 16#CACACACA#;
    end Set_Up_Case;
 
@@ -50,10 +48,10 @@ package body GNATCOLL.JSON.Support.Test.System.Storage_Elements is
       T_1 := Get (O, "T_1");
       T_2 := Get (O, "T_2");
       T_3 := Get (O, "T_3");
-      Assert (T_0 = Td.T_0 , "T_0 missmatch");
-      Assert (T_1 = Td.T_1 , "T_1 missmatch");
-      Assert (T_2 = Td.T_2 , "T_2 missmatch");
-      Assert (T_3 = Td.T_3 , "T_3 missmatch");
+      Assert (T_0 = Td.T_0, "T_0 missmatch");
+      Assert (T_1 = Td.T_1, "T_1 missmatch");
+      Assert (T_2 = Td.T_2, "T_2 missmatch");
+      Assert (T_3 = Td.T_3, "T_3 missmatch");
    end Test_Read;
 
    --------------------

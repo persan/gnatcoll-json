@@ -74,7 +74,7 @@ package body GNATCOLL.JSON.Support.Ada.Numerics.Generic_Real_Arrays is
       Field      : Real_Vector)
    is
    begin
-      Set_Field (Val, Field_Name , Create (Field));
+      Set_Field (Val, Field_Name, Create (Field));
    end Set_Field;
 
    ------------
@@ -92,7 +92,7 @@ package body GNATCOLL.JSON.Support.Ada.Numerics.Generic_Real_Arrays is
                for Y in Val'First (2) .. Val'Last (2) loop
                   Append (Dx, Create (Long_Float (Val (X, Y))));
                end loop;
-               Append (Data , Create (Dx));
+               Append (Data, Create (Dx));
             end;
          end loop;
       end return;
@@ -118,13 +118,13 @@ package body GNATCOLL.JSON.Support.Ada.Numerics.Generic_Real_Arrays is
             null;
          end return;
       end if;
-      return Ret : Real_Matrix (1 .. X , 1 .. Y ) do
+      return Ret : Real_Matrix (1 .. X, 1 .. Y ) do
          for Ix in 1 .. X loop
             declare
                Data_Row : constant JSON_Array := Get (Get (Data, Ix));
             begin
                for Iy in 1 .. Length (Data_Row) loop
-                  Ret (Ix, Iy) := Real (Get_Long_Float (Get (Data_Row , Iy)));
+                  Ret (Ix, Iy) := Real (Get_Long_Float (Get (Data_Row, Iy)));
                end loop;
             end;
          end loop;
@@ -154,7 +154,7 @@ package body GNATCOLL.JSON.Support.Ada.Numerics.Generic_Real_Arrays is
       Field      : Real_Matrix)
    is
    begin
-      Set_Field (Val, Field_Name , Create (Field));
+      Set_Field (Val, Field_Name, Create (Field));
    end Set_Field;
 
 end GNATCOLL.JSON.Support.Ada.Numerics.Generic_Real_Arrays;

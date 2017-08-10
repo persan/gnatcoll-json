@@ -21,9 +21,8 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 
-
 --------------------------------------------------------------------------------
--- This package provides a simpler format of the JSON_Value
+--  This package provides a simpler format of the JSON_Value
 --  Stores data as a JSON Object:
 --  {"Key" : Element,
 --   "Key" : Element,

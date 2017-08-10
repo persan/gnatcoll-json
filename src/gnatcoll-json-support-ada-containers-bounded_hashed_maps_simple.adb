@@ -66,15 +66,15 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Bounded_Hashed_Maps_Simple is
          else
             null;
          end if;
-      end;
+      end Process;
    begin
       Map_JSON_Object (Val, Process'Access);
-      if Capacity < Count_Type(Length (Data)) then
-         Capacity := Count_Type(Length (Data));
+      if Capacity < Count_Type (Length (Data)) then
+         Capacity := Count_Type (Length (Data));
       end if;
 
       if Modulus = 0 then
-         Modulus := Hash_Type'Max(Hash_Type(Capacity/31),3);
+         Modulus := Hash_Type'Max (Hash_Type (Capacity / 31), 3);
       end if;
 
       return Ret : Map (Capacity, Modulus) do
@@ -84,7 +84,7 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Bounded_Hashed_Maps_Simple is
                procedure CB (Name : UTF8_String; Val : JSON_Value) is
                begin
                   Ret.Include (Value (Name), Get (Val));
-               end;
+               end CB;
             begin
                Map_JSON_Object (O, CB'Access);
             end;

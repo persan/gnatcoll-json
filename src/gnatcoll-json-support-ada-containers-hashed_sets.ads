@@ -22,8 +22,8 @@
 ------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------
--- Stores data as s JSON-Array:
--- [Element,Element,..]
+--  Stores data as s JSON-Array:
+--  [Element,Element,..]
 ------------------------------------------------------------------------------
 with Ada.Containers.Hashed_Sets;
 generic
@@ -34,7 +34,6 @@ generic
    with function Get (Val : JSON_Value) return Element_Type is <>;
 
 package GNATCOLL.JSON.Support.Ada.Containers.Hashed_Sets is
-
 
    function Create (Val : Set) return JSON_Array;
    function Get (Val : JSON_Value) return Set;

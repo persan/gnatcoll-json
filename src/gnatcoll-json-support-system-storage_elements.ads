@@ -36,8 +36,6 @@ package GNATCOLL.JSON.Support.System.Storage_Elements is
    function Get (Val : JSON_Value; Field : UTF8_String) return Storage_Offset renames Storage_Offset_Impl.Get;
    procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Storage_Offset) renames Storage_Offset_Impl.Set_Field;
 
-
-
    package Storage_Element_Impl is new GNATCOLL.JSON.Support.Modular_Generic (Storage_Element);
 
    function Create (Val : Storage_Element) return JSON_Value renames Storage_Element_Impl.Create;
@@ -46,7 +44,6 @@ package GNATCOLL.JSON.Support.System.Storage_Elements is
 
    function Get (Val : JSON_Value; Field : UTF8_String) return Storage_Element renames Storage_Element_Impl.Get;
    procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Storage_Element) renames Storage_Element_Impl.Set_Field;
-
 
    package Storage_Array_Impl is new GNATCOLL.JSON.Support.Simple_Arrays_Generic
      (Index_Type   => Storage_Offset,
@@ -61,7 +58,6 @@ package GNATCOLL.JSON.Support.System.Storage_Elements is
 
    procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Storage_Array) renames Storage_Array_Impl.Set_Field;
 
-
    package Integer_Address_Impl is new GNATCOLL.JSON.Support.Modular_Generic (Integer_Address);
 
    function Create (Val : Integer_Address) return JSON_Value renames Integer_Address_Impl.Create;
@@ -71,6 +67,5 @@ package GNATCOLL.JSON.Support.System.Storage_Elements is
    function Get (Val : JSON_Value; Field : UTF8_String) return Integer_Address renames Integer_Address_Impl.Get;
 
    procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Integer_Address) renames Integer_Address_Impl.Set_Field;
-
 
 end GNATCOLL.JSON.Support.System.Storage_Elements;

@@ -48,7 +48,7 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Doubly_Linked_Lists is
          if Name = "Data" then
             Data := Get (Value);
          end if;
-      end;
+      end Process;
    begin
       if Kind (Val) = JSON_Array_Type then
          Data := Get (Val);

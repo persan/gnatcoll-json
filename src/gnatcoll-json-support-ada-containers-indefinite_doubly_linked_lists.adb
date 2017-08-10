@@ -29,7 +29,6 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Doubly_Linked_Lists
 
    function Create (Val : List) return JSON_Array is
 
-
    begin
       return Data : JSON_Array do
          for I of Val loop
@@ -50,7 +49,7 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Doubly_Linked_Lists
          if Name = "Data" then
             Data := Get (Value);
          end if;
-      end;
+      end Process;
    begin
       if Kind (Val) = JSON_Array_Type then
          Data := Get (Val);

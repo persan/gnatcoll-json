@@ -1,7 +1,6 @@
 
 package body GNATCOLL.JSON.Support.Ada.Real_Time is
 
-
    ------------
    -- Create --
    ------------

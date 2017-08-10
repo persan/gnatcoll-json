@@ -101,7 +101,7 @@ package body GNATCOLL.JSON.Support.Ada.Calendar is
          elsif Name = "Seconds" then
             Ret.Seconds := Duration (Float'(Get (Value)));
          end if;
-      end;
+      end Cb;
    begin
       Map_JSON_Object (Val, Cb'Access);
       return Ret;

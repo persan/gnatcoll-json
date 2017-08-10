@@ -54,7 +54,7 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Bounded_Ordered_Sets is
          elsif Name = "Capacity" then
             Capacity := Get (Value);
          end if;
-      end;
+      end Process;
    begin
       if Kind (Val) = JSON_Array_Type then
          Data := Get (Val);

@@ -21,7 +21,6 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 
-
 with GNATCOLL.JSON.Support.Test.Integer_Indefinite_Ordered_Sets_Initialize;
 with GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Ordered_Sets.Generic_Tests;
 

@@ -36,15 +36,13 @@ package body GNATCOLL.JSON.Support.Test.Utilities is
       end return;
    end Read;
 
-
    Ada2file_Mapping : constant Character_Mapping :=
                         To_Mapping ("ABCDEFGHIJKLMNOPQRSTUVWXYZ.",
                                     "abcdefghijklmnopqrstuvwxyz-");
 
    function Ada2file (Item : String) return String is
    begin
-      return Compose ("output" , Translate (Item, Ada2file_Mapping) & ".json");
-   end;
-
+      return Compose ("output", Translate (Item, Ada2file_Mapping) & ".json");
+   end Ada2file;
 
 end GNATCOLL.JSON.Support.Test.Utilities;

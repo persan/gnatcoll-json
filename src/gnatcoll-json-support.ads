@@ -23,9 +23,9 @@
 
 --------------------------------------------------------------------------------
 --
---  This herarchy cotains a set of "support" packages for packing and
+--  This herarchy contains a set of "support" packages for packing and
 --  unpacking "Standard Types" to JSON_Values.
---  The folowing methods are providet for each type and the layout of the
+--  The folowing methods are provided for each type and the layout of the
 --  JSON objects are kept equal for when its possible hence:
 --     Ada.Containers.Vectors,
 --     Ada.Containers.Indefinite_Vectors
@@ -37,7 +37,7 @@
 --     ...
 --  Got the same JSON representation.
 --
--- The methods provided for each type is:
+--  The methods provided for each type is:
 --     function Create (Val : TYPE) return JSON_Value;
 --     function Get (Val : JSON_Value) return TYPE;
 --
@@ -47,6 +47,6 @@
 
 package GNATCOLL.JSON.Support is
    VERSION : constant String := "1.1.1";
-   -- Note Tha above version shall be in sync with
-   -- gnatcoll-jison.gpr  file and the README.md file
+   --  Note Tha above version shall be in sync with
+   --  gnatcoll-jison.gpr  file and the README.md file
 end GNATCOLL.JSON.Support;

@@ -36,7 +36,6 @@ generic
 
 package GNATCOLL.JSON.Support.Ada.Containers.Ordered_Multisets is
 
-
    function Create (Val : Set) return JSON_Array;
    function Get (Val : JSON_Value) return Set;
 

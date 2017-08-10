@@ -41,7 +41,7 @@ generic
 
 package GNATCOLL.JSON.Support.Ada.Containers.Bounded_Hashed_Maps_Simple is
 
-   function Create (Val : Map) return JSON_Value ;
+   function Create (Val : Map) return JSON_Value;
    function Get (Val : JSON_Value) return Map;
 
    function Get (Val : JSON_Value; Field : UTF8_String) return Map;

@@ -29,7 +29,7 @@ library project GnatColl.JSON is
       for Default_Switches ("ada") use ("-gnatwa",
                                         "-gnat12",
                                         "-gnatq",
-                                        -- "-gnatyaAbBcdefhiklnOprtux", --< Triggers a compiler bug in 17.0w 20160503>
+                                        "-gnatyaAbBcdefhiklnOprtux", --< Triggers a compiler bug in 17.0w 20160503>
                                         "-fstack-check",
                                         "-gnatQ");
    end Compiler;

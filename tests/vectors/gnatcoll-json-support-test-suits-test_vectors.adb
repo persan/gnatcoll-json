@@ -27,7 +27,7 @@ with GNATCOLL.JSON.Support.Test.Test_Vectors.Integer_Bounded_Doubly_Linked_Lists
 with GNATCOLL.JSON.Support.Test.Test_Vectors.Integer_Indefinite_Doubly_Linked_Lists.JSON.Test;
 with GNATCOLL.JSON.Support.Test.Test_Vectors.Integer_Doubly_Linked_Lists.JSON.Test;
 pragma Warnings (Off);
--- with GNATCOLL.JSON.Support.GNAT.Spitbol.Table_VString.Test;
+--  with GNATCOLL.JSON.Support.GNAT.Spitbol.Table_VString.Test;
 pragma Warnings (On);
 package body GNATCOLL.JSON.Support.Test.Suits.Test_Vectors is
 

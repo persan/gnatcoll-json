@@ -65,12 +65,12 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Bounded_Ordered_Sets.Generic_T
 
    procedure Test_Get_Set_Filed (Test : in out AUnit.Test_Cases.Test_Case'Class)  is
       Td  : Test_Case renames Test_Case (Test);
-      J   : constant GNATCOLL.JSON.JSON_Value := Create_Object; 
+      J   : constant GNATCOLL.JSON.JSON_Value := Create_Object;
    begin
-      Set_Field(J,"testData",Td.Test_Data.all);
-      Set_Field(J,"testSting","Dummy");
+      Set_Field (J, "testData", Td.Test_Data.all);
+      Set_Field (J, "testSting", "Dummy");
       declare
-         Result : constant Set := Get(J,"testData");
+         Result : constant Set := Get (J, "testData");
       begin
          Assert (Result = Td.Test_Data.all, "data mismatch");
       end;
@@ -83,7 +83,7 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Bounded_Ordered_Sets.Generic_T
    overriding procedure Register_Tests (Test : in out Test_Case) is
       use AUnit.Test_Cases.Registration;
    begin
-      Register_Routine (Test, Test_Write'Unrestricted_Access,"Test_Write");
+      Register_Routine (Test, Test_Write'Unrestricted_Access, "Test_Write");
       Register_Routine (Test, Test_Read'Unrestricted_Access, "Test_Read");
       Register_Routine (Test, Test_Get_Set_Filed'Unrestricted_Access, "Test_Get_Set_Filed");
 

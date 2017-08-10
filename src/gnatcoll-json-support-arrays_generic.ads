@@ -46,9 +46,9 @@ package GNATCOLL.JSON.Support.Arrays_Generic is
    function Get (Val : JSON_Value; Field : UTF8_String) return Array_Type;
    procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Array_Type);
 
-   -- Stored as JSON_Value
-   -- First : Val'First
-   -- Last  : Val'Last
-   -- Data  : [Val(Val'First..Val'Last)]
+   --  Stored as JSON_Value
+   --  First : Val'First
+   --  Last  : Val'Last
+   --  Data  : [Val(Val'First..Val'Last)]
 
 end GNATCOLL.JSON.Support.Arrays_Generic;

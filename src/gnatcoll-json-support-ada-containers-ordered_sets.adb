@@ -18,7 +18,8 @@
 -- a copy of the GCC Runtime Library Exception along with this program;     --
 -- see the files COPYING3 and COPYING.RUNTIME respectively.  If not, see    --
 -- <http://www.gnu.org/licenses/>.                                          --
---                                                                          --
+--
+--
 ------------------------------------------------------------------------------
 
 package body GNATCOLL.JSON.Support.Ada.Containers.Ordered_Sets is
@@ -47,7 +48,7 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Ordered_Sets is
          if Name = "Data" then
             Data := Get (Value);
          end if;
-      end;
+      end Process;
    begin
       if Kind (Val) = JSON_Array_Type then
          Data := Get (Val);

@@ -49,7 +49,7 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Hashed_Sets is
          if Name = "Data" then
             Data := Get (Value);
          end if;
-      end;
+      end Process;
    begin
       if Kind (Val) = JSON_Array_Type then
          Data := Get (Val);

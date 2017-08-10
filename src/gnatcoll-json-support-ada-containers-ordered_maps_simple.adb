@@ -55,7 +55,7 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Ordered_Maps_Simple is
                procedure CB (Name : UTF8_String; Val : JSON_Value) is
                begin
                   Ret.Include (Value (Name), Get (Val));
-               end;
+               end CB;
             begin
                Map_JSON_Object (O, CB'Access);
             end;

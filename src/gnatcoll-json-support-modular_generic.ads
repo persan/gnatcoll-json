@@ -25,7 +25,6 @@ generic
    type Num is mod <>;
 package GNATCOLL.JSON.Support.Modular_Generic is
 
-
    function Create (Val : Num) return JSON_Value with Inline;
    function Get (Val : JSON_Value) return Num with Inline;
    function Get (Val : JSON_Value; Field : UTF8_String) return Num with Inline;

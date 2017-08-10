@@ -5,14 +5,12 @@ with GNATCOLL.JSON.Support.Test.Utilities;
 with GNATCOLL.JSON.Support.Ada.Real_Time;
 package body GNATCOLL.JSON.Support.Test.Ada.Real_Time is
 
-
    use AUnit;
    use AUnit.Assertions;
    use Standard.Ada.Real_Time;
    use GNATCOLL.JSON.Support.Test.Utilities;
    use GNATCOLL.JSON.Support.Ada.Real_Time;
    Unit_Name : constant String := GNAT.Source_Info.Enclosing_Entity;
-
 
    -----------------
    -- Set_Up_Case --
@@ -44,8 +42,8 @@ package body GNATCOLL.JSON.Support.Test.Ada.Real_Time is
    begin
       T := Get (O, "Time");
       Ts := Get (O, "Time_Span");
-      Assert (T = Td.T , "Time missmatch");
-      Assert (Ts = Td.Ts , "Time_Span missmatch");
+      Assert (T = Td.T, "Time missmatch");
+      Assert (Ts = Td.Ts, "Time_Span missmatch");
    end Test_Read;
 
    --------------------

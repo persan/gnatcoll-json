@@ -48,14 +48,14 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Bounded_Ordered_Maps_Simple is
    function Get (Val : JSON_Value) return Map is
       L : constant JSON_Array := Val.Get;
    begin
-      return Ret : Map (Count_Type (Length (L)))do
+      return Ret : Map (Count_Type (Length (L))) do
          for I in 1 .. Length (L) loop
             declare
                O : constant JSON_Value := Get (L, I);
                procedure CB (Name : UTF8_String; Val : JSON_Value) is
                begin
                   Ret.Include (Value (Name), Get (Val));
-               end;
+               end CB;
             begin
                Map_JSON_Object (O, CB'Access);
             end;
