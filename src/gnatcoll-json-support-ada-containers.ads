@@ -22,17 +22,22 @@
 ------------------------------------------------------------------------------
 
 with Ada.Containers;
+with GNATCOLL.JSON.Support.Modular_Generic;
+with GNATCOLL.JSON.Support.Integer_Generic;
 package GNATCOLL.JSON.Support.Ada.Containers is
    use Standard.Ada.Containers;
 
-   function Create (Val : Hash_Type) return JSON_Value with Inline_Always;
-   function Get (Val : JSON_Value) return Hash_Type with Inline_Always;
-   function Get (Val : JSON_Value; Field : UTF8_String) return Hash_Type with Inline_Always;
-   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Hash_Type) with Inline_Always;
+   package Hash_Type_Impl is new GNATCOLL.JSON.Support.Modular_Generic (Hash_Type);
 
-   function Create (Val : Count_Type) return JSON_Value with Inline_Always;
-   function Get (Val : JSON_Value) return Count_Type with Inline_Always;
-   function Get (Val : JSON_Value; Field : UTF8_String) return Count_Type with Inline_Always;
-   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Count_Type) with Inline_Always;
+   function Create (Val : Hash_Type) return JSON_Value renames Hash_Type_Impl.Create;
+   function Get (Val : JSON_Value) return Hash_Type renames Hash_Type_Impl.Get;
+   function Get (Val : JSON_Value; Field : UTF8_String) return Hash_Type renames Hash_Type_Impl.Get;
+   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Hash_Type) renames Hash_Type_Impl.Set_Field;
+
+   package Count_Type_Impl is new GNATCOLL.JSON.Support.Integer_Generic (Count_Type);
+   function Create (Val : Count_Type) return JSON_Value renames Count_Type_Impl.Create;
+   function Get (Val : JSON_Value) return Count_Type renames Count_Type_Impl.Get;
+   function Get (Val : JSON_Value; Field : UTF8_String) return Count_Type renames Count_Type_Impl.Get;
+   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Count_Type) renames Count_Type_Impl.Set_Field;
 
 end GNATCOLL.JSON.Support.Ada.Containers;
