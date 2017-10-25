@@ -13,10 +13,10 @@ endif
 all: compile test
 
 compile:
-	gprbuild -p -j0 -P gnatcoll-json-tests.gpr
 	gprbuild -p -j0 -P gnatcoll-json-util.gpr
 
 test:compile
+	gprbuild -p -j0 -P gnatcoll-json-tests.gpr
 	gnatcoll-json-support-test-main
 
 install:

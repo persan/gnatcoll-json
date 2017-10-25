@@ -11,16 +11,19 @@ project GnatColl.JSON.Tests is
    for Exec_Dir use "bin";
 
    package Builder is
-      for Default_Switches ("Ada") use  GnatColl.JSON.Builder'Default_Switches ("Ada");
+      for Default_Switches ("Ada") use Gnatcoll.Json.Builder'Default_Switches ("Ada");
    end Builder;
 
    package Binder is
-      for Default_Switches ("Ada") use ("-E");
-   end  Binder;
-   package Compiler is
+      for Default_Switches ("ada") use ("-E");
+   end Binder;
 
-      for Default_Switches ("Ada") use  GnatColl.JSON.Compiler'Default_Switches ("Ada");
-      for Switches ("table_vstring_initialize.adb") use ("-g");
+   package Compiler is
+      for Default_Switches ("Ada") use Gnatcoll.Json.Compiler'Default_Switches ("Ada");
    end Compiler;
+
+   package Ide is
+      for Vcs_Kind use "git";
+   end Ide;
 
 end GnatColl.JSON.Tests;
