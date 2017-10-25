@@ -22,7 +22,6 @@
 ------------------------------------------------------------------------------
 
 package body GNATCOLL.JSON.Support.Ada.Containers is
-   use GNATCOLL.JSON;
    ------------
    -- Create --
    ------------

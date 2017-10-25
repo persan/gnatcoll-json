@@ -118,7 +118,7 @@ package body GNATCOLL.JSON.Support.Ada.Numerics.Generic_Real_Arrays is
             null;
          end return;
       end if;
-      return Ret : Real_Matrix (1 .. X, 1 .. Y ) do
+      return Ret : Real_Matrix (1 .. X, 1 .. Y) do
          for Ix in 1 .. X loop
             declare
                Data_Row : constant JSON_Array := Get (Get (Data, Ix));
