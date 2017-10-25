@@ -21,6 +21,14 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 
+------------------------------------------------------------------------------
+--
+--  This is the root for JSON support for the herarchy Ada.*
+--  The package names is a 1:1 maping of the standard packagess with
+--  the sematics GNATCOLL.JSON.Support.GNAT.* = GNAT.*
+--
+------------------------------------------------------------------------------
+
 with Interfaces;
 with GNATCOLL.JSON.Support.Integer_Generic;
 with GNATCOLL.JSON.Support.Modular_Generic;

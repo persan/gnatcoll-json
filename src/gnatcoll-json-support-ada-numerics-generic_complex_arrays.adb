@@ -22,7 +22,6 @@
 ------------------------------------------------------------------------------
 
 package body GNATCOLL.JSON.Support.Ada.Numerics.Generic_Complex_Arrays is
-   use Complex_Types_JSON;
    use Real_Arrays_JSON;
    ------------
    -- Create --

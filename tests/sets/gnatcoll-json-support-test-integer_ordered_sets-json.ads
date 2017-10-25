@@ -20,7 +20,7 @@
 -- <http://www.gnu.org/licenses/>.                                          --
 --                                                                          --
 ------------------------------------------------------------------------------
-
+with GNATCOLL.JSON; use GNATCOLL.JSON;
 with GNATCOLL.JSON.Support.Ada.Containers.Ordered_Sets;
 package GNATCOLL.JSON.Support.Test.Integer_Ordered_Sets.JSON is
   new GNATCOLL.JSON.Support.Ada.Containers.Ordered_Sets

@@ -21,7 +21,7 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 
-with GNATCOLL.JSON; use GNATCOLL.JSON;
+with GNATCOLL.JSON;
 with System.Storage_Elements; use System.Storage_Elements;
 with GNATCOLL.JSON.Support.Modular_Generic;
 with GNATCOLL.JSON.Support.Simple_Arrays_Generic;
