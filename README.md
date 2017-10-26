@@ -15,8 +15,7 @@ package ${package-name}.JSON is
 end ${package-name};
 ```
 
-Next target:
-Rev 1.2.0 YYYY-MM-DD
+Rev 1.2.0 2017-10-26
  * Compatible JSON for one-dimensional containers such as Vectors, Linked-Lists and  Sets.
  *
 
