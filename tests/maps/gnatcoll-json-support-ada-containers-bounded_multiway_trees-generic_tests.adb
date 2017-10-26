@@ -20,11 +20,13 @@
 -- <http://www.gnu.org/licenses/>.                                          --
 --                                                                          --
 ------------------------------------------------------------------------------
-
 with GNAT;
 with GNAT.Source_Info;
 with AUnit.Assertions;
 with GNATCOLL.JSON.Support.Test.Utilities;
+
+pragma Warnings (Off);
+
 package body GNATCOLL.JSON.Support.Ada.Containers.Bounded_Multiway_Trees.Generic_Tests is
 
    use AUnit;

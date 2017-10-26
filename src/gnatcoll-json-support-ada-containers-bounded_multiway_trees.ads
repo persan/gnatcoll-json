@@ -35,17 +35,17 @@ generic
    with package T is new Standard.Ada.Containers.Bounded_Multiway_Trees (<>);
    use T;
 
-   with function Create (Val : Element_Type) return JSON_Value is <>;
-   with function Get (Val : JSON_Value) return Element_Type is <>;
+   with function Create (Val : T.Element_Type) return JSON_Value is <>;
+   with function Get (Val : JSON_Value) return T.Element_Type is <>;
 
 package GNATCOLL.JSON.Support.Ada.Containers.Bounded_Multiway_Trees is
 
-   function Create (Val : Tree) return JSON_Value;
+   function Create (Val : T.Tree) return JSON_Value;
 
-   function Get (Val : JSON_Value) return Tree with Obsolescent => "Not implemented yet";
+   function Get (Val : JSON_Value) return T.Tree with Obsolescent => "Not implemented yet";
 
-   function Get (Val : JSON_Value; Field : UTF8_String) return Tree with Obsolescent => "Not implemented yet";
+   function Get (Val : JSON_Value; Field : UTF8_String) return T.Tree with Obsolescent => "Not implemented yet";
 
-   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Tree);
+   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : T.Tree);
 
 end GNATCOLL.JSON.Support.Ada.Containers.Bounded_Multiway_Trees;

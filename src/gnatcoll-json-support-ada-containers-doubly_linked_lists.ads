@@ -30,15 +30,15 @@ with Ada.Containers.Doubly_Linked_Lists;
 generic
    with package L is new Standard.Ada.Containers.Doubly_Linked_Lists (<>);
    use L;
-   with function Create (Val : Element_Type) return JSON_Value is <>;
-   with function Get (Val : JSON_Value) return Element_Type is <>;
+   with function Create (Val : L.Element_Type) return JSON_Value is <>;
+   with function Get (Val : JSON_Value) return L.Element_Type is <>;
 
 package GNATCOLL.JSON.Support.Ada.Containers.Doubly_Linked_Lists is
 
-   function Create (Val : List) return JSON_Array;
-   function Get (Val : JSON_Value) return List;
+   function Create (Val : L.List) return JSON_Array;
+   function Get (Val : JSON_Value) return L.List;
 
-   function Get (Val : JSON_Value; Field : UTF8_String) return List;
-   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : List);
+   function Get (Val : JSON_Value; Field : UTF8_String) return L.List;
+   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : L.List);
 
 end GNATCOLL.JSON.Support.Ada.Containers.Doubly_Linked_Lists;

@@ -34,18 +34,18 @@ generic
    with package V is new Standard.Ada.Containers.Bounded_Hashed_Maps (<>);
    use V;
 
-   with function Create (Val : Key_Type) return JSON_Value is <>;
-   with function Get (Val : JSON_Value) return Key_Type is <>;
-   with function Create (Val : Element_Type) return JSON_Value is <>;
-   with function Get (Val : JSON_Value) return Element_Type is <>;
+   with function Create (Val : V.Key_Type) return JSON_Value is <>;
+   with function Get (Val : JSON_Value) return V.Key_Type is <>;
+   with function Create (Val : V.Element_Type) return JSON_Value is <>;
+   with function Get (Val : JSON_Value) return V.Element_Type is <>;
 
 package GNATCOLL.JSON.Support.Ada.Containers.Bounded_Hashed_Maps is
 
-   function Create (Val : Map) return JSON_Value with
+   function Create (Val : V.Map) return JSON_Value with
      Inline_Always => True;
-   function Get (Val : JSON_Value) return Map;
+   function Get (Val : JSON_Value) return V.Map;
 
-   function Get (Val : JSON_Value; Field : UTF8_String) return Map;
-   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Map);
+   function Get (Val : JSON_Value; Field : UTF8_String) return V.Map;
+   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : V.Map);
 
 end GNATCOLL.JSON.Support.Ada.Containers.Bounded_Hashed_Maps;

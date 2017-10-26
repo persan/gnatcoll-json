@@ -34,17 +34,17 @@ generic
    with package M is new Standard.Ada.Containers.Indefinite_Ordered_Maps (<>);
    use M;
 
-   with function Image (Val : Key_Type) return String is <>;
-   with function Value (Val : String) return  Key_Type is <>;
+   with function Image (Val : M.Key_Type) return String is <>;
+   with function Value (Val : String) return  M.Key_Type is <>;
 
-   with function Create (Val : Element_Type) return JSON_Value is <>;
-   with function Get (Val : JSON_Value) return Element_Type is <>;
+   with function Create (Val : M.Element_Type) return JSON_Value is <>;
+   with function Get (Val : JSON_Value) return M.Element_Type is <>;
 
 package GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Ordered_Maps_Simple is
-   function Create (Val : Map) return JSON_Value;
-   function Get (Val : JSON_Value) return Map;
+   function Create (Val : M.Map) return JSON_Value;
+   function Get (Val : JSON_Value) return M.Map;
 
-   function Get (Val : JSON_Value; Field : UTF8_String) return Map;
-   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Map);
+   function Get (Val : JSON_Value; Field : UTF8_String) return M.Map;
+   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : M.Map);
 
 end GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Ordered_Maps_Simple;

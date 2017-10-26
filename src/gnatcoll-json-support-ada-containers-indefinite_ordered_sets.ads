@@ -31,15 +31,15 @@ generic
    with package S is new Standard.Ada.Containers.Indefinite_Ordered_Sets (<>);
    use S;
 
-   with function Create (Val : Element_Type) return JSON_Value is <>;
-   with function Get (Val : JSON_Value) return Element_Type is <>;
+   with function Create (Val : S.Element_Type) return JSON_Value is <>;
+   with function Get (Val : JSON_Value) return S.Element_Type is <>;
 
 package GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Ordered_Sets is
 
-   function Create (Val : Set) return JSON_Array;
-   function Get (Val : JSON_Value) return Set;
+   function Create (Val : S.Set) return JSON_Array;
+   function Get (Val : JSON_Value) return S.Set;
 
-   function Get (Val : JSON_Value; Field : UTF8_String) return Set;
-   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Set);
+   function Get (Val : JSON_Value; Field : UTF8_String) return S.Set;
+   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : S.Set);
 
 end GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Ordered_Sets;

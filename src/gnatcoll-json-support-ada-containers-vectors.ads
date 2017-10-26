@@ -31,15 +31,15 @@ generic
    with package V is new Standard.Ada.Containers.Vectors (<>);
    use V;
 
-   with function Create (Val : Element_Type) return JSON_Value is <>;
-   with function Get (Val : JSON_Value) return Element_Type is <>;
+   with function Create (Val : V.Element_Type) return JSON_Value is <>;
+   with function Get (Val : JSON_Value) return V.Element_Type is <>;
 
 package GNATCOLL.JSON.Support.Ada.Containers.Vectors is
-   function Create (Val : Vector) return JSON_Array;
+   function Create (Val : V.Vector) return JSON_Array;
 
-   function Get (Val : JSON_Value) return Vector;
+   function Get (Val : JSON_Value) return V.Vector;
 
-   function Get (Val : JSON_Value; Field : UTF8_String) return Vector;
-   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Vector);
+   function Get (Val : JSON_Value; Field : UTF8_String) return V.Vector;
+   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : V.Vector);
 
 end GNATCOLL.JSON.Support.Ada.Containers.Vectors;
