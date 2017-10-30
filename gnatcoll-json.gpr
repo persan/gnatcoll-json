@@ -12,7 +12,16 @@ library project GnatColl.JSON is
    for Library_Dir use "lib";
 
    for Library_Name use "gnatcolljson";
-   for Library_Kind use Gnatcoll.BUILD;
+
+   case Gnatcoll.BUILD is
+      when "relocatable" =>
+         for Library_Kind use "relocatable";
+      when "static" =>
+         for Library_Kind use "static";
+      when others => -- "static-pic"
+         for Library_Kind use "static-pic";
+   end case;
+
    for Library_Dir use "lib/" & Gnatcoll.BUILD;
 
    for Library_Version use   "lib" &  --  project'Shared_Library_Prefix &
