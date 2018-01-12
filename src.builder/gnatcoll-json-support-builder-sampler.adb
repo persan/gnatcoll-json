@@ -176,7 +176,7 @@ package body GNATCOLL.JSON.Support.Builder.Sampler is
    --  when leaving a [generic] package declaration or a protected [type]
    --  declaration, we have to go one step up in Body_State structure.
 
-   procedure Create_Body_Structure is new Traverse_Element
+   procedure Create_Structure is new Traverse_Element
      (State_Information => Body_State,
       Pre_Operation     => Create_Element_Node,
       Post_Operation    => Go_Up);
@@ -214,6 +214,7 @@ package body GNATCOLL.JSON.Support.Builder.Sampler is
    --  Generates the comment header for a local program unit body. Does nothing
    --  if No_Local_Comment_Headers is ON.
 
+   procedure Generate_Spec_Structure;
    procedure Generate_Body_Structure;
    --  generates in Body_File the Ada part of the sample body, using
    --  the list structure created in Body_Structure as a template
@@ -814,22 +815,20 @@ package body GNATCOLL.JSON.Support.Builder.Sampler is
             raise Fatal_Error;
       end;
 
-      Create_Body_Structure (
-                             Element => Unit_Declaration (CU),
+      Create_Structure (Element => Unit_Declaration (CU),
                              Control => My_Control,
                              State   => My_State);
 
       --  first, trying to create the header, if needed:
       Generate_CU_Header (Header_Created);
-
       if Header_Created then
+         Generate_Spec_Structure;
          Generate_Body_Structure;
          Close (Body_File);
          Close (Spec_O_File);
 
          if not Quiet_Mode then
-            Info ("JSON body is created for " &
-                    GNATCOLL.JSON.Support.Builder.Options.File_Name.all);
+            Info ("JSON body is created for " &  GNATCOLL.JSON.Support.Builder.Options.File_Name.all);
          end if;
 
       else
@@ -974,6 +973,123 @@ package body GNATCOLL.JSON.Support.Builder.Sampler is
             when A_Function_Declaration         |
                  A_Function_Body_Stub           |
                  A_Generic_Function_Declaration =>
+               null;
+
+            when A_Procedure_Declaration        |
+                 A_Procedure_Body_Stub          |
+                 A_Generic_Procedure_Declaration =>
+               null;
+
+            when An_Entry_Declaration =>
+               Generate_Entry_Body (Node);
+
+            when A_Single_Protected_Declaration |
+                 A_Protected_Type_Declaration =>
+               null;
+
+            when A_Single_Task_Declaration |
+                 A_Task_Type_Declaration =>
+               null;
+
+            when An_Incomplete_Type_Declaration       |
+                 A_Tagged_Incomplete_Type_Declaration =>
+               Generate_Full_Type_Declaration (Node);
+
+            when others =>
+               Put      (Standard_Error, "gnatstub: unexpected element ");
+               Put_Line (Standard_Error, "in the body structure");
+               raise Fatal_Error;
+         end case;
+
+         if Node.Down /= null then
+            Print_Node_List (Node.Down);
+         end if;
+
+      end Print_Node;
+
+      procedure Print_Node_List (List : Link) is
+         Next_Node  : Link;
+         List_Start : Link := List;
+      begin
+         Level := Level + 1;
+
+         --  here we have to go to the beginning of the list:
+
+         while List_Start.Prev /= null loop
+            List_Start := List_Start.Prev;
+         end loop;
+
+         Next_Node := List_Start;
+
+         loop
+            Print_Node (Next_Node);
+
+            if Next_Node.Next /= null then
+               Next_Node := Next_Node.Next;
+            else
+               exit;
+            end if;
+
+         end loop;
+
+         --  finalizing the enclosing construct:
+         Level := Level - 1;
+         Next_Node := Next_Node.Up;
+
+         Set_Col (Body_File, Positive_Count (1 + Level * Indent_Level));
+
+         Put_Line (Body_File, "end " & Next_Node.Spec_Name.all & ";");
+
+         if List.Up /= Body_Structure'Access then
+            New_Line (Body_File);
+         end if;
+
+      end Print_Node_List;
+
+   begin
+
+      Print_Node (Body_Structure_Access);
+
+   end Generate_Body_Structure;
+
+   -----------------------------------
+   --  Generate_Spec_Structure is  ---
+   -----------------------------------
+   procedure Generate_Spec_Structure is
+
+      procedure Print_Node (Node : Link);
+      --  outputs a Node into Body_File
+
+      procedure Print_Node_List (List : Link);
+      --  outputs a list of nodes into Body_File. These two procedures -
+      --  Print_Node and Print_Node_List call each other recursively
+
+      procedure Print_Node (Node : Link) is
+         Arg_Kind : constant Flat_Element_Kinds :=
+                      Flat_Element_Kind (Node.Spec);
+      begin
+
+         if Node /= Body_Structure'Access and then Bodyless_Package (Node) then
+            return;
+         end if;
+
+         if Level /= 0
+           and then
+             Arg_Kind not in An_Incomplete_Type_Declaration ..
+               A_Tagged_Incomplete_Type_Declaration
+         then
+            Generate_Unit_Header (Node);
+         end if;
+
+         case Arg_Kind is
+
+            when A_Package_Declaration |
+                 A_Generic_Package_Declaration =>
+               Generate_Package_Body (Node);
+
+            when A_Function_Declaration         |
+                 A_Function_Body_Stub           |
+                 A_Generic_Function_Declaration =>
                Generate_Function_Body (Node);
 
             when A_Procedure_Declaration        |
@@ -1051,7 +1167,7 @@ package body GNATCOLL.JSON.Support.Builder.Sampler is
 
       Print_Node (Body_Structure_Access);
 
-   end Generate_Body_Structure;
+   end Generate_Spec_Structure;
 
    ------------------------
    -- Generate_CU_Header --
