@@ -12,3 +12,4 @@ lib/*
 **/main
 **/*.orig
 
+output/

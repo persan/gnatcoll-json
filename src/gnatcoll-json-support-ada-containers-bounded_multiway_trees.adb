@@ -107,7 +107,8 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Bounded_Multiway_Trees is
    begin
       Map_JSON_Object (Val, CB'Access);
       return Ret : Tree (Capacity) do
-         null;
+
+         raise Program_Error with "Get: Not implemented";
          --  Append_Node (Ret, Ret.Root, Data);
       end return;
    end Get;
