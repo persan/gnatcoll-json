@@ -28,7 +28,6 @@ with Ada.Numerics.Generic_Complex_Arrays;
 generic
    with package Complex_Arrays is new Standard.Ada.Numerics.Generic_Complex_Arrays (<>);
    with package Real_Arrays_JSON is new GNATCOLL.JSON.Support.Ada.Numerics.Generic_Real_Arrays (Complex_Arrays.Real_Arrays);
-   with package Complex_Types_JSON is new GNATCOLL.JSON.Support.Ada.Numerics.Generic_Complex_Types (Complex_Arrays.Complex_Types);
 package GNATCOLL.JSON.Support.Ada.Numerics.Generic_Complex_Arrays is
    use Complex_Arrays;
    function Create (Val : Complex_Vector) return JSON_Value with Inline_Always;

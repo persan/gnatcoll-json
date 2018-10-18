@@ -1,6 +1,6 @@
 with JSONSample.String_Maps.JSON;
 with JSONSample.String_Vectors.JSON;
-
+with GNATCOLL.JSON.Support.Enumeration_Generic;
 package body JSONSample.InterfaceTypes.JSON is
    use GNATCOLL.JSON;
    use JSONSample.String_Maps.JSON;
@@ -82,9 +82,8 @@ package body JSONSample.InterfaceTypes.JSON is
    --  ========================================================
    --                    Req_State_Type
    --  ========================================================
-   package Req_State_Type_JSON is new GNATCOLL.JSON.Support.Enum_Generic
-     (Req_State_Type,
-      Suffix => "_Command");
+   package Req_State_Type_JSON is new GNATCOLL.JSON.Support.Enumeration_Generic
+     (Req_State_Type);
    function Create (Val : Req_State_Type) return JSON_Value renames Req_State_Type_JSON.Create;
    function Get (Val : JSON_Value) return Req_State_Type renames Req_State_Type_JSON.Get;
    function Get (Val : JSON_Value; Name : UTF8_String ) return Req_State_Type renames Req_State_Type_JSON.Get;

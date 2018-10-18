@@ -29,5 +29,4 @@ with Ada.Numerics.Long_Complex_Arrays;
 package GNATCOLL.JSON.Support.Ada.Numerics.Long_Complex_Arrays_JSON is new
   GNATCOLL.JSON.Support.Ada.Numerics.Generic_Complex_Arrays
     (Complex_Arrays     => Standard.Ada.Numerics.Long_Complex_Arrays,
-     Real_Arrays_JSON   => GNATCOLL.JSON.Support.Ada.Numerics.Long_Real_Arrays_JSON,
-     Complex_Types_JSON => GNATCOLL.JSON.Support.Ada.Numerics.Long_Complex_Types_JSON);
+     Real_Arrays_JSON   => GNATCOLL.JSON.Support.Ada.Numerics.Long_Real_Arrays_JSON);

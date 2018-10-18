@@ -10,8 +10,6 @@ package body GNATCOLL.JSON.Support.Test.Ada.Numerics.Generic_Complex_Arrays.Gene
 
    use Complex_Arrays.Real_Arrays;
    use Complex_Arrays;
-   use Real_Arrays_JSON;
-   use Complex_Types_JSON;
 
    Test_Name : constant String := GNAT.Source_Info.Enclosing_Entity;
 

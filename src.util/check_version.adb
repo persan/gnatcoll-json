@@ -68,7 +68,7 @@ begin
       if not VERSION_OK then
          Put_Line (Standard_Error, "README.md:1: Version missmatch "  & GNATCOLL.JSON.Support.VERSION & " not found");
       elsif not DATE_OK then
-         Put_Line (Standard_Error, "README.md:1: Date missmatch: "  & GNAT.Calendar.Time_IO.Image (Ada.Calendar.Clock, GNAT.Calendar.Time_IO.ISO_Date ) & " not Found");
+         Put_Line (Standard_Error, "README.md:1: Date missmatch: "  & GNAT.Calendar.Time_IO.Image (Ada.Calendar.Clock, GNAT.Calendar.Time_IO.ISO_Date) & " not Found");
       end if;
    end if;
    Close (F);
