@@ -13,3 +13,8 @@ lib/*
 **/*.orig
 
 output/
+.tmp*
+gnatinspect.db*
+*loc.xml
+messages.txt
+makefile.setup
