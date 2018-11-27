@@ -1,5 +1,5 @@
 pragma Ada_2012;
-package body Data.Images is
+package body Trader.Data.Images is
    use Ada.Strings.Unbounded;
    function Image (S : Unbounded_String ) return String renames To_String;
    function Image (Item : Integer) return String is (Item'Img);
@@ -31,7 +31,7 @@ package body Data.Images is
    begin
       for I of Item loop
          if not First then
-            Append (Buffer, ", ");
+            Append (Buffer, ", " & ASCII.LF);
          end if;
          First := False;
          Append (Buffer, Image (I));
@@ -48,4 +48,4 @@ package body Data.Images is
       return "( BTC_USD => " & image(item.BTC_USD) & ")";
    end Image;
 
-end Data.Images;
+end Trader.Data.Images;

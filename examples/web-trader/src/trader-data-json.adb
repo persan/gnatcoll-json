@@ -1,5 +1,5 @@
-pragma Ada_2012;
-package body Data.JSON is
+
+package body Trader.Data.JSON is
    use GNATCOLL.JSON;
 
    -- ==============================================================================================
@@ -39,13 +39,13 @@ package body Data.JSON is
       elsif Name = "trade_type" then
          User_Object.trade_type := Get (Value);
       elsif Name = "price" then
-         User_Object.price := Get (Value);
+         User_Object.price := Money'Value (Get (Value));
       elsif Name = "quantity" then
-         User_Object.quantity := Get (Value);
+         User_Object.Quantity := Money'Value (Get (Value));
       elsif Name = "pair" then
          User_Object.pair := Get (Value);
       elsif Name = "amount" then
-         User_Object.amount := Get (Value);
+         User_Object.amount := Money'Value (Get (Value));
       elsif Name = "date" then
          User_Object.date := Get (Value);
       else
@@ -144,4 +144,4 @@ package body Data.JSON is
       Set_Field (Val, Field_Name, Create (Field));
    end Set_Field;
 
-end Data.JSON;
+end Trader.Data.JSON;
