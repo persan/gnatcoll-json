@@ -1,29 +1,30 @@
 with "gnatcoll";
 library project GnatColl.JSON is
+   type Library_Type_Type is ("static", "relocatable", "static-pic");
+   Library_Type : Library_Type_Type := external("LIBRARY_TYPE","static");
 
-   VERSION  := "1.2.0";
+   VERSION  := "1.2.1";
    -- VERSION shall be in sync with:
    --   GNATCOLL.JSON.Support.VERSION
    --   The the README.md file
 
    for Languages use ("ada","Python","Makefile","MarkUP");
    for Source_Dirs use (".","src", "bin");
-   for Object_Dir use ".obj/"  & project'Name & "/" & Gnatcoll.BUILD;
+   for Object_Dir use ".obj/"  & project'Name & "/" & Library_Type;
    for Library_Dir use "lib";
 
    for Library_Name use "gnatcolljson";
-   BUILD : gnatcoll.BUILD_KIND := external("GNATCOLL_JSON_BUILD", external("GNATCOLL_CORE_BUILD", external("GNATCOLL_BUILD", external("LIBRARY_TYPE", "static"))));
 
-   case BUILD is
+   case Library_Type is
       when "relocatable" =>
          for Library_Kind use "relocatable";
       when "static" =>
          for Library_Kind use "static";
-      when others => -- "static-pic"
+      when "static-pic" =>
          for Library_Kind use "static-pic";
    end case;
 
-   for Library_Dir use "lib/" & Gnatcoll.BUILD;
+   for Library_Dir use "lib/" & Library_Type;
 
    for Library_Version use   "lib" &  --  project'Shared_Library_Prefix &
      project'Library_Name &  ".so" &  --  project'Shared_Library_Suffix &
@@ -51,4 +52,5 @@ library project GnatColl.JSON is
       for Body_Suffix ("Makefile") use ".mk";
       for Implementation_Exceptions  ("Makefile") use  ("Makefile");
    end Naming;
+
 end GnatColl.JSON;

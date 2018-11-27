@@ -4,6 +4,8 @@ with "aunit";
 project GnatColl.JSON.Tests is
 
    for Main use ("gnatcoll-json-support-test-main.adb");
+   type Library_Type_Type is ("static", "relocatable", "static-pic");
+   Library_Type : Library_Type_Type := external("LIBRARY_TYPE","static");
 
    for Languages use ("ada");
    for Source_Dirs use ("tests/**");
