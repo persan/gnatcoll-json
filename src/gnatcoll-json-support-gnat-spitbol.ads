@@ -44,4 +44,4 @@ package GNATCOLL.JSON.Support.GNAT.Spitbol is
       procedure Set_Field  (Val        : JSON_Value;  Field_Name : UTF8_String; Field  : V.Table_Array);
    end Table;
 
-end GNATCOLL.JSON.Support.GNAT.SPitbol;
+end GNATCOLL.JSON.Support.GNAT.Spitbol;

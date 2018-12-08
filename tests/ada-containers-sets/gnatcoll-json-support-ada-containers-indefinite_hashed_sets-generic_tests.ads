@@ -25,8 +25,9 @@ with AUnit.Test_Cases;
 generic
    with function Initialize return Set;
 package GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Hashed_Sets.Generic_Tests is
+   type Set_Access is access all Set;
    type Test_Case is new AUnit.Test_Cases.Test_Case with  record
-      Test_Data : access Set;
+      Test_Data : Set_Access;
    end record;
 
    overriding procedure Set_Up_Case (Test : in out Test_Case);

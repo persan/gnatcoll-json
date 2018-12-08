@@ -25,8 +25,11 @@ with AUnit.Test_Cases;
 generic
    with function Initialize return Map;
 package GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Ordered_Maps.Generic_Tests is
+
+   type Map_Access is access all Map;
+
    type Test_Case is new AUnit.Test_Cases.Test_Case with  record
-      Test_Data : access Map;
+      Test_Data : Map_Access;
    end record;
 
    overriding procedure Set_Up_Case (Test : in out Test_Case);

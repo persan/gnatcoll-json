@@ -1,5 +1,5 @@
 with Interfaces;
-package body GNATCOLL.JSON.Support.GNAT.SPitbol is
+package body GNATCOLL.JSON.Support.GNAT.Spitbol is
 
    -----------
    -- Table --
@@ -156,4 +156,4 @@ package body GNATCOLL.JSON.Support.GNAT.SPitbol is
       end Set_Field;
    end Table;
 
-end GNATCOLL.JSON.Support.GNAT.SPitbol;
+end GNATCOLL.JSON.Support.GNAT.Spitbol;

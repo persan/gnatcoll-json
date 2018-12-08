@@ -21,7 +21,6 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 
-with GNATCOLL.JSON.Support.Ada.Numerics.Generic_Complex_Types;
 with GNATCOLL.JSON.Support.Ada.Numerics.Generic_Real_Arrays;
 with Ada.Numerics.Generic_Complex_Arrays;
 
