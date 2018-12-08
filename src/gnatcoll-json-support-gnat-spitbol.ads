@@ -21,7 +21,7 @@
 --                                                                          --
 ------------------------------------------------------------------------------
 with GNAT.Spitbol;
-package GNATCOLL.JSON.Support.GNAT.SPitbol is
+package GNATCOLL.JSON.Support.GNAT.Spitbol is
 
    generic
       with package V is new Standard.GNAT.Spitbol.Table (<>);
