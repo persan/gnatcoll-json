@@ -24,6 +24,7 @@ with Ada.Containers;
 with Ada.Strings.Fixed;
 package GNATCOLL.JSON.Support.Test.Utilities is
    use Ada.Containers;
+   procedure Clean;
 
    procedure Write (Path : String; Item : String);
    function Read (Path : String) return String;

@@ -20,44 +20,7 @@
 -- <http://www.gnu.org/licenses/>.                                          --
 --                                                                          --
 ------------------------------------------------------------------------------
-pragma Warnings (Off);
-with GNATCOLL.JSON.Support.GNAT.SPitbol.Table_Boolean;
-with GNATCOLL.JSON.Support.GNAT.SPitbol.Table_Integer;
-with GNATCOLL.JSON.Support.GNAT.SPitbol.Table_VString;
-with GNATCOLL.JSON.Support.Ada.Calendar;
-with GNATCOLL.JSON.Support.Ada.Containers.Bounded_Doubly_Linked_Lists;
-with GNATCOLL.JSON.Support.Ada.Containers.Bounded_Hashed_Maps;
-with GNATCOLL.JSON.Support.Ada.Containers.Bounded_Hashed_Maps_Simple;
-with GNATCOLL.JSON.Support.Ada.Containers.Bounded_Hashed_Sets;
-with GNATCOLL.JSON.Support.Ada.Containers.Bounded_Multiway_Trees;
-with GNATCOLL.JSON.Support.Ada.Containers.Bounded_Ordered_Maps;
-with GNATCOLL.JSON.Support.Ada.Containers.Bounded_Ordered_Maps_Simple;
-with GNATCOLL.JSON.Support.Ada.Containers.Bounded_Vectors;
-with GNATCOLL.JSON.Support.Ada.Containers.Doubly_Linked_Lists;
-with GNATCOLL.JSON.Support.Ada.Containers.Hashed_Maps;
-with GNATCOLL.JSON.Support.Ada.Containers.Hashed_Maps_Simple;
-with GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Hashed_Maps;
-with GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Hashed_Maps_Simple;
-with GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Vectors;
-with GNATCOLL.JSON.Support.Ada.Containers.Ordered_Maps;
-with GNATCOLL.JSON.Support.Ada.Containers.Ordered_Sets;
-with GNATCOLL.JSON.Support.Ada.Containers.Ordered_Maps_Simple;
-with GNATCOLL.JSON.Support.Ada.Containers.Vectors;
-with GNATCOLL.JSON.Support.Ada.Numerics;
-with GNATCOLL.JSON.Support.Ada.Numerics.Complex_Arrays_JSON;
-with GNATCOLL.JSON.Support.Ada.Numerics.Complex_Types_JSON;
-with GNATCOLL.JSON.Support.Ada.Numerics.Generic_Complex_Arrays;
-with GNATCOLL.JSON.Support.Ada.Numerics.Generic_Complex_Types;
-with GNATCOLL.JSON.Support.Ada.Numerics.Long_Complex_Arrays_JSON;
-with GNATCOLL.JSON.Support.Ada.Numerics.Long_Complex_Types_JSON;
-with GNATCOLL.JSON.Support.Ada.Numerics.Long_Real_Arrays_JSON;
-with GNATCOLL.JSON.Support.Ada.Numerics.Long_Long_Complex_Arrays_JSON;
-with GNATCOLL.JSON.Support.Ada.Numerics.Long_Long_Complex_Types_JSON;
-with GNATCOLL.JSON.Support.Ada.Numerics.Long_Long_Real_Arrays_JSON;
-with GNATCOLL.JSON.Support.Ada.Numerics.Real_Arrays_JSON;
-
-pragma Warnings (On);
-
+with GNATCOLL.JSON.Support.Test.Utilities;
 with AUnit.Run;
 with AUnit.Reporter.Text;
 --  with AUnit.Reporter.GNATtest;
@@ -71,5 +34,6 @@ procedure GNATCOLL.JSON.Support.Test.Main is
    --  Reporter : AUnit.Reporter.GNATtest.GNATtest_Reporter;
    --  Reporter : AUnit.Reporter.XML.XML_Reporter;
 begin
+   GNATCOLL.JSON.Support.Test.Utilities.Clean;
    Run (Reporter);
 end GNATCOLL.JSON.Support.Test.Main;

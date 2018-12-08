@@ -39,6 +39,12 @@ package body GNATCOLL.JSON.Support.Test.Utilities is
    Ada2file_Mapping : constant Character_Mapping :=
                         To_Mapping ("ABCDEFGHIJKLMNOPQRSTUVWXYZ.",
                                     "abcdefghijklmnopqrstuvwxyz-");
+   procedure Clean is
+   begin
+      Delete_Directory ("output");
+   exception
+      when others => null;
+   end Clean;
 
    function Ada2file (Item : String) return String is
    begin

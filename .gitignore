@@ -4,13 +4,12 @@ Makefile.conf
 _
 output/*.json
 lib/*
-**/b__*
-**/*.o
-**/*.so
-**/*.ali
-**/.obj
+b__*
+*.o
+*.so
+*.ali
 **/main
-**/*.orig
+*.orig
 
 output/
 .tmp*
@@ -18,3 +17,14 @@ gnatinspect.db*
 *loc.xml
 messages.txt
 makefile.setup
+*.stderr
+*.stdout
+*.bexce
+*.cswi
+*~
+*.bexch
+clang_ref_cache.db
+*.bexch
+*.lexch
+trader
+trader-main

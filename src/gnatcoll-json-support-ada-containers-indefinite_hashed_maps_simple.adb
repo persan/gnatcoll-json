@@ -28,17 +28,12 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Hashed_Maps_Simple 
    ------------
 
    function Create (Val : Map) return JSON_Value is
-      Data : JSON_Array;
    begin
-      for I in Val.Iterate loop
-         declare
-            O : constant JSON_Value := Create_Object;
-         begin
-            O.Set_Field (Image (Key (I)), Create (Element (I)));
-            Append (Data, O);
-         end;
-      end loop;
-      return Create (Data);
+      return Ret : constant JSON_Value := Create_Object do
+         for I in Val.Iterate loop
+            Ret.Set_Field (Image (Key (I)), Create (Element (I)));
+         end loop;
+      end return;
    end Create;
 
    ---------
@@ -46,20 +41,16 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Hashed_Maps_Simple 
    ---------
 
    function Get (Val : JSON_Value) return Map is
-      L : constant JSON_Array := Val.Get;
    begin
       return Ret : Map do
-         for I in 1 .. Length (L) loop
-            declare
-               O : constant JSON_Value := Get (L, I);
-               procedure CB (Name : UTF8_String; Val : JSON_Value) is
-               begin
-                  Ret.Include (Value (Name), Get (Val));
-               end CB;
+         declare
+            procedure CB (Name : UTF8_String; Val : JSON_Value) is
             begin
-               Map_JSON_Object (O, CB'Access);
-            end;
-         end loop;
+               Ret.Include (Value (Name), Get (Val));
+            end CB;
+         begin
+            Map_JSON_Object (Val, CB'Access);
+         end;
       end return;
    end Get;
 
