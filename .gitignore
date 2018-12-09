@@ -27,4 +27,4 @@ clang_ref_cache.db
 *.bexch
 *.lexch
 trader
-trader-main
+*main

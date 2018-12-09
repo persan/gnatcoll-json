@@ -24,8 +24,8 @@
 ------------------------------------------------------------------------------
 --  Stores data as a JSON Object:
 --   {"Capacity": Capacity,
---    "Data     : {"Key": Element,
---                 "Key": Element,
+--    "Data     : [{"Key": Key, "Element", Element},
+--                 {"Key": Key, "Element", Element},
 --                  ... }
 ------------------------------------------------------------------------------
 with Ada.Containers.Bounded_Ordered_Maps;

@@ -15,6 +15,11 @@ package ${package-name}.JSON is
 end ${package-name};
 ```
 
+Rev 1.3.0 2018-12-xx
+* Corrected implementation of simple_maps.
+* Clean up compiler warnings.
+*
+
 Rev 1.2.0 2017-10-26
  * Compatible JSON for one-dimensional containers such as Vectors, Linked-Lists and  Sets.
  *

@@ -66,10 +66,10 @@ CLEANER=gprclean -q $(RBD) $(GTARGET)
 UNINSTALLER=$(INSTALLER) -p -f --install-name=gnatcoll-json --uninstall
 
 
-EXEC_DIR := $(shell gprinfo --exec-dir gnatcoll-json-tests.gpr -XLIBRARY_TYPE=static 2>/dev/null)
+EXEC_DIR := $(shell gprinfo --exec-dir -r tests/gnatcoll-json-tests.gpr -XLIBRARY_TYPE=static 2>/dev/null)
 
 ifeq ("${EXEC_DIR}","")
-	EXEC_DIR:=${CURDIR}/bin
+	EXEC_DIRS:=${CURDIR}/bin:${CURDIR}/tests/bin
 endif
 
 
@@ -116,6 +116,7 @@ clean: $(LIBRARY_TYPES:%=clean-%)
 clean-%:
 	-$(CLEANER) -XLIBRARY_TYPE=$* -XXMLADA_BUILD=$* -XGPR_BUILD=$* \
 		$(GPR_VARS) $(GNATCOLL_JSON_GPR)
+
 .PHONY: test-install
 test-install:
 	@sudo rm -rf _
@@ -152,8 +153,8 @@ check_clean: # IGNORE
 tools:
 	gprbuild -P gnatcoll-json-util.gpr -XLIBRARY_TYPE=static
 test:
-	gprbuild -P gnatcoll-json-tests.gpr -XLIBRARY_TYPE=static
-	gnatcoll-json-support-test-main
+	gprbuild -P tests/gnatcoll-json-tests.gpr -XLIBRARY_TYPE=static
+	tests/bin/gnatcoll-json-support-test-main
 	
 tag:tools check_clean all
 	@check_version >/dev/null
