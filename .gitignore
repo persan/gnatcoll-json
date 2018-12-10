@@ -28,3 +28,4 @@ clang_ref_cache.db
 *.lexch
 trader
 *main
+*.cgpr
