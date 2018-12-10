@@ -25,6 +25,7 @@ with GNATCOLL.JSON.Support.Test.Suits.Test_Vectors;
 with GNATCOLL.JSON.Support.Test.Set_Suites;
 with GNATCOLL.JSON.Support.Test.Map_Suites;
 with GNATCOLL.JSON.Support.Test.Suits.Numerics;
+with GNATCOLL.JSON.Support.Test.Tree_Suites;
 with GNATCOLL.JSON.Support.Test.Ada.Containers;
 with GNATCOLL.JSON.Support.Test.Check_Golden;
 with GNATCOLL.JSON.Support.Test.Ada.Calendar;
@@ -39,11 +40,11 @@ package body GNATCOLL.JSON.Support.Test.Suits.All_Tests is
    Result : aliased Test_Suite;
 
    --  Statically allocate test cases:
-   Test_1 : aliased GNATCOLL.JSON.Support.Test.Ada.Containers.Test_Case;
-   Test_2 : aliased GNATCOLL.JSON.Support.Test.Ada.Calendar.Test_Case;
-   Test_3 : aliased GNATCOLL.JSON.Support.Test.Ada.Real_Time.Test_Case;
-   Test_4 : aliased GNATCOLL.JSON.Support.Test.System.Test_Case;
-   Test_5 : aliased GNATCOLL.JSON.Support.Test.System.Storage_Elements.Test_Case;
+   Test_Ada_Containers          : aliased GNATCOLL.JSON.Support.Test.Ada.Containers.Test_Case;
+   Test_Ada_Calendar            : aliased GNATCOLL.JSON.Support.Test.Ada.Calendar.Test_Case;
+   Test_Ada_Real_Time           : aliased GNATCOLL.JSON.Support.Test.Ada.Real_Time.Test_Case;
+   Test_System                  : aliased GNATCOLL.JSON.Support.Test.System.Test_Case;
+   Test_System_Storage_Elements : aliased GNATCOLL.JSON.Support.Test.System.Storage_Elements.Test_Case;
 
    Golden : aliased GNATCOLL.JSON.Support.Test.Check_Golden.Test_Case;
 
@@ -53,16 +54,17 @@ package body GNATCOLL.JSON.Support.Test.Suits.All_Tests is
 
    function Suite return AUnit.Test_Suites.Access_Test_Suite is
    begin
-      Add_Test (Result'Access, Test_1'Access);
-      Add_Test (Result'Access, Test_2'Access);
-      Add_Test (Result'Access, Test_3'Access);
-      Add_Test (Result'Access, Test_4'Access);
-      Add_Test (Result'Access, Test_5'Access);
+      Add_Test (Result'Access, Test_Ada_Containers'Access);
+      Add_Test (Result'Access, Test_Ada_Calendar'Access);
+      Add_Test (Result'Access, Test_Ada_Real_Time'Access);
+      Add_Test (Result'Access, Test_System'Access);
+      Add_Test (Result'Access, Test_System_Storage_Elements'Access);
 
       Add_Test (Result'Access, Set_Suites.Suite);
       Add_Test (Result'Access, Map_Suites.Suite);
+      Add_Test (Result'Access, Tree_Suites.Suite);
       Add_Test (Result'Access, Test_Vectors.Suite);
-      Add_Test (Result'Access, GNATCOLL.JSON.Support.Test.Suits.Numerics.Suite);
+      Add_Test (Result'Access, Numerics.Suite);
 
       Add_Test (Result'Access, Golden'Access);
       return Result'Access;

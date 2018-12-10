@@ -27,16 +27,11 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Bounded_Ordered_Maps_Simple is
    -- Create --
    ------------
 
-   function Create (Val : Map) return JSON_Array is
+   function Create (Val : Map) return JSON_Value is
    begin
-      return Data : JSON_Array do
+      return Data : constant JSON_Value := Create_Object do
          for I in Val.Iterate loop
-            declare
-               O : constant JSON_Value := Create_Object;
-            begin
-               O.Set_Field (Image (Key (I)), Create (Element (I)));
-               Append (Data, O);
-            end;
+            Data.Set_Field (Image (Key (I)), Create (Element (I)));
          end loop;
       end return;
    end Create;
@@ -44,22 +39,28 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Bounded_Ordered_Maps_Simple is
    ---------
    -- Get --
    ---------
-
    function Get (Val : JSON_Value) return Map is
-      L : constant JSON_Array := Val.Get;
+      Length : Standard.Ada.Containers.Count_Type := 0;
    begin
-      return Ret : Map (Count_Type (Length (L))) do
-         for I in 1 .. Length (L) loop
-            declare
-               O : constant JSON_Value := Get (L, I);
-               procedure CB (Name : UTF8_String; Val : JSON_Value) is
-               begin
-                  Ret.Include (Value (Name), Get (Val));
-               end CB;
+      declare
+         procedure CB (Name : UTF8_String; Val : JSON_Value) is
+            pragma Unreferenced (Name, Val);
+         begin
+            Length := Length + 1;
+         end CB;
+      begin
+         Map_JSON_Object (Val, CB'Access);
+      end;
+
+      return Ret : Map (Length) do
+         declare
+            procedure CB (Name : UTF8_String; Val : JSON_Value) is
             begin
-               Map_JSON_Object (O, CB'Access);
-            end;
-         end loop;
+               Ret.Include (Value (Name), Get (Val));
+            end CB;
+         begin
+            Map_JSON_Object (Val, CB'Access);
+         end;
       end return;
    end Get;
 
