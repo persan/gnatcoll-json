@@ -1,0 +1,9 @@
+with "gnatcoll-json.gpr";
+
+project GnatColl.JSON.Builder  is
+
+   for Languages use ("ada");
+   for Exec_Dir use "bin";
+   for object_Dir use ".obj";
+   for main use ("main.adb");
+end GnatColl.JSON.Builder;
