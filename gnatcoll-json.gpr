@@ -45,6 +45,9 @@ library project GnatColl.JSON is
                                         "-fstack-check",
                                         "-gnatQ");
    end Compiler;
+   package Install is
+
+   end  Install;
 
    package Naming is
       for Body_Suffix ("Python") use ".py";

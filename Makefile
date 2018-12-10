@@ -24,7 +24,7 @@ endif
 
 GNATCOLL_JSON_OS := $(if $(findstring darwin,$(NORMALIZED_TARGET)),osx,$(if $(findstring windows,$(NORMALIZED_TARGET)),windows,unix))
 
-prefix := $(dir $(shell $(WHICH) gnatls))..
+prefix ?= $(dir $(shell $(WHICH) gnatls))..
 GNATCOLL_JSON_VERSION := $(shell $(CAT) $(SOURCE_DIR)/version_information)
 
 BUILD         = PROD
@@ -142,7 +142,7 @@ makefile.setup:
 	$(ECHO) "SOURCE_DIR=$(SOURCE_DIR)" >> makefile.setup
 	$(ECHO) "GNATCOLL_JSON_OS=$(GNATCOLL_JSON_OS)" >> makefile.setup
 	$(ECHO) "GNATCOLL_JSON_VERSION=$(GNATCOLL_JSON_VERSION)" >> makefile.setup
-	
+
 
 # Let gprbuild handle parallelisation. In general, we don't support parallel
 # runs in this Makefile, as concurrent gprinstall processes may crash.
@@ -155,7 +155,7 @@ tools:
 test:
 	gprbuild -P tests/gnatcoll-json-tests.gpr -XLIBRARY_TYPE=static
 	tests/bin/gnatcoll-json-support-test-main
-	
+
 tag:tools check_clean all
 	@check_version >/dev/null
 	@check_tags gnatcoll-json-v`check_version`

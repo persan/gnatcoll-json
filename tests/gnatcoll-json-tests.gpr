@@ -13,7 +13,7 @@ project GnatColl.JSON.Tests is
    for Exec_Dir use "bin";
 
    package Builder is
-      for Default_Switches ("Ada") use Gnatcoll.Json.Builder'Default_Switches ("Ada");
+      for Default_Switches ("Ada") use GnatColl.JSON.Builder'Default_Switches ("Ada");
    end Builder;
 
    package Binder is
@@ -21,7 +21,7 @@ project GnatColl.JSON.Tests is
    end Binder;
 
    package Compiler is
-      for Default_Switches ("Ada") use Gnatcoll.Json.Compiler'Default_Switches ("Ada");
+      for Default_Switches ("Ada") use GnatColl.JSON.Compiler'Default_Switches ("Ada");
    end Compiler;
 
    package Ide is
