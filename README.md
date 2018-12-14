@@ -1,5 +1,5 @@
 This library provides a set of utilities for serializing/deseriallizing
-Ada Standard containers and most of the Types defind in the package heracies
+Ada Standard containers and most of the Types defined in the package hierarchies
     Ada, GNAT, System, Interfaces
    to/from JSON
 
