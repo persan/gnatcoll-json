@@ -29,3 +29,4 @@ clang_ref_cache.db
 trader
 *main
 *.cgpr
+*.pyc
