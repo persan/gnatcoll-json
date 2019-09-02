@@ -10,5 +10,8 @@ begin
    Register_Routine (Test, Test_Get_Array_1'Unrestricted_Access, "Test_Get_Array_1");
    Register_Routine (Test, Test_Get_Array_2'Unrestricted_Access, "Test_Get_Array_2");
    Register_Routine (Test, Test_Get_Array_3'Unrestricted_Access, "Test_Get_Array_3");
+   Register_Routine (Test, Test_Get_Array_Hidden_Alternate_1'Unrestricted_Access, "Test_Get_Array_Hidden_Alternate_1");
+   Register_Routine (Test, Test_Get_Array_Hidden_Alternate_2'Unrestricted_Access, "Test_Get_Array_Hidden_Alternate_2");
+   Register_Routine (Test, Test_Get_Array_Hidden_Alternate_3'Unrestricted_Access, "Test_Get_Array_Hidden_Alternate_3");
 end Register_Tests;
 --  end read only

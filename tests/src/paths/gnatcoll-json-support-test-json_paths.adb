@@ -97,6 +97,32 @@ package body GNATCOLL.JSON.Support.Test.JSON_Paths is
       Assert (Result = Expected, "Got :" & Result'Img & " Expected:" & Expected'Img);
    end Test_Get_Array_3;
 
+   procedure Test_Get_Array_Hidden_Alternate_1 (Test : in out AUnit.Test_Cases.Test_Case'Class) is
+      T        : Test_Case renames Test_Case (Test);
+      Expected : constant Integer := 2;
+      Result   : Integer;
+   begin
+      Result := Get (GNATCOLL.JSON.Support.JSON_Paths.Get (T.Data, "array.2"));
+      Assert (Result = Expected, "Got :" & Result'Img & " Expected:" & Expected'Img);
+   end Test_Get_Array_Hidden_Alternate_1;
+
+   procedure Test_Get_Array_Hidden_Alternate_2 (Test : in out AUnit.Test_Cases.Test_Case'Class) is
+      T        : Test_Case renames Test_Case (Test);
+      Expected : constant Integer := 3;
+      Result   : Integer;
+   begin
+      Result := Get (GNATCOLL.JSON.Support.JSON_Paths.Get (T.Data, "array.4.3"));
+      Assert (Result = Expected, "Got :" & Result'Img & " Expected:" & Expected'Img);
+   end Test_Get_Array_Hidden_Alternate_2;
+
+   procedure Test_Get_Array_Hidden_Alternate_3 (Test : in out AUnit.Test_Cases.Test_Case'Class) is
+      T        : Test_Case renames Test_Case (Test);
+      Expected : constant Boolean := True;
+      Result   : Boolean;
+   begin
+      Result := Get (GNATCOLL.JSON.Support.JSON_Paths.Get (T.Data, "array.5.True"));
+      Assert (Result = Expected, "Got :" & Result'Img & " Expected:" & Expected'Img);
+   end Test_Get_Array_Hidden_Alternate_3;
    --------------------
    -- Register_Tests --
    --------------------
