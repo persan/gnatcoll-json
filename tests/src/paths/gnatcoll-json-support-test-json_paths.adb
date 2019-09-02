@@ -4,7 +4,6 @@ with GNAT.Source_Info;
 with AUnit; use AUnit;
 with GNATCOLL.JSON.Support.JSON_Paths;
 with AUnit.Assertions;
-with Ada.Text_IO; use Ada.Text_IO;
 package body GNATCOLL.JSON.Support.Test.JSON_Paths is
    use AUnit.Assertions;
    Unit_Name : constant String := GNAT.Source_Info.Enclosing_Entity;
@@ -33,7 +32,6 @@ package body GNATCOLL.JSON.Support.Test.JSON_Paths is
    overriding procedure Set_Up_Case (Test : in out Test_Case) is
    begin
       Test.Data := Read (Src);
-      Put_Line (Test.Data.Write (Compact => False));
    end Set_Up_Case;
 
    procedure Test_Get_deep (Test : in out AUnit.Test_Cases.Test_Case'Class) is
