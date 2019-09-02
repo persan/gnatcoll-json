@@ -13,7 +13,7 @@ package GNATCOLL.JSON.Support.JSON_Paths is
    --                [ {"fix"  : 1},
    --                  {"fool" : 2}
    --                ],
-   --
+   --              "numbers"   : [1,2,3,5,6,7,9],
    --              "description" : "fix",
    --              "speed"       : 1.2,
    --              "active"      : False
