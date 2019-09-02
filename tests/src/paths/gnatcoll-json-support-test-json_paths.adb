@@ -4,6 +4,7 @@ with GNAT.Source_Info;
 with AUnit; use AUnit;
 with GNATCOLL.JSON.Support.JSON_Paths;
 with AUnit.Assertions;
+with Ada.Text_IO; use Ada.Text_IO;
 package body GNATCOLL.JSON.Support.Test.JSON_Paths is
    use AUnit.Assertions;
    Unit_Name : constant String := GNAT.Source_Info.Enclosing_Entity;
@@ -19,15 +20,20 @@ package body GNATCOLL.JSON.Support.Test.JSON_Paths is
            "   ""struct""  : {""f1"": ""f1""} " & "," &
            "   ""deep1""   : {""deep2"": " &
            "                    {"  &
-           "                        ""deep3""    : ""rock"" " &
-           "                    }"  & "," &
-           "   ""array""   : [ 1,2,3, [1,2,3]]" & "" &
-           "                 } " & "" &
+           "                        ""deep3""    : ""rock""," &
+           "                        ""deep31""   : ""sss""" &
+           "                    }"  &
+           "                 }," &
+           "   ""array""   : [ 1,2,3, [1,2,3,4], { ""False"": false, " &
+           "                                       ""True"" : true" &
+           "                                     }" &
+           "                 ]" &
            "}";
 
    overriding procedure Set_Up_Case (Test : in out Test_Case) is
    begin
       Test.Data := Read (Src);
+      Put_Line (Test.Data.Write (Compact => False));
    end Set_Up_Case;
 
    procedure Test_Get_deep (Test : in out AUnit.Test_Cases.Test_Case'Class) is
@@ -80,9 +86,18 @@ package body GNATCOLL.JSON.Support.Test.JSON_Paths is
       Expected : constant Integer := 3;
       Result   : Integer;
    begin
-      Result := Get (GNATCOLL.JSON.Support.JSON_Paths.Get (T.Data, "array(2)(3)"));
+      Result := Get (GNATCOLL.JSON.Support.JSON_Paths.Get (T.Data, "array(4)(3)"));
       Assert (Result = Expected, "Got :" & Result'Img & " Expected:" & Expected'Img);
    end Test_Get_Array_2;
+
+   procedure Test_Get_Array_3 (Test : in out AUnit.Test_Cases.Test_Case'Class) is
+      T        : Test_Case renames Test_Case (Test);
+      Expected : constant Boolean := True;
+      Result   : Boolean;
+   begin
+      Result := Get (GNATCOLL.JSON.Support.JSON_Paths.Get (T.Data, "array(5).True"));
+      Assert (Result = Expected, "Got :" & Result'Img & " Expected:" & Expected'Img);
+   end Test_Get_Array_3;
 
    --------------------
    -- Register_Tests --
