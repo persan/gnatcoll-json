@@ -46,8 +46,8 @@
 --------------------------------------------------------------------------------
 
 package GNATCOLL.JSON.Support is
-   VERSION      : constant String := "1.3.0";
-   VERSION_DATE : constant String := "2018-12-22";
+   VERSION      : constant String := "1.4.0";
+   VERSION_DATE : constant String := "2019-09-xx";
    --  Note The above versions shall be in sync with
    --  gnatcoll-json.gpr  file and the README.md file
 
@@ -76,9 +76,35 @@ package GNATCOLL.JSON.Support is
    --    }
    --
    --  JSON_Null  will be returned if the Path dont exist.
-   -------------------------------------------------------------------
+   --
+   ----------------------------------------------------------------------------
 
-   function Has_Value (Value : JSON_Value; Path : UTF8_String) return Boolean is
+   function Path_Has_Value (Value : JSON_Value; Path : UTF8_String) return Boolean is
      (Get (Value, Path).Kind in JSON_Elementary_Value_Type);
+
+private
+   function "or" (L, R : JSON_Value) return JSON_Value;
+   --
+   --  Merges two JSON_Objects together and the values in the right object
+   --  has presedence.
+   --  Raises Constraint_Error if the kind of the right node is JSON_Elementary_Value_Type
+   --  and the left node is of a differnet Kind and not JSON_Null_Type.
+   --  { "a" : 1 } "or"  { "b" : True } => { "a" : 1 , "b" : True }
+   --  { "a" : 1 } "or"  { "a" : 2 }    => { "a" : 2}
+   --  { "a" : 1 } "or"  { "a" : True } => { "a" : True }
+   --  { "a" : [1,2] } "or"  { "a" : [3,4] } => { "a" : [1,3,3,4] }
+   ----------------------------------------------------------------------------
+
+   function "+" (L, R : JSON_Value) return JSON_Value;
+   --
+   --  Merges two JSON_Objects together and the values in the right object
+   --  has presedence.
+   --  Raises Constraint_Error if the kind of the right node is
+   --  of a different kind then left node and not JSON_Null_Type.
+   --  { "a" : 1 } "or"  { "b" : True } => { "a" : 1 , "b" : True }
+   --  { "a" : 1 } "or"  { "a" : 2 }    => { "a" : 2}
+   --  { "a" : 1 } "or"  { "a" : True } => raise Constraint_Error
+   --  { "a" : [1,2] } "or"  { "a" : [3,4] } => { "a" : [1,3,3,4] }
+   ----------------------------------------------------------------------------
 
 end GNATCOLL.JSON.Support;

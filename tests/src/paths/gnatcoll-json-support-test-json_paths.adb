@@ -97,6 +97,11 @@ package body GNATCOLL.JSON.Support.Test.JSON_Paths is
       Assert (Result = Expected, "Got :" & Result'Img & " Expected:" & Expected'Img);
    end Test_Get_Array_3;
 
+   ----------------------------------------------------------------------------
+   --  Note the tests for alternate arrays is a non documented feature
+   --  kept for compabilty with another implementation
+   --  This syntax is not to be documented in the public API.
+   --
    procedure Test_Get_Array_Hidden_Alternate_1 (Test : in out AUnit.Test_Cases.Test_Case'Class) is
       T        : Test_Case renames Test_Case (Test);
       Expected : constant Integer := 2;

@@ -57,4 +57,47 @@ package body GNATCOLL.JSON.Support is
       end if;
    end Get_Path;
 
+   procedure Mapper is new Gen_Map_JSON_Object (JSON_Value);
+   procedure Append (Path : String; L : in out JSON_Value; R : JSON_Value; Raise_On_Kind_Missmatch : Boolean)  is
+      procedure Map
+        (User_Object : in out JSON_Value;
+         Name        : UTF8_String;
+         Value       : JSON_Value) is
+         Temp        : JSON_Value;
+      begin
+         if User_Object.Has_Field (Name) then
+            Temp := User_Object.Get (Name);
+            if Temp.Kind in JSON_Elementary_Value_Type and then Value.Kind = Temp.Kind then
+               Set_Field (User_Object, Name, Value);
+            end if;
+--                 when JSON_Array_Type => null;
+--                 when JSON_Object_Type => null;
+         else
+            User_Object.Set_Field (Name, Value);
+         end if;
+      end Map;
+
+   begin
+      if R.Kind /= L.Kind and then Raise_On_Kind_Missmatch then
+         raise Constraint_Error with Path & ":" & R.Kind'Img & "/=" & L.Kind'Img;
+      end if;
+      if L.Kind = JSON_Object_Type then
+         Mapper (R, Map'Access, L);
+      end if;
+   end Append;
+
+   function "or" (L, R : JSON_Value) return JSON_Value is
+   begin
+      return Ret : JSON_Value := L do
+         Append ("", Ret, R, False);
+      end return;
+   end "or";
+
+   function "+" (L, R : JSON_Value) return JSON_Value is
+   begin
+      return Ret : JSON_Value := L do
+         Append ("", Ret, R, True);
+      end return;
+   end "+";
+
 end GNATCOLL.JSON.Support;
