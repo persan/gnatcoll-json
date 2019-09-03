@@ -50,4 +50,35 @@ package GNATCOLL.JSON.Support is
    VERSION_DATE : constant String := "2018-12-22";
    --  Note The above versions shall be in sync with
    --  gnatcoll-json.gpr  file and the README.md file
+
+   Path_Delimiter          : constant String := ".";
+   Start_Indexed_Delimiter : constant String := "(";
+   End_Indexed_Delimiter   : constant String := ")";
+
+   function Get_Path (Val : JSON_Value; Path : UTF8_String) return JSON_Value;
+   --  Return the JSON_Value on a textual path.
+   --
+   --  "data.text.values(1).fix" will return a JSON_Object of JSON_Int_Type containing 1
+   --  "data.text.active" will return a JSON_Object of JSON_Boolean_Type containing False
+   --
+   --    { "data"
+   --        { "text" :
+   --            { "values" :
+   --                [ {"fix"  : 1},
+   --                  {"fool" : 2}
+   --                ],
+   --              "numbers"   : [1,2,3,5,6,7,9],
+   --              "description" : "fix",
+   --              "speed"       : 1.2,
+   --              "active"      : False
+   --            }
+   --        }
+   --    }
+   --
+   --  JSON_Null  will be returned if the Path dont exist.
+   -------------------------------------------------------------------
+
+   function Has_Value (Value : JSON_Value; Path : UTF8_String) return Boolean is
+     (Get (Value, Path).Kind in JSON_Elementary_Value_Type);
+
 end GNATCOLL.JSON.Support;

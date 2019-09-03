@@ -2,7 +2,7 @@ pragma Ada_2012;
 with GNAT;
 with GNAT.Source_Info;
 with AUnit; use AUnit;
-with GNATCOLL.JSON.Support.JSON_Paths;
+with GNATCOLL.JSON.Support;
 with AUnit.Assertions;
 package body GNATCOLL.JSON.Support.Test.JSON_Paths is
    use AUnit.Assertions;
@@ -39,7 +39,7 @@ package body GNATCOLL.JSON.Support.Test.JSON_Paths is
       Expected : constant String := "rock";
       Result   : String (Expected'Range);
    begin
-      Result := Get (GNATCOLL.JSON.Support.JSON_Paths.Get (T.Data, "deep1.deep2.deep3"));
+      Result := Get (GNATCOLL.JSON.Support.Get_Path (T.Data, "deep1.deep2.deep3"));
       Assert (Result = Expected, "Got :" & Result & " Expected:" & Expected);
    end Test_Get_deep;
 
@@ -48,7 +48,7 @@ package body GNATCOLL.JSON.Support.Test.JSON_Paths is
       Result   : Float;
       Expected : constant := 2.0;
    begin
-      Result := Get (GNATCOLL.JSON.Support.JSON_Paths.Get (T.Data, "float"));
+      Result := Get (GNATCOLL.JSON.Support.Get_Path (T.Data, "float"));
       Assert (Result = Expected, "Got :" & Result'Img & " Expected:" & Expected'Img);
    end Test_Get_Float;
 
@@ -57,7 +57,7 @@ package body GNATCOLL.JSON.Support.Test.JSON_Paths is
       Result   : Integer;
       Expected : constant := 1;
    begin
-      Result := Get (GNATCOLL.JSON.Support.JSON_Paths.Get (T.Data, "integer"));
+      Result := Get (GNATCOLL.JSON.Support.Get_Path (T.Data, "integer"));
       Assert (Result = Expected, "Got :" & Result'Img & " Expected:" & Expected'Img);
    end Test_Get_Integer;
 
@@ -66,7 +66,7 @@ package body GNATCOLL.JSON.Support.Test.JSON_Paths is
       Expected : constant String := "one";
       Result   : String (Expected'Range);
    begin
-      Result := Get (GNATCOLL.JSON.Support.JSON_Paths.Get (T.Data, "string"));
+      Result := Get (GNATCOLL.JSON.Support.Get_Path (T.Data, "string"));
       Assert (Result = Expected, "Got :" & Result & " Expected:" & Expected);
    end Test_Get_String;
 
@@ -75,7 +75,7 @@ package body GNATCOLL.JSON.Support.Test.JSON_Paths is
       Expected : constant Integer := 2;
       Result   : Integer;
    begin
-      Result := Get (GNATCOLL.JSON.Support.JSON_Paths.Get (T.Data, "array(2)"));
+      Result := Get (GNATCOLL.JSON.Support.Get_Path (T.Data, "array(2)"));
       Assert (Result = Expected, "Got :" & Result'Img & " Expected:" & Expected'Img);
    end Test_Get_Array_1;
 
@@ -84,7 +84,7 @@ package body GNATCOLL.JSON.Support.Test.JSON_Paths is
       Expected : constant Integer := 3;
       Result   : Integer;
    begin
-      Result := Get (GNATCOLL.JSON.Support.JSON_Paths.Get (T.Data, "array(4)(3)"));
+      Result := Get (GNATCOLL.JSON.Support.Get_Path (T.Data, "array(4)(3)"));
       Assert (Result = Expected, "Got :" & Result'Img & " Expected:" & Expected'Img);
    end Test_Get_Array_2;
 
@@ -93,7 +93,7 @@ package body GNATCOLL.JSON.Support.Test.JSON_Paths is
       Expected : constant Boolean := True;
       Result   : Boolean;
    begin
-      Result := Get (GNATCOLL.JSON.Support.JSON_Paths.Get (T.Data, "array(5).True"));
+      Result := Get (GNATCOLL.JSON.Support.Get_Path (T.Data, "array(5).True"));
       Assert (Result = Expected, "Got :" & Result'Img & " Expected:" & Expected'Img);
    end Test_Get_Array_3;
 
@@ -102,7 +102,7 @@ package body GNATCOLL.JSON.Support.Test.JSON_Paths is
       Expected : constant Integer := 2;
       Result   : Integer;
    begin
-      Result := Get (GNATCOLL.JSON.Support.JSON_Paths.Get (T.Data, "array.2"));
+      Result := Get (GNATCOLL.JSON.Support.Get_Path (T.Data, "array.2"));
       Assert (Result = Expected, "Got :" & Result'Img & " Expected:" & Expected'Img);
    end Test_Get_Array_Hidden_Alternate_1;
 
@@ -111,7 +111,7 @@ package body GNATCOLL.JSON.Support.Test.JSON_Paths is
       Expected : constant Integer := 3;
       Result   : Integer;
    begin
-      Result := Get (GNATCOLL.JSON.Support.JSON_Paths.Get (T.Data, "array.4.3"));
+      Result := Get (GNATCOLL.JSON.Support.Get_Path (T.Data, "array.4.3"));
       Assert (Result = Expected, "Got :" & Result'Img & " Expected:" & Expected'Img);
    end Test_Get_Array_Hidden_Alternate_2;
 
@@ -120,7 +120,7 @@ package body GNATCOLL.JSON.Support.Test.JSON_Paths is
       Expected : constant Boolean := True;
       Result   : Boolean;
    begin
-      Result := Get (GNATCOLL.JSON.Support.JSON_Paths.Get (T.Data, "array.5.True"));
+      Result := Get (GNATCOLL.JSON.Support.Get_Path (T.Data, "array.5.True"));
       Assert (Result = Expected, "Got :" & Result'Img & " Expected:" & Expected'Img);
    end Test_Get_Array_Hidden_Alternate_3;
    --------------------
