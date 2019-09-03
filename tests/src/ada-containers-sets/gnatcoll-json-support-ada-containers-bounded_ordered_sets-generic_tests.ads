@@ -27,7 +27,7 @@ generic
 package GNATCOLL.JSON.Support.Ada.Containers.Bounded_Ordered_Sets.Generic_Tests is
    type Set_Access is access all Set;
    type Test_Case is new AUnit.Test_Cases.Test_Case with  record
-      Test_Data : Set_access;
+      Test_Data : Set_Access;
    end record;
 
    overriding procedure Set_Up_Case (Test : in out Test_Case);
