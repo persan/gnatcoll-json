@@ -25,9 +25,10 @@ with AUnit.Test_Cases;
 generic
    with function Initialize return Vector;
 package GNATCOLL.JSON.Support.Ada.Containers.Bounded_Vectors.Generic_Test is
+   type Vector_access is access all Vector;
    type Test_Case is new AUnit.Test_Cases.Test_Case with  record
-      Test_Data : access Vector;
-      Result    : access Vector;
+      Test_Data : Vector_access;
+      Result    : Vector_access;
    end record;
 
    overriding procedure Set_Up_Case (Test : in out Test_Case);

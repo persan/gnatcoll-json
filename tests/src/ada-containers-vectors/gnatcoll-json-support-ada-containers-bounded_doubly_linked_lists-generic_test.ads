@@ -25,9 +25,10 @@ with AUnit.Test_Cases;
 generic
    with function Initialize return  List;
 package GNATCOLL.JSON.Support.Ada.Containers.Bounded_Doubly_Linked_Lists.Generic_Test is
+   type List_Access is access all List;
    type Test_Case is new AUnit.Test_Cases.Test_Case with  record
-      Test_Data : access List;
-      Result    : access List;
+      Test_Data : List_access;
+      Result    : List_access;
    end record;
 
    overriding procedure Set_Up_Case (Test : in out Test_Case);
