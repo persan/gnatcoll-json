@@ -41,6 +41,7 @@ library project GnatColl.JSON is
       for Default_Switches ("ada") use ("-gnatwa",
                                         "-gnat12",
                                         "-gnatq",
+                                        -- "-gnata", "-gnateE",
                                         "-gnatyaAbBcdefhiklnOprtux", --< Triggers a compiler bug in 17.0w 20160503>
                                         "-fstack-check",
                                         "-gnatQ");
