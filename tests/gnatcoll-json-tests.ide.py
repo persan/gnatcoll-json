@@ -57,6 +57,7 @@ def on_file_saved_generate_register_tests(hook_name, f):
         with open(out_path, "w") as outf:
             outf.write(REGISTER_TESTS_TEMPLATE % {"package_name":  UnitName,
                                                   "registrations": "\n".join(registrations)})
+
 try:
     dummy = GPS.on_file_saved_generate_register_tests_installed
 except:
