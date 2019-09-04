@@ -62,6 +62,7 @@ package body GNATCOLL.JSON.Support.Test.Utilities is
       return Read (Read (From_Path), From_Path);
    exception
       when  Ada.IO_Exceptions.Name_Error =>
+         Put_Line ("Creating:" & From_Path);
          Write (From_Path, "{}");
          return JSON_Null;
    end Read_Json_Value;

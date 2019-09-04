@@ -26,7 +26,7 @@ package body GNATCOLL.JSON.Support.Test.JSON_Merge is
       Result      : JSON_Value;
    begin
       Result := Left + Right;
-      Write (Write (Result, False), Result_Name);
+      Write (Result_Name, Write (Result, False));
       Assert (Result = Expected, "Not expected result");
    end Test_Add_1;
 
@@ -40,7 +40,7 @@ package body GNATCOLL.JSON.Support.Test.JSON_Merge is
       Result      : JSON_Value;
    begin
       Result := Left + Right;
-      Write (Write (Result, False), Result_Name);
+      Write (Result_Name, Write (Result, False));
       Assert (Result = Expected, "Not expected result");
    end Test_Add_2;
 
@@ -54,7 +54,7 @@ package body GNATCOLL.JSON.Support.Test.JSON_Merge is
       Result      : JSON_Value;
    begin
       Result := Left + Right;
-      Write (Write (Result, False), Result_Name);
+      Write (Result_Name, Write (Result, False));
       Assert (Result = Expected, "Not expected result");
    end Test_Add_3;
 
@@ -68,7 +68,7 @@ package body GNATCOLL.JSON.Support.Test.JSON_Merge is
       Result      : JSON_Value;
    begin
       Result := Left + Right;
-      Write (Write (Result, False), Result_Name);
+      Write (Result_Name, Write (Result, False));
       Assert (Result = Expected, "Not expected result");
    end Test_Or_1;
 
@@ -82,7 +82,7 @@ package body GNATCOLL.JSON.Support.Test.JSON_Merge is
       Result      : JSON_Value;
    begin
       Result := Left + Right;
-      Write (Write (Result, False), Result_Name);
+      Write (Result_Name, Write (Result, False));
       Assert (Result = Expected, "Not expected result");
    end Test_Or_2;
 
@@ -96,7 +96,7 @@ package body GNATCOLL.JSON.Support.Test.JSON_Merge is
       Result      : JSON_Value;
    begin
       Result := Left + Right;
-      Write (Write (Result, False), Result_Name);
+      Write (Result_Name, Write (Result, False));
       Assert (Result = Expected, "Not expected result");
    end Test_Or_3;
 
@@ -109,7 +109,7 @@ package body GNATCOLL.JSON.Support.Test.JSON_Merge is
       Result      : JSON_Value;
    begin
       Result := Normalize_Field_Names (Source);
-      Write (Write (Result, False), Result_Name);
+      Write (Result_Name, Write (Result, False));
       Assert (Result = Expected, "Not expected result");
    end Test_Normalize_1;
 
@@ -122,7 +122,7 @@ package body GNATCOLL.JSON.Support.Test.JSON_Merge is
       Result      : JSON_Value;
    begin
       Result := Normalize_Field_Names (Source);
-      Write (Write (Result, False), Result_Name);
+      Write (Result_Name, Write (Result, False));
       Assert (Result = Expected, "Not expected result");
    end Test_Normalize_2;
    --------------------

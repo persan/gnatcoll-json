@@ -3,7 +3,7 @@ with "../util/gnatcoll-json-util.gpr";
 with "aunit";
 project GnatColl.JSON.Tests is
 
-   --     for Main use project'Main & ("gnatcoll-json-support-test-json_merge-main.ads");
+   for Main use project'Main & ("gnatcoll-json-support-test-json_merge-main.ads");
    --     for Main use project'Main & ("gnatcoll-json-support-test-json_paths-main.ads");
    for Main use project'Main & ("gnatcoll-json-support-test-main.adb");
    --     for Main use project'Main & ("gnatcoll-json-support-test-tree_suites-main.adb");
@@ -12,8 +12,8 @@ project GnatColl.JSON.Tests is
    type Library_Type_Type is ("static", "relocatable", "static-pic");
    Library_Type : Library_Type_Type := external ("LIBRARY_TYPE", "static");
 
-   for Languages use ("ada");
-   for Source_Dirs use ("src/**");
+   for Languages use ("ada","JSON");
+   for Source_Dirs use ("src/**", "data");
    for Object_Dir use ".obj/" & project'Name;
    for Exec_Dir use "bin";
 
@@ -26,11 +26,16 @@ project GnatColl.JSON.Tests is
    end Binder;
 
    package Compiler is
+      for Driver ("JSON") use "";
       for Default_Switches ("Ada") use GnatColl.JSON.Compiler'Default_Switches ("Ada");
    end Compiler;
 
    package Ide is
       for Vcs_Kind use "git";
    end Ide;
+
+   package Naming is
+      for Body_Suffix("JSON") use ".json";
+   end Naming;
 
 end GnatColl.JSON.Tests;
