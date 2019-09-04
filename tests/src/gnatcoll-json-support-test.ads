@@ -55,5 +55,4 @@ with Ada.Containers.Vectors; -- @ Impl-> TestOK
 pragma Warnings (On);
 
 package GNATCOLL.JSON.Support.Test is
-   function Read_Json_Value (From_Path : String) return JSON_Value;
 end GNATCOLL.JSON.Support.Test;

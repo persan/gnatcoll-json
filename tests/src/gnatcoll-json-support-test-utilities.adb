@@ -51,4 +51,8 @@ package body GNATCOLL.JSON.Support.Test.Utilities is
       return Compose ("output", Translate (Item, Ada2file_Mapping) & ".json");
    end Ada2file;
 
+   function Read_Json_Value (From_Path : String) return JSON_Value is
+   begin
+      return Read (Read (From_Path), From_Path);
+   end Read_Json_Value;
 end GNATCOLL.JSON.Support.Test.Utilities;

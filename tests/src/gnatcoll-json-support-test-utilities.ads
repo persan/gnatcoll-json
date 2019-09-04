@@ -39,4 +39,6 @@ package GNATCOLL.JSON.Support.Test.Utilities is
    function Image (Item : Integer) return String is (Ada.Strings.Fixed.Trim (Item'Img, Ada.Strings.Both));
    function Value (Item : String) return Integer is (Integer'Value (Item));
 
+   function Read_Json_Value (From_Path : String) return JSON_Value;
+
 end GNATCOLL.JSON.Support.Test.Utilities;
