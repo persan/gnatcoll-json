@@ -100,4 +100,11 @@ package body GNATCOLL.JSON.Support is
       end return;
    end "+";
 
+   function Normalize_Field_Names (Src       : JSON_Value;
+                                   Normalize : not null access function (Src : String) return String := Default_Normalize'Access) return JSON_Value is
+      pragma Unreferenced (Normalize);
+   begin
+      return Src;
+   end Normalize_Field_Names;
+
 end GNATCOLL.JSON.Support;

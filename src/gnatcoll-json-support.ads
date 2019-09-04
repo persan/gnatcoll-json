@@ -107,4 +107,13 @@ private
    --  { "a" : [1,2] } "or"  { "a" : [3,4] } => { "a" : [1,3,3,4] }
    ----------------------------------------------------------------------------
 
+   function Default_Normalize (Src : String) return String is (Src);
+
+   function Normalize_Field_Names (Src       : JSON_Value;
+                                   Normalize : not null access function (Src : String) return String := Default_Normalize'Access) return JSON_Value;
+   --
+   --  Nomralizes/remaps all field names by calling the nomalize function
+   --  to transform the names.
+   ----------------------------------------------------------------------------
+
 end GNATCOLL.JSON.Support;
