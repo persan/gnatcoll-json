@@ -70,8 +70,8 @@ package body GNATCOLL.JSON.Support is
             if Temp.Kind in JSON_Elementary_Value_Type and then Value.Kind = Temp.Kind then
                Set_Field (User_Object, Name, Value);
             end if;
---                 when JSON_Array_Type => null;
---                 when JSON_Object_Type => null;
+            --                 when JSON_Array_Type => null;
+            --                 when JSON_Object_Type => null;
          else
             User_Object.Set_Field (Name, Value);
          end if;
@@ -102,9 +102,56 @@ package body GNATCOLL.JSON.Support is
 
    function Normalize_Field_Names (Src       : JSON_Value;
                                    Normalize : not null access function (Src : String) return String := Default_Normalize'Access) return JSON_Value is
-      pragma Unreferenced (Normalize);
+      function Set_Array_Keys_To_Lower_Case (JSON_Arr : in JSON_Value) return JSON_Value;
+      function Set_Object_Keys_To_Lower_Case (JSON_Obj : in JSON_Value) return JSON_Value;
+      function Normalize_JSON_Keys (JSON_Val : in JSON_Value) return JSON_Value is
+         Norm_JSON_Value : JSON_Value;
+      begin
+         Norm_JSON_Value := (case JSON_Val.Kind is
+                                when JSON_Object_Type => Set_Object_Keys_To_Lower_Case (JSON_Val),
+                                when JSON_Array_Type  => Set_Array_Keys_To_Lower_Case (JSON_Val),
+                                when others           => JSON_Val);
+         return Norm_JSON_Value;
+      end Normalize_JSON_Keys;
+      ---------------------------------------------------------------------------
+      function Set_Array_Keys_To_Lower_Case (JSON_Arr : in JSON_Value) return JSON_Value is
+         JSON_Arr_Arr : constant JSON_Array := Get (JSON_Arr);
+         JSON_Arr_Val : JSON_Value;
+         JSON_Arr_Ret : constant JSON_Value := Create (Empty_Array);
+      begin
+         for I in 1 .. Length (JSON_Arr_Arr) loop
+            JSON_Arr_Val := Get (JSON_Arr_Arr, I);
+            case JSON_Arr_Val.Kind is
+            when JSON_Object_Type  => JSON_Arr_Ret.Append (Set_Object_Keys_To_Lower_Case (JSON_Arr_Val));
+            when JSON_Array_Type   => JSON_Arr_Ret.Append (Set_Array_Keys_To_Lower_Case (JSON_Arr_Val));
+            when JSON_Null_Type    => raise Constraint_Error with "";
+            when others => JSON_Arr_Ret.Append (JSON_Arr_Val);
+            end case;
+         end loop;
+         return JSON_Arr_Ret;
+      end Set_Array_Keys_To_Lower_Case;
+
+      ---------------------------------------------------------------------------
+      function Set_Object_Keys_To_Lower_Case (JSON_Obj : in JSON_Value) return JSON_Value is
+         JSON_Obj_Ret : constant JSON_Value := Create_Object;
+
+         --  For each name and value combination entered here, add as object field with name in lowercase. Recurse on fields.
+         procedure Set_Key_To_Lower_Case (Name : UTF8_String; JSON_Child : JSON_Value) is
+            JSON_Child_Ret : JSON_Value;
+         begin
+            JSON_Child_Ret := (case JSON_Child.Kind is
+                                  when JSON_Object_Type => Set_Object_Keys_To_Lower_Case (JSON_Child),
+                                  when JSON_Array_Type  => Set_Array_Keys_To_Lower_Case (JSON_Child),
+                                  when others           => JSON_Child);
+            JSON_Obj_Ret.Set_Field (Normalize (Name), JSON_Child_Ret);
+         end Set_Key_To_Lower_Case;
+      begin
+         --  Iterate over all fields in the object and do the procedure above
+         JSON_Obj.Map_JSON_Object (Set_Key_To_Lower_Case'Access);
+         return JSON_Obj_Ret;
+      end Set_Object_Keys_To_Lower_Case;
    begin
-      return Src;
+      return Normalize_JSON_Keys (Src);
    end Normalize_Field_Names;
 
 end GNATCOLL.JSON.Support;
