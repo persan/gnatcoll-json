@@ -31,6 +31,10 @@ package GNATCOLL.JSON.Support.Test.Utilities is
 
    function Ada2file (Item : String) return String;
 
+   function Ada2file_Simple (Ada_Name : String) return String;
+   --  Converts the Ada_Name to a filename without suffix.
+   -----------------------------------------------------------------------------
+
    function Hash (Element : Integer) return Hash_Type is (Hash_Type (Element));
 
    function Image (Item : String) return String is (Item);

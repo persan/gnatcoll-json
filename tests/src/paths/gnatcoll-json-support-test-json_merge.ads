@@ -1,7 +1,7 @@
 with AUnit.Test_Cases;
 package GNATCOLL.JSON.Support.Test.JSON_Merge is
    type Test_Case is new AUnit.Test_Cases.Test_Case with record
-      Data : GNATCOLL.JSON.JSON_Value;
+      null;
    end record;
 
    overriding procedure Set_Up_Case (Test : in out Test_Case);

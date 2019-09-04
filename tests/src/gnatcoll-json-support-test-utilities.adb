@@ -1,6 +1,7 @@
 with Ada.Text_IO.Text_Streams;
 with Ada.Directories;
 with Ada.Strings.Maps;
+with Ada.IO_Exceptions;
 package body GNATCOLL.JSON.Support.Test.Utilities is
 
    use Ada.Text_IO;
@@ -46,13 +47,22 @@ package body GNATCOLL.JSON.Support.Test.Utilities is
       when others => null;
    end Clean;
 
+   function Ada2file_Simple (Ada_Name : String) return String is
+   begin
+      return Translate (Ada_Name, Ada2file_Mapping);
+   end Ada2file_Simple;
+
    function Ada2file (Item : String) return String is
    begin
-      return Compose ("output", Translate (Item, Ada2file_Mapping) & ".json");
+      return Compose ("output", Ada2file_Simple (Item) & ".json");
    end Ada2file;
 
    function Read_Json_Value (From_Path : String) return JSON_Value is
    begin
       return Read (Read (From_Path), From_Path);
+   exception
+      when  Ada.IO_Exceptions.Name_Error =>
+         Write (From_Path, "{}");
+         return JSON_Null;
    end Read_Json_Value;
 end GNATCOLL.JSON.Support.Test.Utilities;
