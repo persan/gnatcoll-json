@@ -20,8 +20,7 @@
 -- <http://www.gnu.org/licenses/>.                                          --
 --                                                                          --
 ------------------------------------------------------------------------------
-pragma Warnings (Off, "unit * is never instantiated");
-pragma Warnings (Off, "unit * is not referenced");
+pragma Warnings (Off);
 
 with Ada.Calendar; -- @ Impl -> TestOK
 with Ada.Real_Time; -- @ Impl -> TestOK
@@ -53,9 +52,8 @@ with Ada.Containers.Ordered_Sets; -- @ Impl-> TestOK
 with Ada.Containers.Restricted_Doubly_Linked_Lists;
 with Ada.Containers.Vectors; -- @ Impl-> TestOK
 
-pragma Warnings (On, "unit * is never instantiated");
-pragma Warnings (On, "unit * is not referenced");
+pragma Warnings (On);
 
 package GNATCOLL.JSON.Support.Test is
-
+   function Read_Json_Value (From_Path : String) return JSON_Value;
 end GNATCOLL.JSON.Support.Test;
