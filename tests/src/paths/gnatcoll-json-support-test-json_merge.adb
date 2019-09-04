@@ -5,6 +5,7 @@ with AUnit; use AUnit;
 with GNATCOLL.JSON.Support;
 with AUnit.Assertions;
 with GNATCOLL.JSON.Support.Test.Utilities;
+with GNAT.Case_Util;
 package body GNATCOLL.JSON.Support.Test.JSON_Merge is
    use AUnit.Assertions;
    use GNATCOLL.JSON.Support.Test.Utilities;
@@ -120,8 +121,15 @@ package body GNATCOLL.JSON.Support.Test.JSON_Merge is
       Expected    : constant JSON_Value := Read_Json_Value (Name & "-expected.json");
       Result_Name : constant String := Name & "-result.out.json";
       Result      : JSON_Value;
+      function Lower (Src : String) return String is
+
+      begin
+         return Ret : String := Src do
+            GNAT.Case_Util.To_Lower (Ret);
+         end return;
+      end Lower;
    begin
-      Result := Normalize_Field_Names (Source);
+      Result := Normalize_Field_Names (Source, Lower'Access);
       Write (Result_Name, Write (Result, False));
       Assert (Result = Expected, "Not expected result");
    end Test_Normalize_2;
