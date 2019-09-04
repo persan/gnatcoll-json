@@ -28,7 +28,6 @@ matcher = re.compile("(" +
 
 
 def on_file_saved_generate_register_tests(hook_name, f):
-    print "generate"
     path = f.name()
     folder = dirname(path)
     testRoutines = []
@@ -39,7 +38,7 @@ def on_file_saved_generate_register_tests(hook_name, f):
         return
 
     with open(path) as inf:
-        for line in inf
+        for line in inf:
             matches = matcher.match(line.strip())
             if matches:
                 if matches.group(2):
@@ -59,7 +58,7 @@ def on_file_saved_generate_register_tests(hook_name, f):
             outf.write(REGISTER_TESTS_TEMPLATE % {"package_name":  UnitName,
                                                   "registrations": "\n".join(registrations)})
 try:
-    GPS.Hook("file_saved").remove(on_file_saved_generate_register_tests)
+    dummy = GPS.on_file_saved_generate_register_tests_installed
 except:
-    print "fail"
-GPS.Hook("file_saved").add(on_file_saved_generate_register_tests)
+    GPS.Hook("file_saved").add(on_file_saved_generate_register_tests)
+    GPS.on_file_saved_generate_register_tests_installed = True
