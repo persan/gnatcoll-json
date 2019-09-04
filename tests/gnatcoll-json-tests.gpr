@@ -3,6 +3,7 @@ with "../util/gnatcoll-json-util.gpr";
 with "aunit";
 project GnatColl.JSON.Tests is
 
+   --     for Main use project'Main & ("gnatcoll-json-support-test-json_merge-main.ads");
    --     for Main use project'Main & ("gnatcoll-json-support-test-json_paths-main.ads");
    for Main use project'Main & ("gnatcoll-json-support-test-main.adb");
    --     for Main use project'Main & ("gnatcoll-json-support-test-tree_suites-main.adb");
