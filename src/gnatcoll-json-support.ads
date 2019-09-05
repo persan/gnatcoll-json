@@ -93,7 +93,7 @@ package GNATCOLL.JSON.Support is
    ----------------------------------------------------------------------------
 
    --
-   -- NOT the below functions are under development and does not work with addrays.
+   --  NOTE the below functions are under development and does not work with arrays.
    function "or" (L, R : JSON_Value) return JSON_Value;
    --
    --  Merges two JSON_Objects together and the values in the left object
@@ -116,7 +116,7 @@ package GNATCOLL.JSON.Support is
    --  { "a" : [1,2] } "+"  { "a" : [3,4] } => { "a" : [1,3,3,4] }
    ----------------------------------------------------------------------------
 private
-   function "and" (L, R : JSON_Value) return JSON_Value is (L);
+   function "and" (L, R : JSON_Value) return JSON_Value;
    --
    --  Returns the common elements in the JSON_Values
    --  comonality is determined by name and type.
@@ -126,7 +126,7 @@ private
    --  { "a" : [1,2] } "-"  { "a" : [3,4] } => { "a" : [1,3] }
    ----------------------------------------------------------------------------
 
-   function "-" (L, R : JSON_Value) return JSON_Value is (L);
+   function "-" (L, R : JSON_Value) return JSON_Value;
    --
    --  Returns the common elements in the JSON_Values
    --  comonality is determined by name and type.

@@ -5,6 +5,8 @@ package body GNATCOLL.JSON.Support is
    use GNAT.Regpat;
    use Ada.Text_IO;
 
+   procedure JSON_Value_Mapper is new Gen_Map_JSON_Object (JSON_Value);
+
    Match_Regexp : constant String
    --    12                  3                                       4                                           5     6                                7
      := "(([a-z]+[a-z0-9_]*)|(" & Quote (Start_Indexed_Delimiter) & "(\d+)" & Quote (End_Indexed_Delimiter) & ")|(\d+))(" & Quote (Path_Delimiter) & "|)(.*)";
@@ -25,6 +27,10 @@ package body GNATCOLL.JSON.Support is
                   );
       end loop;
    end Debug;
+
+   ----------------------------------------------------------------------------
+   --  Get_Path
+   ----------------------------------------------------------------------------
 
    function Get_Path (Val : JSON_Value; Path : UTF8_String) return JSON_Value is
       Matches : GNAT.Regpat.Match_Array (1 .. GNAT.Regpat.Paren_Count (Matcher));
@@ -57,7 +63,10 @@ package body GNATCOLL.JSON.Support is
       end if;
    end Get_Path;
 
-   procedure Mapper is new Gen_Map_JSON_Object (JSON_Value);
+   --------------
+   --  Append  --
+   --------------
+
    procedure Append (Path : String; L : in out JSON_Value; R : JSON_Value; Raise_On_Kind_Missmatch : Boolean)  is
 
       procedure Map
@@ -88,10 +97,13 @@ package body GNATCOLL.JSON.Support is
          raise Constraint_Error with Path & ":" & R.Kind'Img & "/=" & L.Kind'Img;
       end if;
       if L.Kind = JSON_Object_Type then
-         Mapper (R, Map'Access, L);
+         JSON_Value_Mapper (R, Map'Access, L);
       end if;
    end Append;
 
+   ----------------------------------------------------------------------------
+   --  or
+   ----------------------------------------------------------------------------
    function "or" (L, R : JSON_Value) return JSON_Value is
    begin
       return Ret : JSON_Value := L do
@@ -99,12 +111,40 @@ package body GNATCOLL.JSON.Support is
       end return;
    end "or";
 
+   ----------------------------------------------------------------------------
+   --  +
+   ----------------------------------------------------------------------------
+
    function "+" (L, R : JSON_Value) return JSON_Value is
    begin
       return Ret : JSON_Value := L do
          Append ("", Ret, R, True);
       end return;
    end "+";
+
+   ----------------------------------------------------------------------------
+   --  and
+   ----------------------------------------------------------------------------
+
+   function "and" (L, R : JSON_Value) return JSON_Value is
+      pragma Unreferenced (R, L);
+   begin
+      return raise Program_Error with """and"" is unimplemented";
+   end "and";
+
+   ----------------------------------------------------------------------------
+   --  -
+   ----------------------------------------------------------------------------
+
+   function "-" (L, R : JSON_Value) return JSON_Value is
+      pragma Unreferenced (R, L);
+   begin
+      return raise Program_Error with """-"" is unimplemented";
+   end "-";
+
+   ----------------------------------------------------------------------------
+   --  Normalize_Field_Names
+   ----------------------------------------------------------------------------
 
    function Normalize_Field_Names (Src           : JSON_Value;
                                    Normalize     : not null access function (Src : String)
