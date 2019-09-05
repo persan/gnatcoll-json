@@ -82,16 +82,25 @@ package GNATCOLL.JSON.Support is
    function Path_Has_Value (Value : JSON_Value; Path : UTF8_String) return Boolean is
      (Get (Value, Path).Kind in JSON_Elementary_Value_Type);
 
-private
+   function Default_Normalize (Src : String) return String is (Src);
+
+   function Normalize_Field_Names (Src       : JSON_Value;
+                                   Normalize : not null access function (Src : String) return
+                                     String := Default_Normalize'Access) return JSON_Value;
+   --
+   --  Normalizes/remaps all field names by calling the normalize function
+   --  to transform the field-names.
+   ----------------------------------------------------------------------------
+
+   --
+   -- NOT the below functions are under development and does not work with addrays.
    function "or" (L, R : JSON_Value) return JSON_Value;
    --
-   --  Merges two JSON_Objects together and the values in the right object
+   --  Merges two JSON_Objects together and the values in the left object
    --  has presedence.
-   --  Raises Constraint_Error if the kind of the right node is JSON_Elementary_Value_Type
-   --  and the left node is of a differnet Kind and not JSON_Null_Type.
    --  { "a" : 1 } "or"  { "b" : True } => { "a" : 1 , "b" : True }
-   --  { "a" : 1 } "or"  { "a" : 2 }    => { "a" : 2}
-   --  { "a" : 1 } "or"  { "a" : True } => { "a" : True }
+   --  { "a" : 1 } "or"  { "a" : 2 }    => { "a" : 1}
+   --  { "a" : 1 } "or"  { "a" : True } => { "a" : 1 }
    --  { "a" : [1,2] } "or"  { "a" : [3,4] } => { "a" : [1,3,3,4] }
    ----------------------------------------------------------------------------
 
@@ -101,19 +110,30 @@ private
    --  has presedence.
    --  Raises Constraint_Error if the kind of the right node is
    --  of a different kind then left node and not JSON_Null_Type.
-   --  { "a" : 1 } "or"  { "b" : True } => { "a" : 1 , "b" : True }
-   --  { "a" : 1 } "or"  { "a" : 2 }    => { "a" : 2}
-   --  { "a" : 1 } "or"  { "a" : True } => raise Constraint_Error
-   --  { "a" : [1,2] } "or"  { "a" : [3,4] } => { "a" : [1,3,3,4] }
+   --  { "a" : 1 } "+"  { "b" : True } => { "a" : 1 , "b" : True }
+   --  { "a" : 1 } "+"  { "a" : 2 }    => { "a" : 2}
+   --  { "a" : 1 } "+"  { "a" : True } => raise Constraint_Error
+   --  { "a" : [1,2] } "+"  { "a" : [3,4] } => { "a" : [1,3,3,4] }
+   ----------------------------------------------------------------------------
+private
+   function "and" (L, R : JSON_Value) return JSON_Value is (L);
+   --
+   --  Returns the common elements in the JSON_Values
+   --  comonality is determined by name and type.
+   --  { "a" : 1 } "and"  { "b" : True } => {}
+   --  { "a" : 1 } "and"  { "a" : 2 }    => {"a" : 1}
+   --  { "a" : 1 } "and"  { "a" : True } => {}
+   --  { "a" : [1,2] } "-"  { "a" : [3,4] } => { "a" : [1,3] }
    ----------------------------------------------------------------------------
 
-   function Default_Normalize (Src : String) return String is (Src);
-
-   function Normalize_Field_Names (Src       : JSON_Value;
-                                   Normalize : not null access function (Src : String) return String := Default_Normalize'Access) return JSON_Value;
+   function "-" (L, R : JSON_Value) return JSON_Value is (L);
    --
-   --  Nomralizes/remaps all field names by calling the nomalize function
-   --  to transform the names.
+   --  Returns the common elements in the JSON_Values
+   --  comonality is determined by name and type.
+   --  { "a" : 1 } "-"  { "b" : True } => {"a" : 1 }
+   --  { "a" : 1 } "-"  { "a" : 2 }    => {}
+   --  { "a" : 1 } "-"  { "a" : True } => raise Constraint_Error
+   --  { "a" : [1,2] } "-"  { "a" : [3,4] } => {}
    ----------------------------------------------------------------------------
 
 end GNATCOLL.JSON.Support;

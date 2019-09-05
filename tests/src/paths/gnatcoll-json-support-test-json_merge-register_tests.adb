@@ -11,5 +11,6 @@ begin
    Register_Routine (Test, Test_Or_3'Unrestricted_Access, "Test_Or_3");
    Register_Routine (Test, Test_Normalize_1'Unrestricted_Access, "Test_Normalize_1");
    Register_Routine (Test, Test_Normalize_2'Unrestricted_Access, "Test_Normalize_2");
+   Register_Routine (Test, Test_Normalize_3'Unrestricted_Access, "Test_Normalize_3");
 end Register_Tests;
 --  end read only

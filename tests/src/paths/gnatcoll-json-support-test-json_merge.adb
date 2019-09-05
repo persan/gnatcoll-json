@@ -6,6 +6,7 @@ with GNATCOLL.JSON.Support;
 with AUnit.Assertions;
 with GNATCOLL.JSON.Support.Test.Utilities;
 with GNAT.Case_Util;
+with Ada.Strings.Fixed;
 package body GNATCOLL.JSON.Support.Test.JSON_Merge is
    use AUnit.Assertions;
    use GNATCOLL.JSON.Support.Test.Utilities;
@@ -16,6 +17,10 @@ package body GNATCOLL.JSON.Support.Test.JSON_Merge is
    begin
       null;
    end Set_Up_Case;
+
+   ----------------------------------------------------------------------------
+   --  +
+   ----------------------------------------------------------------------------
 
    procedure Test_Add_1 (Test : in out AUnit.Test_Cases.Test_Case'Class) is
       pragma Unreferenced (Test);
@@ -40,9 +45,15 @@ package body GNATCOLL.JSON.Support.Test.JSON_Merge is
       Result_Name : constant String := Name & "-result.out.json";
       Result      : JSON_Value;
    begin
-      Result := Left + Right;
-      Write (Result_Name, Write (Result, False));
-      Assert (Result = Expected, "Not expected result");
+      begin
+         Result := Left + Right;
+         Write (Result_Name, Write (Result, False));
+         Assert (Result = Expected, "Dit nor raise");
+      exception
+         when Constraint_Error =>
+            null;
+      end;
+
    end Test_Add_2;
 
    procedure Test_Add_3 (Test : in out AUnit.Test_Cases.Test_Case'Class) is
@@ -59,6 +70,9 @@ package body GNATCOLL.JSON.Support.Test.JSON_Merge is
       Assert (Result = Expected, "Not expected result");
    end Test_Add_3;
 
+   ----------------------------------------------------------------------------
+   --  or
+   ----------------------------------------------------------------------------
    procedure Test_Or_1 (Test : in out AUnit.Test_Cases.Test_Case'Class) is
       pragma Unreferenced (Test);
       Name        : constant String := "data/" & Ada2file_Simple (Enclosing_Entity);
@@ -101,6 +115,10 @@ package body GNATCOLL.JSON.Support.Test.JSON_Merge is
       Assert (Result = Expected, "Not expected result");
    end Test_Or_3;
 
+   ----------------------------------------------------------------------------
+   --  Normalize
+   ----------------------------------------------------------------------------
+
    procedure Test_Normalize_1 (Test : in out AUnit.Test_Cases.Test_Case'Class) is
       pragma Unreferenced (Test);
       Name        : constant String := "data/" & Ada2file_Simple (Enclosing_Entity);
@@ -133,6 +151,28 @@ package body GNATCOLL.JSON.Support.Test.JSON_Merge is
       Write (Result_Name, Write (Result, False));
       Assert (Result = Expected, "Not expected result");
    end Test_Normalize_2;
+
+   procedure Test_Normalize_3 (Test : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Unreferenced (Test);
+      Name        : constant String := "data/" & Ada2file_Simple (Enclosing_Entity);
+      Source      : constant JSON_Value := Read_Json_Value (Name & "-source.json");
+      Expected    : constant JSON_Value := Read_Json_Value (Name & "-expected.json");
+      Result_Name : constant String := Name & "-result.out.json";
+      Result      : JSON_Value;
+      Count       : Natural := 0;
+      function Adjust (Src : String) return String is
+         pragma Unreferenced (Src);
+
+      begin
+         Count := Count + 1;
+         return Ada.Strings.Fixed.Trim (Count'Img, Ada.Strings.Both);
+      end Adjust;
+   begin
+      Result := Normalize_Field_Names (Source, Adjust'Access);
+      Write (Result_Name, Write (Result, False));
+      Assert (Result = Expected, "Not expected result");
+   end Test_Normalize_3;
+
    --------------------
    -- Register_Tests --
    --------------------

@@ -1,0 +1,5 @@
+{"data" : 1,
+ "fields" : {"blue" : 1, "risk" : 2    },
+ "flax" : {"blue" : 1, "risk" : 2    },
+ "ok"   : [ {"NOK" : true},1, 2]
+}
