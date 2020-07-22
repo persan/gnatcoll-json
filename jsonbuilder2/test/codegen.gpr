@@ -1,0 +1,18 @@
+with "gnatcoll.gpr";
+with "../gnatcoll-json.gpr";
+
+library project Codegen is
+
+   for Library_name use "codegen";
+   for Library_dir use "lib";
+   for Object_Dir use ".obj";
+
+   package Compiler is
+      for Switches ("ada") use ("-gnatwa", "-g", "-O2", "-gnatf", "-fstack-check");
+   end Compiler;
+
+   package Make is
+      for Makefile use "Makefile";
+   end Make;
+
+end Codegen;
