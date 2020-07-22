@@ -40,13 +40,7 @@ package body GNATCOLL.JSON.Support.Arrays_Generic is
    begin
       Map_JSON_Object (Val, Cb'Access);
       Length := GNATCOLL.JSON.Length (Data);
-      if (First > Last) and then Length = 0 then
-         return Ret : Array_Type (Index_Type'Succ (Index_Type'First) .. Index_Type'First) do
-            pragma Warnings (Off, Ret); -- Only used to get an empty array.
-            null;
-         end return;
-      elsif (First > Last) and then Length > 0 then
-         --         First := Index_Type'First;
+      if (First > Last) and then Length >= 0 then
          return Ret : Array_Type (Index_Type'Succ (Index_Type'First) .. Index_Type'First) do
             pragma Warnings (Off, Ret); -- Only used to get an empty array.
             null;
