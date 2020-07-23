@@ -1,21 +1,57 @@
+with Ada.Text_IO;
 with Libadalang.Analysis; use Libadalang.Analysis;
 with Libadalang.Helpers;
 with Ada.Strings.Unbounded;
+with Ada.Containers.Indefinite_Ordered_Sets;
+with GNATCOLL.Opt_Parse;
 package GNATCOLL.Json.Builder is
+   VERSION : constant String := "0.0.1";
+
    procedure Process_Unit (Context : Libadalang.Helpers.App_Job_Context; Unit : Analysis_Unit);
+   procedure App_Setup (Context : Libadalang.Helpers.App_Context; Jobs : Libadalang.Helpers.App_Job_Context_Array);
+
+   package String_Sets is new Ada.Containers.Indefinite_Ordered_Sets (String);
 
    package Application is new Libadalang.Helpers.App
-     (Name         => "json-builder",
-      Description  => "Generated JSON bindings from Ada-specs",
-      Process_Unit => Process_Unit);
+     (Name           => "json-builder",
+      Description    => "Generated JSON bindings from Ada-specs",
+      App_Setup      => App_Setup,
+      Process_Unit   => Process_Unit);
 
+   package Args is
+      use GNATCOLL.Opt_Parse;
+      package Output_folder is new Parse_Option
+        (Application.Args.Parser, "-o", "--output", "Where to write the output results.",
+         Ada.Strings.Unbounded.Unbounded_String,
+         Default_Val => Ada.Strings.Unbounded.To_Unbounded_String (""));
+
+      package Verbose is new Parse_Flag
+        (Application.Args.Parser, "-v", "--verbose", "Be versbose.");
+
+      package Version is new Parse_Flag
+        (Application.Args.Parser, "", "--version", "Print version and exit.");
+
+   end Args;
+
+   type Current_Type_Info is record
+      Type_Name : Ada.Strings.Unbounded.Unbounded_String;
+   end record;
    type Analyzser (Context : access Libadalang.Helpers.App_Job_Context;
-                   Unit    : access Analysis_Unit) is tagged
+                   Unit    : access Analysis_Unit) is tagged limited
       record
          Name        : Ada.Strings.Unbounded.Unbounded_String;
          Spec_Buffer : Ada.Strings.Unbounded.Unbounded_String;
          Body_Buffer : Ada.Strings.Unbounded.Unbounded_String;
+         Out_Folder  : Ada.Strings.Unbounded.Unbounded_String;
+         Withs       : String_Sets.Set;
+         Current     : Current_Type_Info;
+         outf        : Ada.Text_IO.File_Type;
       end record;
+
+   procedure Create_File (Self : in out Analyzser; Name : Ada.Strings.Unbounded.Unbounded_String);
+   procedure Put_Line (Self : in out Analyzser; Item : String);
+   procedure Put_Line (Self : in out Analyzser; Item : Ada.Strings.Unbounded.Unbounded_String);
+   procedure Close_File (Self : in out Analyzser);
 
    procedure On_Ada_Abort_Absent (Self : in out Analyzser; Node : Ada_Node'Class);
 

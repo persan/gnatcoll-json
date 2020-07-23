@@ -30,3 +30,4 @@ trader
 *main
 *.cgpr
 *.pyc
+*.old

@@ -1,7 +1,0 @@
-library project Libiconv is
-   for Library_Name use "iconv";
-   for Library_Kind use "dynamic";
-   for Library_Dir use "/usr/gnat/lib64";
-   for Externally_Built use "True";
-   for Source_Dirs use ();
-end Libiconv;

@@ -13,12 +13,12 @@ package Simple is
 
 
    type Simple_Record is record
-      D1  : Integer;
-      D3  : Long_Float;
-      D2  : AA;
-      D4  : Aa_Array (1 .. 10);
-      D5  : Enum;
-      D6  : My;
+      D1_Integer     : Integer;
+      D3_Long_Float  : Long_Float;
+      D2_AA          : AA;
+      D4_Aa_Array    : Aa_Array (1 .. 10);
+      D5_Enum        : Enum;
+      D6_My          : My;
    end record;
 
    type Some_Interface is interface;
@@ -31,14 +31,11 @@ package Simple is
 
    type Concrete_Taggd_Record is new Simple.Abstract_Record with record
       Data2 : Integer;
-   end record with Annotate => Top_Level;
-
-   type Concrete_Taggd_Record_No_Codegen is new Abstract_Record with record
-      Data2 : Integer;
-   end record with Annotate => No_Code_Gen;
+   end record;
 
 
    type Concrete_Taggd_Record_with_Time is new Concrete_Taggd_Record with  record
-      T : Ada.Calendar.Time with Annotate => Key;
+      T : Ada.Calendar.Time;
    end record;
+
 end Simple;

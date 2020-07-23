@@ -1,27 +1,59 @@
-with "gnatcoll-json.gpr";
-with "libadalang.gpr";
 with "libiconv.gpr";
-project GnatColl.JSON.Builder is
+with "libadalang.gpr";
+with "../gnatcoll-json.gpr";
+project Gnatcoll.Json.Builder is
 
-   for Main use ("gnatcoll-json-support-generate-driver-main.adb");
+   for Main use ("gnatcoll-json-builder-main.adb");
 
-   for Languages use ("ada");
-   for Source_Dirs use ("tests.codegen","src/**");
-   for Object_Dir use ".obj/";
+   for Languages use ("Ada", "python","Makefile");
+
+
+   for Source_Dirs use (".", "src/**");
+   for Object_Dir use ".obj";
    for Exec_Dir use "bin";
-   for Externally_Built use "False";
 
    package Builder is
-      for Executable ("gnatcoll-json-support-generate-driver-main.adb") use "ada2json";
-   end  Builder;
+      for Switches ("ada") use ("-s", "-j0", "-g", "-k", "-C");
+      for Executable ("gnatcoll-json-builder-main.adb") use "json-builder";
+   end Builder;
 
    package Compiler is
-      for Default_Switches ("Ada") use ("-g");
+      for Driver ("Python") use "";
+      for Driver ("Makefile") use "";
+
+      for Switches ("ada") use ("-g",
+                                "-gnatQ",
+                                "-fcallgraph-info=su,da",
+                                "-fstack-check",
+                                "-gnatwa",
+                                "-gnatyABOabcdfhiklnprtux");
    end Compiler;
 
    package Binder is
-      for Default_Switches ("Ada") use ("-E");
+      for Switches ("Ada") use ("-E");
    end Binder;
 
+   package Documentation is
+      for Documentation_Dir use "doc";
+      for Image_Dir use "doc/images";
+   end Documentation;
 
-end GnatColl.JSON.Builder;
+   package Ide is
+      for Vcs_Kind use "git";
+   end Ide;
+
+   package Gnattest is
+      for Harness_Dir use project'Project_Dir & "tests";
+   end Gnattest;
+
+   package Codepeer is
+      for Switches use ("-j0");
+   end Codepeer;
+
+   package Naming is
+      for Body_Suffix ("python") use ".py";
+      for Body_Suffix ("Makefile") use ".mk";
+      for Implementation_Exceptions ("Makefile") use ("Makefile");
+   end Naming;
+
+end Gnatcoll.Json.Builder;

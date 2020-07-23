@@ -1,22 +1,50 @@
+with Ada.Characters;
+with Ada.Directories;
+with GNAT.OS_Lib;
 with Libadalang.Common;
-with Ada.Text_IO;
 with Ada.Text_IO.Unbounded_IO;
 with GNAT.Source_Info;
-with Ada.Strings.Fixed;
 with Ada.Strings.Maps;
+with Ada.Characters.Conversions;
+with GNATCOLL.VFS;
 package body GNATCOLL.Json.Builder is
 
    use Libadalang.Common;
    use Ada.Text_IO;
    use GNAT.Source_Info;
    use Ada.Strings.Unbounded;
-   use Ada.Strings.Fixed;
    use Ada.Text_IO.Unbounded_IO;
    Ada2file : constant Ada.Strings.Maps.Character_Mapping := Ada.Strings.Maps.To_Mapping ("ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ.",
-                                                                                 "abcdefgjijklmnopqrstuvwxyzåäö.");
+                                                                                          "abcdefgjijklmnopqrstuvwxyzåäö-");
+   procedure App_Setup (Context : Libadalang.Helpers.App_Context; Jobs : Libadalang.Helpers.App_Job_Context_Array) is
+      pragma Unreferenced (Jobs, Context);
+   begin
+      if Args.Version.Get then
+         Put_Line (VERSION);
+         GNAT.OS_Lib.OS_Exit (0);
+      end if;
+   end;
+
    procedure Process_Unit (Context : Libadalang.Helpers.App_Job_Context; Unit : Analysis_Unit) is
       Self : Analyzser (Context'Unrestricted_Access, Unit'Unrestricted_Access);
+      root : GNATCOLL.VFS.Virtual_File;
+      use all type Libadalang.Helpers.Source_Provider_Kind;
+      use all type GNATCOLL.VFS.Filesystem_String;
+      Output_folder  : Ada.Strings.Unbounded.Unbounded_String;
+
    begin
+      if Context.App_Ctx.Provider.Kind = Libadalang.Helpers.Project_File then
+         root := Context.App_Ctx.Provider.Project.Root_Project.Project_Path.Get_Parent;
+      else
+         root := GNATCOLL.VFS.Create (".");
+      end if;
+
+      Output_folder := To_Unbounded_String ((+root.Full_Name.all) & To_String (Args.Output_folder.Get));
+      if not Ada.Directories.Exists (To_String (Output_folder)) then
+         Ada.Directories.Create_Path (To_String (Output_folder));
+      end if;
+      Append (Output_folder, "/");
+
       for Node of Unit.Root.Children loop
          case Node.Kind is
             when Ada_Library_Item =>
@@ -27,12 +55,42 @@ package body GNATCOLL.Json.Builder is
                Put_Line (Enclosing_Entity & " : " & Node.Kind'Img & " : " & Node.Image);
          end case;
       end loop;
-      Put_Line ("-- " & Translate (Self.Name, Ada2file) & ".ads" & " " & String'(80 * '-'));
-      Put_Line (Self.Spec_Buffer);
-      Put_Line ("-- " & Translate (Self.Name, Ada2file) & ".adb" & " " & String'(80 * '-'));
-      Put_Line (Self.Body_Buffer);
-      Put_Line (String'(40 * '-'));
+
+      Self.Create_File (To_String (Output_folder) & Translate (Self.Name, Ada2file) & ".ads");
+      for I of Self.Withs loop
+         Self.Put_Line ("with " & I & ";");
+      end loop;
+      Self.Put_Line (Self.Spec_Buffer);
+      Self.Close_File;
+      Self.Create_File (To_String (Output_folder) & Translate (Self.Name, Ada2file) & ".adb");
+
+      Self.Put_Line (Self.Body_Buffer);
+      Self.Close_File;
+
    end Process_Unit;
+
+   procedure Create_File (Self : in out Analyzser; Name : Ada.Strings.Unbounded.Unbounded_String) is
+   begin
+      pragma Debug (Put_Line (GNAT.Source_Info.Enclosing_Entity & "( " & Name & ") --------------------------"));
+      Ada.Text_IO.Create (Self.outf, Out_File, To_String (Name));
+   end;
+   procedure Put_Line (Self : in out Analyzser; Item : String) is
+   begin
+      pragma Debug (Put_Line (Item));
+      Put_Line (Self.outf, Item);
+   end;
+
+   procedure Put_Line (Self : in out Analyzser; Item : Ada.Strings.Unbounded.Unbounded_String)  is
+   begin
+      pragma Debug (Put_Line (Item));
+      Put_Line (Self.outf, Item);
+   end;
+
+   procedure Close_File (Self : in out Analyzser) is
+   begin
+      pragma Debug (Put_Line (GNAT.Source_Info.Enclosing_Entity & "--------------------------"));
+      Ada.Text_IO.Close (Self.outf);
+   end;
 
    procedure On_Ada_Abort_Absent (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
@@ -1040,7 +1098,10 @@ package body GNATCOLL.Json.Builder is
                      Self.Name := Name;
                   end if;
                   Append (Self.Body_Buffer, "package body " & Name & " is" & ASCII.LF);
+
+                  Append (Self.Spec_Buffer, "with GNATColl.JSON;" & ASCII.LF & ASCII.LF);
                   Append (Self.Spec_Buffer, "package " & Name & " is" & ASCII.LF);
+                  Append (Self.Spec_Buffer, "   use GNATColl.JSON;" & ASCII.LF & ASCII.LF);
                when Ada_Public_Part =>
                   Self.On_Ada_Public_Part (N);
                when Ada_End_Name =>
@@ -1180,8 +1241,26 @@ package body GNATCOLL.Json.Builder is
       for N of Node.Children loop
          if not N.Is_Null then
             case N.Kind is
-               when Ada_Type_Decl =>
-                  Self.On_Ada_Type_Decl (N);
+               when Ada_Defining_Name =>
+                  Self.Current.Type_Name := To_Unbounded_String (Debug_Text (N.As_Defining_Name));
+               when Ada_Signed_Int_Type_Def =>
+                  Self.On_Ada_Signed_Int_Type_Def (N);
+               when Ada_Enum_Type_Def =>
+                  Self.On_Ada_Enum_Type_Def (N);
+               when Ada_Mod_Int_Type_Def =>
+                  Self.On_Ada_Mod_Int_Type_Def (N);
+               when Ada_Floating_Point_Def =>
+                  Self.On_Ada_Floating_Point_Def (N);
+               when Ada_Derived_Type_Def =>
+                  Self.On_Ada_Derived_Type_Def (N);
+               when Ada_Record_Type_Def =>
+                  Self.On_Ada_Record_Type_Def (N);
+               when Ada_Array_Type_Def =>
+                  Self.On_Ada_Array_Type_Def (N);
+
+               when Ada_Interface_Type_Def | Ada_Aspect_Spec =>
+                  null;
+
                when others =>
                   Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
             end case;
@@ -4001,48 +4080,204 @@ package body GNATCOLL.Json.Builder is
    end On_Ada_Type_Access_Def;
 
    procedure On_Ada_Array_Type_Def (Self : in out Analyzser; Node : Ada_Node'Class) is
+      Name         : constant String := To_String (Self.Current.Type_Name);
+      Index_Name   : Unbounded_String;
+      Element_Name : Unbounded_String;
+
    begin
-      Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Array_Type_Def =>
-                  Self.On_Ada_Array_Type_Def (N);
+
+      Append (Self.Spec_Buffer, "   --  ------------------------------------" & ASCII.LF);
+      Append (Self.Spec_Buffer, "   --  " & Name & " " & ASCII.LF);
+      Append (Self.Spec_Buffer, "   --  ------------------------------------" & ASCII.LF);
+      for C of Node.Children loop
+         if not C.Is_Null then
+            case C.Kind is
+               when Ada_Unconstrained_Array_Indices =>
+                  for CC of C.Children loop
+                     if not CC.Is_Null then
+                        case CC.Kind is
+                           when Ada_Unconstrained_Array_Index_List =>
+                              for CCc of CC.Children loop
+                                 if not CCc.Is_Null then
+                                    case CCc.Kind is
+                                       when Ada_Unconstrained_Array_Index =>
+                                          for CCcC of CCc.Children loop
+                                             if not CCcC.Is_Null then
+                                                case CCcC.Kind is
+                                                   when Ada_Subtype_Indication =>
+                                                      for Ccccc of CCcC.Children loop
+                                                         if not Ccccc.Is_Null then
+                                                            case Ccccc.Kind is
+                                                            when Ada_Not_Null_Absent | Ada_Aliased_Absent | Ada_Constant_Absent =>
+                                                               null;
+                                                               when Ada_Identifier =>
+                                                                  Index_Name := To_Unbounded_String (Ada.Characters.Conversions.To_String (As_Identifier (Ccccc).Text));
+                                                               when others =>
+                                                                  Append (Self.Spec_Buffer, "   --5      " & Ccccc.Kind'Img & ASCII.LF);
+                                                            end case;
+                                                         end if;
+                                                      end loop;
+                                                   when others =>
+                                                      Append (Self.Spec_Buffer, "   --4      " & CCcC.Kind'Img & ASCII.LF);
+                                                end case;
+                                             end if;
+                                          end loop;
+                                       when others =>
+                                          Append (Self.Spec_Buffer, "   --3      " & CCc.Kind'Img & ASCII.LF);
+                                    end case;
+                                 end if;
+                              end loop;
+                           when others =>
+                              Append (Self.Spec_Buffer, "   --2     " & CC.Kind'Img & ASCII.LF);
+                        end case;
+                     end if;
+                  end loop;
+               when Ada_Constrained_Array_Indices =>
+                  null;
+               when Ada_Component_Def =>
+
+                  for C_1 of C.Children loop
+                     if not C_1.Is_Null then
+                        case C_1.Kind is
+                           when Ada_Subtype_Indication =>
+                              for C_2 of C_1.Children loop
+                                 if not C_2.Is_Null then
+                                    case C_2.Kind is
+                                       when Ada_Not_Null_Absent | Ada_Aliased_Absent | Ada_Constant_Absent =>
+                                          null;
+                                       when Ada_Identifier =>
+                                          Element_Name := To_Unbounded_String (Ada.Characters.Conversions.To_String (As_Identifier (C_2).Text));
+                                       when others =>
+                                          Append (Self.Spec_Buffer, "   -- " & GNAT.Source_Info.Source_Location & "      " & C_2.Kind'Img & ASCII.LF);
+                                    end case;
+                                 end if;
+                              end loop;
+
+                           when Ada_Not_Null_Absent | Ada_Aliased_Absent | Ada_Constant_Absent =>
+                              null;
+                           when others =>
+                              Append (Self.Spec_Buffer, "   -- " & GNAT.Source_Info.Source_Location & "      " & C_1.Kind'Img & ASCII.LF);
+                              Print (C_1);
+
+                        end case;
+                     end if;
+                  end loop;
                when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
+                  Append (Self.Spec_Buffer, "   --1  " & C.Kind'Img & ASCII.LF);
             end case;
          end if;
       end loop;
+      Append (Self.Spec_Buffer, "   package " & Name & "_JSON_Impl is new GNATCOLL.JSON.Support.Arrays_Generic" & ASCII.LF &
+                "      (" & Index_Name & "," & Element_Name & "," &  Name & ", Create, Get, Create, Get); " & ASCII.LF);
+
+      Append (Self.Spec_Buffer, "   function Create (Val : " & Name & ") return JSON_Value renames " & Name & "_JSON_Impl.Create;" & ASCII.LF);
+      Append (Self.Spec_Buffer, "   function Get (Val : JSON_Value) return " & Name & " renames " & Name & "_JSON_Impl.Get;" & ASCII.LF);
+      Append (Self.Spec_Buffer, "   function Get (Val : JSON_Value; Field : UTF8_String) return " & Name & " renames " & Name & "_JSON_Impl.Get;" & ASCII.LF);
+      Append (Self.Spec_Buffer, "   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : " & Name & ") renames " & Name & "_JSON_Impl.Set_Field;" & ASCII.LF & ASCII.LF & ASCII.LF);
+      Self.Withs.Include ("GNATCOLL.JSON.Support.Arrays_Generic");
+
+      Append (Self.Spec_Buffer, ASCII.LF & ASCII.LF);
    end On_Ada_Array_Type_Def;
 
    procedure On_Ada_Derived_Type_Def (Self : in out Analyzser; Node : Ada_Node'Class) is
+      Name                : constant String := To_String (Self.Current.Type_Name);
+      ABSTRACT_ABSENT     : Boolean := False with Warnings => Off;
+      LIMITED_ABSENT      : Boolean := False with Warnings => Off;
+      SYNCHRONIZED_ABSENT : Boolean := False with Warnings => Off;
+      SUBTYPE_INDICATION  : Boolean := False with Warnings => Off;
+      PARENT_LIST         : Boolean := False with Warnings => Off;
+      WITH_PRIVATE_ABSENT : Boolean := False with Warnings => Off;
+      Is_Record           : Boolean := False with Warnings => Off;
+      Done                : Boolean := False with Warnings => Off;
+
    begin
-      Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Derived_Type_Def =>
-                  Self.On_Ada_Derived_Type_Def (N);
+      for CC of Node.Children loop
+         if not CC.Is_Null then
+            case CC.Kind is
+               when Ada_Abstract_Absent =>
+                  ABSTRACT_ABSENT := True;
+               when Ada_Limited_Absent =>
+                  LIMITED_ABSENT := True;
+               when Ada_Synchronized_Absent =>
+                  SYNCHRONIZED_ABSENT := True;
+               when Ada_Subtype_Indication =>
+                  null;
+               when Ada_Parent_List =>
+                  null;
+               when Ada_With_Private_Absent =>
+                  WITH_PRIVATE_ABSENT := True;
+               when Ada_Record_Def =>
+                  Is_Record := True;
                when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
+                  Append (Self.Body_Buffer, "   --  " & CC.Kind'Img & ASCII.LF);
             end case;
          end if;
       end loop;
+      --  --------------------------------------------------------------------------------------
+      --  Specefication
+      --  --------------------------------------------------------------------------------------
+      Append (Self.Spec_Buffer, "   --  -------------------------------------------------------------------------" & ASCII.LF);
+      Append (Self.Spec_Buffer, "   --  " & Name & " " & ASCII.LF);
+      Append (Self.Spec_Buffer, "   --" & ASCII.LF);
+      Append (Self.Spec_Buffer, "   function Create (Val : " & Name & ") return JSON_Value;" & ASCII.LF);
+      Append (Self.Spec_Buffer, "   function Get (Val : JSON_Value) return " & Name & ";" & ASCII.LF);
+      Append (Self.Spec_Buffer, "   function Get (Val : JSON_Value; Field : UTF8_String) return " & Name & ";" & ASCII.LF);
+      Append (Self.Spec_Buffer, "   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : " & Name & ");" & ASCII.LF);
+      Append (Self.Spec_Buffer, "   --  -------------------------------------------------------------------------" & ASCII.LF);
+      Append (Self.Spec_Buffer, ASCII.LF & ASCII.LF);
+
+      Append (Self.Body_Buffer, "   --  --------------------------------------------------------------------" & ASCII.LF);
+      Append (Self.Body_Buffer, "   --  ADA_DERIVED_TYPE_DEF: " & Name & " " & ASCII.LF);
+      Append (Self.Body_Buffer, "   --  --------------------------------------------------------------------" & ASCII.LF);
+
+      --  --------------------------------------------------------------------------------------
+      --  Implementation
+      --  --------------------------------------------------------------------------------------
+
+      if not Done then
+         Append (Self.Body_Buffer,
+                 "   function Create (Val : " & Name & ") return JSON_Value is" & ASCII.LF &
+                   "   begin" & ASCII.LF &
+                   "      return ret : JSON_Value := Create_Object do" & ASCII.LF &
+                   "         null;" & ASCII.LF &
+                   "      end return;" & ASCII.LF &
+                   "   end Create;" & ASCII.LF & ASCII.LF);
+
+         Append (Self.Body_Buffer, "   function Get (Val : JSON_Value) return " & Name & " is" & ASCII.LF &
+                   "   begin" & ASCII.LF &
+                   "      return ret : " & Name & " do" & ASCII.LF &
+                   "         null;" & ASCII.LF &
+                   "      end return;" & ASCII.LF &
+                   "   end Get;" & ASCII.LF & ASCII.LF);
+
+         Append (Self.Body_Buffer, "   function Get (Val : JSON_Value; Field : UTF8_String) return " & Name & " is" & ASCII.LF &
+                   "   begin" & ASCII.LF &
+                   "       return " & Name & "'(Get (JSON_Value'(Get (Val, Field))));" & ASCII.LF &
+                   "   end Get;" & ASCII.LF & ASCII.LF);
+
+         Append (Self.Body_Buffer, "   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : " & Name & ") is" & ASCII.LF &
+                   "   begin" & ASCII.LF &
+                   "      Set_Field (Val, Field_Name, Create (Field));" & ASCII.LF &
+                   "   end Set_Field;" &  ASCII.LF & ASCII.LF & ASCII.LF);
+      end if;
+
    end On_Ada_Derived_Type_Def;
 
    procedure On_Ada_Enum_Type_Def (Self : in out Analyzser; Node : Ada_Node'Class) is
+      Name : constant String := To_String (Self.Current.Type_Name);
    begin
-      Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Enum_Type_Def =>
-                  Self.On_Ada_Enum_Type_Def (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
+      Append (Self.Spec_Buffer, "   --  -------------------------------------------------------------------------" & ASCII.LF);
+      Append (Self.Spec_Buffer, "   --  " & Name & " " & ASCII.LF);
+      Append (Self.Spec_Buffer, "   --" & ASCII.LF);
+      Append (Self.Spec_Buffer, "   package " & Name & "_JSON_Impl is new GNATCOLL.JSON.Support.Enumeration_Generic (" & Name & ");" & ASCII.LF);
+      Append (Self.Spec_Buffer, "   function Create (Val : " & Name & ") return JSON_Value renames " & Name & "_JSON_Impl.Create;" & ASCII.LF);
+      Append (Self.Spec_Buffer, "   function Get (Val : JSON_Value) return " & Name & " renames " & Name & "_JSON_Impl.Get;" & ASCII.LF);
+      Append (Self.Spec_Buffer, "   function Get (Val : JSON_Value; Field : UTF8_String) return " & Name & " renames " & Name & "_JSON_Impl.Get;" & ASCII.LF);
+      Append (Self.Spec_Buffer, "   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : " & Name & ") renames " & Name & "_JSON_Impl.Set_Field;" & ASCII.LF);
+      Append (Self.Spec_Buffer, "   --  -------------------------------------------------------------------------" & ASCII.LF);
+      Append (Self.Spec_Buffer, ASCII.LF & ASCII.LF);
+
+      Self.Withs.Include ("GNATCOLL.JSON.Support.Enumeration_Generic");
    end On_Ada_Enum_Type_Def;
 
    procedure On_Ada_Formal_Discrete_Type_Def (Self : in out Analyzser; Node : Ada_Node'Class) is
@@ -4076,18 +4311,19 @@ package body GNATCOLL.Json.Builder is
    end On_Ada_Interface_Type_Def;
 
    procedure On_Ada_Mod_Int_Type_Def (Self : in out Analyzser; Node : Ada_Node'Class) is
+      Name : constant String := To_String (Self.Current.Type_Name);
    begin
-      Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Mod_Int_Type_Def =>
-                  Self.On_Ada_Mod_Int_Type_Def (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
+      Append (Self.Spec_Buffer, "   --  -------------------------------------------------------------------------" & ASCII.LF);
+      Append (Self.Spec_Buffer, "   --  " & Name & " " & ASCII.LF);
+      Append (Self.Spec_Buffer, "   --" & ASCII.LF);
+      Append (Self.Spec_Buffer, "   package " & Name & "_JSON_Impl is new GNATCOLL.JSON.Support.Modular_Generic (" & Name & ");" & ASCII.LF);
+      Append (Self.Spec_Buffer, "   function Create (Val : " & Name & ") return JSON_Value renames " & Name & "_JSON_Impl.Create;" & ASCII.LF);
+      Append (Self.Spec_Buffer, "   function Get (Val : JSON_Value) return " & Name & " renames " & Name & "_JSON_Impl.Get;" & ASCII.LF);
+      Append (Self.Spec_Buffer, "   function Get (Val : JSON_Value; Field : UTF8_String) return " & Name & " renames " & Name & "_JSON_Impl.Get;" & ASCII.LF);
+      Append (Self.Spec_Buffer, "   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : " & Name & ") renames " & Name & "_JSON_Impl.Set_Field;" & ASCII.LF);
+      Append (Self.Spec_Buffer, "   --  -------------------------------------------------------------------------" & ASCII.LF);
+      Append (Self.Spec_Buffer, ASCII.LF & ASCII.LF);
+      Self.Withs.Include ("GNATCOLL.JSON.Support.Modular_Generic");
    end On_Ada_Mod_Int_Type_Def;
 
    procedure On_Ada_Private_Type_Def (Self : in out Analyzser; Node : Ada_Node'Class) is
@@ -4121,18 +4357,19 @@ package body GNATCOLL.Json.Builder is
    end On_Ada_Decimal_Fixed_Point_Def;
 
    procedure On_Ada_Floating_Point_Def (Self : in out Analyzser; Node : Ada_Node'Class) is
+      Name : constant String := To_String (Self.Current.Type_Name);
    begin
-      Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Floating_Point_Def =>
-                  Self.On_Ada_Floating_Point_Def (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
+      Append (Self.Spec_Buffer, "   --  -------------------------------------------------------------------------" & ASCII.LF);
+      Append (Self.Spec_Buffer, "   --  " & Name & " " & ASCII.LF);
+      Append (Self.Spec_Buffer, "   --" & ASCII.LF);
+      Append (Self.Spec_Buffer, "   package " & Name & "_JSON_Impl is new GNATCOLL.JSON.Support.Float_Generic (" & Name & ");" & ASCII.LF);
+      Append (Self.Spec_Buffer, "   function Create (Val : " & Name & ") return JSON_Value renames " & Name & "_JSON_Impl.Create;" & ASCII.LF);
+      Append (Self.Spec_Buffer, "   function Get (Val : JSON_Value) return " & Name & " renames " & Name & "_JSON_Impl.Get;" & ASCII.LF);
+      Append (Self.Spec_Buffer, "   function Get (Val : JSON_Value; Field : UTF8_String) return " & Name & " renames " & Name & "_JSON_Impl.Get;" & ASCII.LF);
+      Append (Self.Spec_Buffer, "   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : " & Name & ") renames " & Name & "_JSON_Impl.Set_Field;" & ASCII.LF);
+      Append (Self.Spec_Buffer, "   --  -------------------------------------------------------------------------" & ASCII.LF);
+      Append (Self.Spec_Buffer, ASCII.LF & ASCII.LF);
+      Self.Withs.Include ("GNATCOLL.JSON.Support.Float_Generic");
    end On_Ada_Floating_Point_Def;
 
    procedure On_Ada_Ordinary_Fixed_Point_Def (Self : in out Analyzser; Node : Ada_Node'Class) is
@@ -4151,8 +4388,64 @@ package body GNATCOLL.Json.Builder is
    end On_Ada_Ordinary_Fixed_Point_Def;
 
    procedure On_Ada_Record_Type_Def (Self : in out Analyzser; Node : Ada_Node'Class) is
+      Name : constant String := To_String (Self.Current.Type_Name);
+      ABSTRACT_ABSENT     : Boolean := False with Warnings => Off;
+      LIMITED_ABSENT      : Boolean := False with Warnings => Off;
+      SYNCHRONIZED_ABSENT : Boolean := False with Warnings => Off;
+      SUBTYPE_INDICATION  : Boolean := False with Warnings => Off;
+      PARENT_LIST         : Boolean := False with Warnings => Off;
+      WITH_PRIVATE_ABSENT : Boolean := False with Warnings => Off;
+      Is_Record           : Boolean := False with Warnings => Off;
+
    begin
+      for CC of Node.Children loop
+         if not CC.Is_Null then
+            case CC.Kind is
+               when Ada_Abstract_Absent =>
+                  ABSTRACT_ABSENT := True;
+               when Ada_Limited_Absent =>
+                  LIMITED_ABSENT := True;
+               when Ada_Synchronized_Absent =>
+                  SYNCHRONIZED_ABSENT := True;
+               when Ada_Subtype_Indication =>
+                  null;
+               when Ada_Parent_List =>
+                  null;
+               when Ada_With_Private_Absent =>
+                  WITH_PRIVATE_ABSENT := True;
+               when Ada_Record_Def =>
+                  Is_Record := True;
+               when others =>
+                  Append (Self.Body_Buffer, "   --  " & CC.Kind'Img & ASCII.LF);
+            end case;
+         end if;
+      end loop;
+
+      Append (Self.Spec_Buffer, "   --  -------------------------------------------------------------------------" & ASCII.LF);
+      Append (Self.Spec_Buffer, "   --  " & Name & " " & ASCII.LF);
+      Append (Self.Spec_Buffer, "   --" & ASCII.LF);
+      if ABSTRACT_ABSENT then
+         Append (Self.Spec_Buffer, "   function Create (Val : " & Name & ") return JSON_Value;" & ASCII.LF);
+         Append (Self.Spec_Buffer, "   function Get (Val : JSON_Value) return " & Name & ";" & ASCII.LF);
+         Append (Self.Spec_Buffer, "   function Get (Val : JSON_Value; Field : UTF8_String) return " & Name & ";" & ASCII.LF);
+         Append (Self.Spec_Buffer, "   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : " & Name & ");" & ASCII.LF);
+      end if;
+      Append (Self.Spec_Buffer, "   procedure Map_JSON_Value (User_Object : in out " & Name & ";" & ASCII.LF);
+      Append (Self.Spec_Buffer, "                             Name        : UTF8_String;" & ASCII.LF);
+      Append (Self.Spec_Buffer, "                             Value       : JSON_Value);" & ASCII.LF);
+      if ABSTRACT_ABSENT then
+         Append (Self.Spec_Buffer, "   procedure Map_JSON_Object is new Gen_Map_JSON_Object (" & Name & ");" & ASCII.LF);
+         Append (Self.Spec_Buffer, "   --  Map_JSON_Object(Val         : JSON_Value;" & ASCII.LF);
+         Append (Self.Spec_Buffer, "   --                  CB          : access procedure (User_Object : in out " & Name & ";" & ASCII.LF);
+         Append (Self.Spec_Buffer, "   --                                                  Name        : UTF8_String;" & ASCII.LF);
+         Append (Self.Spec_Buffer, "   --                                                  Value       : JSON_Value);" & ASCII.LF);
+         Append (Self.Spec_Buffer, "   --                   User_Object : in out Abstract_Record)" & ASCII.LF);
+         Append (Self.Spec_Buffer, "   --  -------------------------------------------------------------------------" & ASCII.LF);
+      end if;
+      Append (Self.Spec_Buffer, ASCII.LF & ASCII.LF);
+
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
+
       for N of Node.Children loop
          if not N.Is_Null then
             case N.Kind is
@@ -4166,18 +4459,19 @@ package body GNATCOLL.Json.Builder is
    end On_Ada_Record_Type_Def;
 
    procedure On_Ada_Signed_Int_Type_Def (Self : in out Analyzser; Node : Ada_Node'Class) is
+      Name : constant String := To_String (Self.Current.Type_Name);
    begin
-      Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Signed_Int_Type_Def =>
-                  Self.On_Ada_Signed_Int_Type_Def (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
+      Append (Self.Spec_Buffer, "   --  -------------------------------------------------------------------------" & ASCII.LF);
+      Append (Self.Spec_Buffer, "   --  " & Name & " " & ASCII.LF);
+      Append (Self.Spec_Buffer, "   --" & ASCII.LF);
+      Append (Self.Spec_Buffer, "   package " & Name & "_JSON_Impl is new GNATCOLL.JSON.Support.Integer_Generic (" & Name & ");" & ASCII.LF);
+      Append (Self.Spec_Buffer, "   function Create (Val : " & Name & ") return JSON_Value renames " & Name & "_JSON_Impl.Create;" & ASCII.LF);
+      Append (Self.Spec_Buffer, "   function Get (Val : JSON_Value) return " & Name & " renames " & Name & "_JSON_Impl.Get;" & ASCII.LF);
+      Append (Self.Spec_Buffer, "   function Get (Val : JSON_Value; Field : UTF8_String) return " & Name & " renames " & Name & "_JSON_Impl.Get;" & ASCII.LF);
+      Append (Self.Spec_Buffer, "   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : " & Name & ") renames " & Name & "_JSON_Impl.Set_Field;" & ASCII.LF);
+      Append (Self.Spec_Buffer, "   --  -------------------------------------------------------------------------" & ASCII.LF);
+      Append (Self.Spec_Buffer, ASCII.LF & ASCII.LF);
+      Self.Withs.Include ("GNATCOLL.JSON.Support.Integer_Generic");
    end On_Ada_Signed_Int_Type_Def;
 
    procedure On_Ada_Anonymous_Type (Self : in out Analyzser; Node : Ada_Node'Class) is
