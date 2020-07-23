@@ -3,6 +3,7 @@ with Ada.Text_IO;
 with Ada.Text_IO.Unbounded_IO;
 with GNAT.Source_Info;
 with Ada.Strings.Fixed;
+with Ada.Strings.Maps;
 package body GNATCOLL.Json.Builder is
 
    use Libadalang.Common;
@@ -11,7 +12,8 @@ package body GNATCOLL.Json.Builder is
    use Ada.Strings.Unbounded;
    use Ada.Strings.Fixed;
    use Ada.Text_IO.Unbounded_IO;
-
+   Ada2file : constant Ada.Strings.Maps.Character_Mapping := Ada.Strings.Maps.To_Mapping ("ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ.",
+                                                                                 "abcdefgjijklmnopqrstuvwxyzåäö.");
    procedure Process_Unit (Context : Libadalang.Helpers.App_Job_Context; Unit : Analysis_Unit) is
       Self : Analyzser (Context'Unrestricted_Access, Unit'Unrestricted_Access);
    begin
@@ -19,17 +21,17 @@ package body GNATCOLL.Json.Builder is
          case Node.Kind is
             when Ada_Library_Item =>
                Self.On_Ada_Library_Item (Node);
+            when Ada_Pragma_Node_List =>
+               null;
             when others =>
                Put_Line (Enclosing_Entity & " : " & Node.Kind'Img & " : " & Node.Image);
          end case;
       end loop;
-      Put_Line (String'(80 * '-'));
-      Put_Line (Self.Name);
-      Put_Line (String'(80 * '-'));
+      Put_Line ("-- " & Translate (Self.Name, Ada2file) & ".ads" & " " & String'(80 * '-'));
       Put_Line (Self.Spec_Buffer);
-      Put_Line (String'(80 * '-'));
+      Put_Line ("-- " & Translate (Self.Name, Ada2file) & ".adb" & " " & String'(80 * '-'));
       Put_Line (Self.Body_Buffer);
-      Put_Line (String'(80 * '-'));
+      Put_Line (String'(40 * '-'));
    end Process_Unit;
 
    procedure On_Ada_Abort_Absent (Self : in out Analyzser; Node : Ada_Node'Class) is
@@ -94,7 +96,7 @@ package body GNATCOLL.Json.Builder is
 
    procedure On_Ada_Ada_Node_List (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
-      Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
+      --  Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
       for N of Node.Children loop
          if not N.Is_Null then
             case N.Kind is

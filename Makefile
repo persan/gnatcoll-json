@@ -131,9 +131,9 @@ test-install:
 
 .SILENT: setup
 
-makefile.setup:
+makefile.setup:Makefile
 	$(ECHO) "prefix=$(prefix)" > makefile.setup
-	$(ECHO) "PATH=${EXEC_DIR}:${PATH}:$(dir $(shell which gnatls))" >> makefile.setup
+	$(ECHO) "export PATH=${EXEC_DIR}:${PATH}:$(dir $(shell which gnatls))" >> makefile.setup
 	$(ECHO) "ENABLE_SHARED=$(ENABLE_SHARED)" >> makefile.setup
 	$(ECHO) "INTEGRATED=$(INTEGRATED)" >> makefile.setup
 	$(ECHO) "BUILD=$(BUILD)" >> makefile.setup

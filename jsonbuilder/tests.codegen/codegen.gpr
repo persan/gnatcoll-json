@@ -1,5 +1,5 @@
 with "gnatcoll.gpr";
-with "../gnatcoll-json.gpr";
+with "gnatcoll-json.gpr";
 
 library project Codegen is
 
