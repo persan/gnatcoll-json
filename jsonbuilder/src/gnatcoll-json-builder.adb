@@ -72,54 +72,37 @@ package body GNATCOLL.Json.Builder is
    procedure Create_File (Self : in out Analyzser; Name : Ada.Strings.Unbounded.Unbounded_String) is
    begin
       pragma Debug (Put_Line (GNAT.Source_Info.Enclosing_Entity & "( " & Name & ") --------------------------"));
-      Ada.Text_IO.Create (Self.outf, Out_File, To_String (Name));
+      Ada.Text_IO.Create (Self.Outf, Out_File, To_String (Name));
    end;
    procedure Put_Line (Self : in out Analyzser; Item : String) is
    begin
       pragma Debug (Put_Line (Item));
-      Put_Line (Self.outf, Item);
+      Put_Line (Self.Outf, Item);
    end;
 
    procedure Put_Line (Self : in out Analyzser; Item : Ada.Strings.Unbounded.Unbounded_String)  is
    begin
       pragma Debug (Put_Line (Item));
-      Put_Line (Self.outf, Item);
+      Put_Line (Self.Outf, Item);
    end;
 
    procedure Close_File (Self : in out Analyzser) is
    begin
       pragma Debug (Put_Line (GNAT.Source_Info.Enclosing_Entity & "--------------------------"));
-      Ada.Text_IO.Close (Self.outf);
+      Ada.Text_IO.Close (Self.Outf);
    end;
+
+   --  ---------------------------------------------------------------------------------------------
+   --  ---------------------------------------------------------------------------------------------
 
    procedure On_Ada_Abort_Absent (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Abort_Absent =>
-                  Self.On_Ada_Abort_Absent (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Abort_Absent;
 
    procedure On_Ada_Abort_Present (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Abort_Present =>
-                  Self.On_Ada_Abort_Present (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Abort_Present;
 
    procedure On_Ada_Abstract_Absent (Self : in out Analyzser; Node : Ada_Node'Class) is
@@ -154,7 +137,7 @@ package body GNATCOLL.Json.Builder is
 
    procedure On_Ada_Ada_Node_List (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
-      --  Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
+      pragma Debug (Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image));
       for N of Node.Children loop
          if not N.Is_Null then
             case N.Kind is
@@ -217,16 +200,6 @@ package body GNATCOLL.Json.Builder is
    procedure On_Ada_Stmt_List (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Stmt_List =>
-                  Self.On_Ada_Stmt_List (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Stmt_List;
 
    procedure On_Ada_Aspect_Assoc_List (Self : in out Analyzser; Node : Ada_Node'Class) is
@@ -367,31 +340,11 @@ package body GNATCOLL.Json.Builder is
    procedure On_Ada_Elsif_Expr_Part_List (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Elsif_Expr_Part_List =>
-                  Self.On_Ada_Elsif_Expr_Part_List (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Elsif_Expr_Part_List;
 
    procedure On_Ada_Elsif_Stmt_Part_List (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Elsif_Stmt_Part_List =>
-                  Self.On_Ada_Elsif_Stmt_Part_List (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Elsif_Stmt_Part_List;
 
    procedure On_Ada_Enum_Literal_Decl_List (Self : in out Analyzser; Node : Ada_Node'Class) is
@@ -487,31 +440,11 @@ package body GNATCOLL.Json.Builder is
    procedure On_Ada_Pragma_Node_List (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Pragma_Node_List =>
-                  Self.On_Ada_Pragma_Node_List (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Pragma_Node_List;
 
    procedure On_Ada_Select_When_Part_List (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Select_When_Part_List =>
-                  Self.On_Ada_Select_When_Part_List (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Select_When_Part_List;
 
    procedure On_Ada_Unconstrained_Array_Index_List (Self : in out Analyzser; Node : Ada_Node'Class) is
@@ -652,16 +585,6 @@ package body GNATCOLL.Json.Builder is
    procedure On_Ada_At_Clause (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_At_Clause =>
-                  Self.On_Ada_At_Clause (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_At_Clause;
 
    procedure On_Ada_Attribute_Def_Clause (Self : in out Analyzser; Node : Ada_Node'Class) is
@@ -682,31 +605,11 @@ package body GNATCOLL.Json.Builder is
    procedure On_Ada_Enum_Rep_Clause (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Enum_Rep_Clause =>
-                  Self.On_Ada_Enum_Rep_Clause (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Enum_Rep_Clause;
 
    procedure On_Ada_Record_Rep_Clause (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Record_Rep_Clause =>
-                  Self.On_Ada_Record_Rep_Clause (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Record_Rep_Clause;
 
    procedure On_Ada_Aspect_Spec (Self : in out Analyzser; Node : Ada_Node'Class) is
@@ -742,16 +645,6 @@ package body GNATCOLL.Json.Builder is
    procedure On_Ada_Pragma_Argument_Assoc (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Pragma_Argument_Assoc =>
-                  Self.On_Ada_Pragma_Argument_Assoc (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Pragma_Argument_Assoc;
 
    procedure On_Ada_Entry_Spec (Self : in out Analyzser; Node : Ada_Node'Class) is
@@ -1087,7 +980,7 @@ package body GNATCOLL.Json.Builder is
    procedure On_Ada_Package_Decl (Self : in out Analyzser; Node : Ada_Node'Class) is
       Name : Unbounded_String;
    begin
-      Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
+      --  Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
       for N of Node.Children loop
          if not N.Is_Null then
             case N.Kind is
@@ -1237,7 +1130,7 @@ package body GNATCOLL.Json.Builder is
 
    procedure On_Ada_Type_Decl (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
-      Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
+      --  Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
       for N of Node.Children loop
          if not N.Is_Null then
             case N.Kind is
@@ -2080,7 +1973,7 @@ package body GNATCOLL.Json.Builder is
 
    procedure On_Ada_Public_Part (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
-      Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
+      --  Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
       for N of Node.Children loop
          if not N.Is_Null then
             case N.Kind is
@@ -2516,361 +2409,121 @@ package body GNATCOLL.Json.Builder is
    procedure On_Ada_Op_Div (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Op_Div =>
-                  Self.On_Ada_Op_Div (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Op_Div;
 
    procedure On_Ada_Op_Double_Dot (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Op_Double_Dot =>
-                  Self.On_Ada_Op_Double_Dot (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Op_Double_Dot;
 
    procedure On_Ada_Op_Eq (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Op_Eq =>
-                  Self.On_Ada_Op_Eq (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Op_Eq;
 
    procedure On_Ada_Op_Gt (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Op_Gt =>
-                  Self.On_Ada_Op_Gt (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Op_Gt;
 
    procedure On_Ada_Op_Gte (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Op_Gte =>
-                  Self.On_Ada_Op_Gte (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Op_Gte;
 
    procedure On_Ada_Op_In (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Op_In =>
-                  Self.On_Ada_Op_In (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Op_In;
 
    procedure On_Ada_Op_Lt (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Op_Lt =>
-                  Self.On_Ada_Op_Lt (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Op_Lt;
 
    procedure On_Ada_Op_Lte (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Op_Lte =>
-                  Self.On_Ada_Op_Lte (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Op_Lte;
 
    procedure On_Ada_Op_Minus (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Op_Minus =>
-                  Self.On_Ada_Op_Minus (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Op_Minus;
 
    procedure On_Ada_Op_Mod (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Op_Mod =>
-                  Self.On_Ada_Op_Mod (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Op_Mod;
 
    procedure On_Ada_Op_Mult (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Op_Mult =>
-                  Self.On_Ada_Op_Mult (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Op_Mult;
 
    procedure On_Ada_Op_Neq (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Op_Neq =>
-                  Self.On_Ada_Op_Neq (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Op_Neq;
 
    procedure On_Ada_Op_Not (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Op_Not =>
-                  Self.On_Ada_Op_Not (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Op_Not;
 
    procedure On_Ada_Op_Not_In (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Op_Not_In =>
-                  Self.On_Ada_Op_Not_In (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Op_Not_In;
 
    procedure On_Ada_Op_Or (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Op_Or =>
-                  Self.On_Ada_Op_Or (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Op_Or;
 
    procedure On_Ada_Op_Or_Else (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Op_Or_Else =>
-                  Self.On_Ada_Op_Or_Else (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Op_Or_Else;
 
    procedure On_Ada_Op_Plus (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Op_Plus =>
-                  Self.On_Ada_Op_Plus (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Op_Plus;
 
    procedure On_Ada_Op_Pow (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Op_Pow =>
-                  Self.On_Ada_Op_Pow (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Op_Pow;
 
    procedure On_Ada_Op_Rem (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Op_Rem =>
-                  Self.On_Ada_Op_Rem (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Op_Rem;
 
    procedure On_Ada_Op_Xor (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Op_Xor =>
-                  Self.On_Ada_Op_Xor (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Op_Xor;
 
    procedure On_Ada_String_Literal (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_String_Literal =>
-                  Self.On_Ada_String_Literal (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_String_Literal;
 
    procedure On_Ada_Null_Literal (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Null_Literal =>
-                  Self.On_Ada_Null_Literal (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Null_Literal;
 
    procedure On_Ada_Int_Literal (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Int_Literal =>
-                  Self.On_Ada_Int_Literal (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Int_Literal;
 
    procedure On_Ada_Real_Literal (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Real_Literal =>
-                  Self.On_Ada_Real_Literal (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Real_Literal;
 
    procedure On_Ada_Target_Name (Self : in out Analyzser; Node : Ada_Node'Class) is
@@ -3056,7 +2709,7 @@ package body GNATCOLL.Json.Builder is
    procedure On_Ada_Library_Item (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
 
-      Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
+      --  Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
       for N of Node.Children loop
          if not N.Is_Null then
             case N.Kind is
@@ -3137,91 +2790,31 @@ package body GNATCOLL.Json.Builder is
    procedure On_Ada_Mode_Default (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Mode_Default =>
-                  Self.On_Ada_Mode_Default (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Mode_Default;
 
    procedure On_Ada_Mode_In (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Mode_In =>
-                  Self.On_Ada_Mode_In (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Mode_In;
 
    procedure On_Ada_Mode_In_Out (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Mode_In_Out =>
-                  Self.On_Ada_Mode_In_Out (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Mode_In_Out;
 
    procedure On_Ada_Mode_Out (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Mode_Out =>
-                  Self.On_Ada_Mode_Out (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Mode_Out;
 
    procedure On_Ada_Not_Null_Absent (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Not_Null_Absent =>
-                  Self.On_Ada_Not_Null_Absent (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Not_Null_Absent;
 
    procedure On_Ada_Not_Null_Present (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Not_Null_Present =>
-                  Self.On_Ada_Not_Null_Present (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Not_Null_Present;
 
    procedure On_Ada_Null_Component_Decl (Self : in out Analyzser; Node : Ada_Node'Class) is
@@ -3242,76 +2835,26 @@ package body GNATCOLL.Json.Builder is
    procedure On_Ada_Others_Designator (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Others_Designator =>
-                  Self.On_Ada_Others_Designator (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Others_Designator;
 
    procedure On_Ada_Overriding_Not_Overriding (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Overriding_Not_Overriding =>
-                  Self.On_Ada_Overriding_Not_Overriding (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Overriding_Not_Overriding;
 
    procedure On_Ada_Overriding_Overriding (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Overriding_Overriding =>
-                  Self.On_Ada_Overriding_Overriding (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Overriding_Overriding;
 
    procedure On_Ada_Overriding_Unspecified (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Overriding_Unspecified =>
-                  Self.On_Ada_Overriding_Unspecified (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Overriding_Unspecified;
 
    procedure On_Ada_Params (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Params =>
-                  Self.On_Ada_Params (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Params;
 
    procedure On_Ada_Pragma_Node (Self : in out Analyzser; Node : Ada_Node'Class) is
@@ -3422,526 +2965,176 @@ package body GNATCOLL.Json.Builder is
    procedure On_Ada_Quantifier_All (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Quantifier_All =>
-                  Self.On_Ada_Quantifier_All (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Quantifier_All;
 
    procedure On_Ada_Quantifier_Some (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Quantifier_Some =>
-                  Self.On_Ada_Quantifier_Some (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Quantifier_Some;
 
    procedure On_Ada_Range_Spec (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Range_Spec =>
-                  Self.On_Ada_Range_Spec (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Range_Spec;
 
    procedure On_Ada_Renaming_Clause (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Renaming_Clause =>
-                  Self.On_Ada_Renaming_Clause (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Renaming_Clause;
 
    procedure On_Ada_Synthetic_Renaming_Clause (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Synthetic_Renaming_Clause =>
-                  Self.On_Ada_Synthetic_Renaming_Clause (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Synthetic_Renaming_Clause;
 
    procedure On_Ada_Reverse_Absent (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Reverse_Absent =>
-                  Self.On_Ada_Reverse_Absent (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Reverse_Absent;
 
    procedure On_Ada_Reverse_Present (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Reverse_Present =>
-                  Self.On_Ada_Reverse_Present (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Reverse_Present;
 
    procedure On_Ada_Select_When_Part (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Select_When_Part =>
-                  Self.On_Ada_Select_When_Part (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Select_When_Part;
 
    procedure On_Ada_Accept_Stmt (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Accept_Stmt =>
-                  Self.On_Ada_Accept_Stmt (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Accept_Stmt;
 
    procedure On_Ada_Accept_Stmt_With_Stmts (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Accept_Stmt_With_Stmts =>
-                  Self.On_Ada_Accept_Stmt_With_Stmts (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Accept_Stmt_With_Stmts;
 
    procedure On_Ada_For_Loop_Stmt (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_For_Loop_Stmt =>
-                  Self.On_Ada_For_Loop_Stmt (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_For_Loop_Stmt;
 
    procedure On_Ada_Loop_Stmt (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Loop_Stmt =>
-                  Self.On_Ada_Loop_Stmt (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Loop_Stmt;
 
    procedure On_Ada_While_Loop_Stmt (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_While_Loop_Stmt =>
-                  Self.On_Ada_While_Loop_Stmt (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_While_Loop_Stmt;
 
    procedure On_Ada_Begin_Block (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Begin_Block =>
-                  Self.On_Ada_Begin_Block (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Begin_Block;
 
    procedure On_Ada_Decl_Block (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Decl_Block =>
-                  Self.On_Ada_Decl_Block (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Decl_Block;
 
    procedure On_Ada_Case_Stmt (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Case_Stmt =>
-                  Self.On_Ada_Case_Stmt (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Case_Stmt;
 
    procedure On_Ada_Extended_Return_Stmt (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Extended_Return_Stmt =>
-                  Self.On_Ada_Extended_Return_Stmt (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Extended_Return_Stmt;
 
    procedure On_Ada_If_Stmt (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_If_Stmt =>
-                  Self.On_Ada_If_Stmt (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_If_Stmt;
 
    procedure On_Ada_Named_Stmt (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Named_Stmt =>
-                  Self.On_Ada_Named_Stmt (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Named_Stmt;
 
    procedure On_Ada_Select_Stmt (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Select_Stmt =>
-                  Self.On_Ada_Select_Stmt (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Select_Stmt;
 
    procedure On_Ada_Error_Stmt (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Error_Stmt =>
-                  Self.On_Ada_Error_Stmt (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Error_Stmt;
 
    procedure On_Ada_Abort_Stmt (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Abort_Stmt =>
-                  Self.On_Ada_Abort_Stmt (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Abort_Stmt;
 
    procedure On_Ada_Assign_Stmt (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Assign_Stmt =>
-                  Self.On_Ada_Assign_Stmt (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Assign_Stmt;
 
    procedure On_Ada_Call_Stmt (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Call_Stmt =>
-                  Self.On_Ada_Call_Stmt (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Call_Stmt;
 
    procedure On_Ada_Delay_Stmt (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Delay_Stmt =>
-                  Self.On_Ada_Delay_Stmt (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Delay_Stmt;
 
    procedure On_Ada_Exit_Stmt (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Exit_Stmt =>
-                  Self.On_Ada_Exit_Stmt (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Exit_Stmt;
 
    procedure On_Ada_Goto_Stmt (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Goto_Stmt =>
-                  Self.On_Ada_Goto_Stmt (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Goto_Stmt;
 
    procedure On_Ada_Label (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Label =>
-                  Self.On_Ada_Label (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Label;
 
    procedure On_Ada_Null_Stmt (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Null_Stmt =>
-                  Self.On_Ada_Null_Stmt (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Null_Stmt;
 
    procedure On_Ada_Raise_Stmt (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Raise_Stmt =>
-                  Self.On_Ada_Raise_Stmt (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Raise_Stmt;
 
    procedure On_Ada_Requeue_Stmt (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Requeue_Stmt =>
-                  Self.On_Ada_Requeue_Stmt (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Requeue_Stmt;
 
    procedure On_Ada_Return_Stmt (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Return_Stmt =>
-                  Self.On_Ada_Return_Stmt (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Return_Stmt;
 
    procedure On_Ada_Terminate_Alternative (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Terminate_Alternative =>
-                  Self.On_Ada_Terminate_Alternative (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Terminate_Alternative;
 
    procedure On_Ada_Subp_Kind_Function (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Subp_Kind_Function =>
-                  Self.On_Ada_Subp_Kind_Function (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Subp_Kind_Function;
 
    procedure On_Ada_Subp_Kind_Procedure (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Subp_Kind_Procedure =>
-                  Self.On_Ada_Subp_Kind_Procedure (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Subp_Kind_Procedure;
 
    procedure On_Ada_Subunit (Self : in out Analyzser; Node : Ada_Node'Class) is
@@ -3962,31 +3155,11 @@ package body GNATCOLL.Json.Builder is
    procedure On_Ada_Synchronized_Absent (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Synchronized_Absent =>
-                  Self.On_Ada_Synchronized_Absent (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Synchronized_Absent;
 
    procedure On_Ada_Synchronized_Present (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Synchronized_Present =>
-                  Self.On_Ada_Synchronized_Present (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Synchronized_Present;
 
    procedure On_Ada_Tagged_Absent (Self : in out Analyzser; Node : Ada_Node'Class) is
@@ -4022,61 +3195,21 @@ package body GNATCOLL.Json.Builder is
    procedure On_Ada_Task_Def (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Task_Def =>
-                  Self.On_Ada_Task_Def (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Task_Def;
 
    procedure On_Ada_Access_To_Subp_Def (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Access_To_Subp_Def =>
-                  Self.On_Ada_Access_To_Subp_Def (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Access_To_Subp_Def;
 
    procedure On_Ada_Anonymous_Type_Access_Def (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Anonymous_Type_Access_Def =>
-                  Self.On_Ada_Anonymous_Type_Access_Def (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Anonymous_Type_Access_Def;
 
    procedure On_Ada_Type_Access_Def (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Type_Access_Def =>
-                  Self.On_Ada_Type_Access_Def (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Type_Access_Def;
 
    procedure On_Ada_Array_Type_Def (Self : in out Analyzser; Node : Ada_Node'Class) is
@@ -4194,8 +3327,6 @@ package body GNATCOLL.Json.Builder is
       for CC of Node.Children loop
          if not CC.Is_Null then
             case CC.Kind is
-               when Ada_Abstract_Absent =>
-                  ABSTRACT_ABSENT := True;
                when Ada_Limited_Absent =>
                   LIMITED_ABSENT := True;
                when Ada_Synchronized_Absent =>
@@ -4235,13 +3366,20 @@ package body GNATCOLL.Json.Builder is
       --  --------------------------------------------------------------------------------------
 
       if not Done then
-         Append (Self.Body_Buffer,
-                 "   function Create (Val : " & Name & ") return JSON_Value is" & ASCII.LF &
-                   "   begin" & ASCII.LF &
-                   "      return ret : JSON_Value := Create_Object do" & ASCII.LF &
-                   "         null;" & ASCII.LF &
-                   "      end return;" & ASCII.LF &
-                   "   end Create;" & ASCII.LF & ASCII.LF);
+         --  for Field of Fields loop
+         --    Append (Self.Body_Buffer,
+         --            Name & "_" & Field & "_Name : constant aliased String := "" & Field &"";" & ASCII.LF);
+         --  end loop;
+
+         Append (Self.Body_Buffer, "   function Create (Val : " & Name & ") return JSON_Value is" & ASCII.LF);
+         Append (Self.Body_Buffer, "   begin" & ASCII.LF);
+         Append (Self.Body_Buffer, "      return ret : JSON_Value := Create_Object do" & ASCII.LF);
+         Append (Self.Body_Buffer, "         null;" & ASCII.LF);
+         --  for Field of Fields loop
+         --    Append (Self.Body_Buffer,"      Set_Field (ret, Field, Create (Val." & Field & "));");
+         --  end loop;
+         Append (Self.Body_Buffer, "      end return;" & ASCII.LF);
+         Append (Self.Body_Buffer, "   end Create;" & ASCII.LF & ASCII.LF);
 
          Append (Self.Body_Buffer, "   function Get (Val : JSON_Value) return " & Name & " is" & ASCII.LF &
                    "   begin" & ASCII.LF &
@@ -4298,16 +3436,6 @@ package body GNATCOLL.Json.Builder is
    procedure On_Ada_Interface_Type_Def (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Interface_Type_Def =>
-                  Self.On_Ada_Interface_Type_Def (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Interface_Type_Def;
 
    procedure On_Ada_Mod_Int_Type_Def (Self : in out Analyzser; Node : Ada_Node'Class) is
@@ -4567,76 +3695,26 @@ package body GNATCOLL.Json.Builder is
    procedure On_Ada_Until_Absent (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Until_Absent =>
-                  Self.On_Ada_Until_Absent (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Until_Absent;
 
    procedure On_Ada_Until_Present (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Until_Present =>
-                  Self.On_Ada_Until_Present (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Until_Present;
 
    procedure On_Ada_Use_Package_Clause (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Use_Package_Clause =>
-                  Self.On_Ada_Use_Package_Clause (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Use_Package_Clause;
 
    procedure On_Ada_Use_Type_Clause (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Use_Type_Clause =>
-                  Self.On_Ada_Use_Type_Clause (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Use_Type_Clause;
 
    procedure On_Ada_Variant (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
-      for N of Node.Children loop
-         if not N.Is_Null then
-            case N.Kind is
-               when Ada_Variant =>
-                  Self.On_Ada_Variant (N);
-               when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
-            end case;
-         end if;
-      end loop;
    end On_Ada_Variant;
 
    procedure On_Ada_Variant_Part (Self : in out Analyzser; Node : Ada_Node'Class) is

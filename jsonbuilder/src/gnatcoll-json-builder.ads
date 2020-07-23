@@ -20,22 +20,29 @@ package GNATCOLL.Json.Builder is
 
    package Args is
       use GNATCOLL.Opt_Parse;
+      use Ada.Strings.Unbounded;
+      use Application.Args;
+
       package Output_folder is new Parse_Option
-        (Application.Args.Parser, "-o", "--output", "Where to write the output results.",
-         Ada.Strings.Unbounded.Unbounded_String,
-         Default_Val => Ada.Strings.Unbounded.To_Unbounded_String (""));
+        (Parser, "-o", "--output", "Where to write the output results.",
+         Unbounded_String,
+         Default_Val => To_Unbounded_String (""));
 
       package Verbose is new Parse_Flag
-        (Application.Args.Parser, "-v", "--verbose", "Be versbose.");
+        (Parser, "-v", "--verbose", "Be versbose.");
 
       package Version is new Parse_Flag
-        (Application.Args.Parser, "", "--version", "Print version and exit.");
+        (Parser, "", "--version", "Print version and exit.");
+
+      package Simple is new Parse_Flag
+        (Parser, "", "--simple", "Use simple JSON represenation for predefined.");
 
    end Args;
 
    type Current_Type_Info is record
       Type_Name : Ada.Strings.Unbounded.Unbounded_String;
    end record;
+
    type Analyzser (Context : access Libadalang.Helpers.App_Job_Context;
                    Unit    : access Analysis_Unit) is tagged limited
       record
@@ -45,13 +52,15 @@ package GNATCOLL.Json.Builder is
          Out_Folder  : Ada.Strings.Unbounded.Unbounded_String;
          Withs       : String_Sets.Set;
          Current     : Current_Type_Info;
-         outf        : Ada.Text_IO.File_Type;
+         Outf        : Ada.Text_IO.File_Type;
       end record;
 
    procedure Create_File (Self : in out Analyzser; Name : Ada.Strings.Unbounded.Unbounded_String);
    procedure Put_Line (Self : in out Analyzser; Item : String);
    procedure Put_Line (Self : in out Analyzser; Item : Ada.Strings.Unbounded.Unbounded_String);
    procedure Close_File (Self : in out Analyzser);
+
+   --  -------------------------------------------------------------------------
 
    procedure On_Ada_Abort_Absent (Self : in out Analyzser; Node : Ada_Node'Class);
 
