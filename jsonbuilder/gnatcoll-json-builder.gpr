@@ -2,6 +2,7 @@ with "libiconv.gpr";
 with "libadalang.gpr";
 with "../gnatcoll-json.gpr";
 project Gnatcoll.Json.Builder is
+   for Create_Missing_Dirs use "True";
 
    for Main use ("gnatcoll-json-builder-main.adb");
 
