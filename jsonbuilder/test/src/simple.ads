@@ -26,16 +26,16 @@ package Simple is
    type Some_syncronized_Interface is synchronized interface;
 
    type Abstract_Record is abstract tagged record
-      Data : Integer;
+      Data : Integer := 0;
    end record;
 
    type Concrete_Taggd_Record is new Simple.Abstract_Record with record
-      Data2 : Integer;
+      Data2 : Integer := 1;
    end record;
 
 
    type Concrete_Taggd_Record_with_Time is new Concrete_Taggd_Record with  record
-      T : Ada.Calendar.Time;
+      T : Ada.Calendar.Time := Ada.Calendar.Time_Of (2020, 01, 10, 100.0);
    end record;
 
 end Simple;
