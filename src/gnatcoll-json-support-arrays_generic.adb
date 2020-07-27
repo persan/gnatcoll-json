@@ -45,7 +45,7 @@ package body GNATCOLL.JSON.Support.Arrays_Generic is
             pragma Warnings (Off, Ret); -- Only used to get an empty array.
             null;
          end return;
-      elsif First >= Last then
+      elsif Last >= First  then
          return Ret : Array_Type (First .. Last) do
             for Ix in 1 .. Length loop
                Ret (First) := Get (Get (Data, Ix));
