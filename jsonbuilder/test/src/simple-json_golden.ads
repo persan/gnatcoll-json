@@ -3,6 +3,7 @@ with GNATCOLL.JSON.Support.Enumeration_Generic;
 with GNATCOLL.JSON.Support.Integer_Generic;
 with GNATCOLL.JSON.Support.Modular_Generic;
 with GNATColl.JSON;
+with GNATCOLL.JSON.Support.Gen_Map_JSON_Object;
 
 package Simple.JSON_Golden is
    use GNATColl.JSON;
@@ -118,7 +119,7 @@ package Simple.JSON_Golden is
    procedure Map_JSON_Value (User_Object : in out Record_With_Discriminatns;
                              Name        : UTF8_String;
                              Value       : JSON_Value);
-   procedure Map_JSON_Object is new Gen_Map_JSON_Object (Record_With_Discriminatns);
+   procedure Map_JSON_Object is new GNATCOLL.JSON.Support.Gen_Map_JSON_Object (Record_With_Discriminatns);
 
    procedure Set_Fields (Val : JSON_Value; Data : Record_With_Discriminatns);
 

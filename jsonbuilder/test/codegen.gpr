@@ -1,5 +1,5 @@
 with "gnatcoll.gpr";
-with "gnatcoll-json.gpr";
+with "../../gnatcoll-json.gpr";
 
 project Codegen is
    for Create_Missing_Dirs use "True";

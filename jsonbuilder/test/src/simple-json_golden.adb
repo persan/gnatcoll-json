@@ -39,9 +39,6 @@ package body Simple.JSON_Golden is
 
    procedure Set_Fields (Val : JSON_Value; Data : Simple_Record) is
    begin
-      -- if tagged then
-      --    set_fields(val,Simple_Record{parent}(data);
-      -- end if;
       Set_Field (Val, Simple_Record_D1_Integer_Field_Name,    Data.D1_Integer);
       Set_Field_Long_Float (Val, Simple_Record_D3_Long_Float_Field_Name, Data.D3_Long_Float);
       Set_Field (Val, Simple_Record_D2_AA_Field_Name, Data.D2_AA);
@@ -68,10 +65,6 @@ package body Simple.JSON_Golden is
          User_Object.D6_My := Get (Value);
       else
          null;
-         -- if tagged then
-         --    Map_JSON_Value(Simple_Record{parent}(User_Object), Name, Value);
-         -- end if;
-
       end if;
    end;
 
@@ -97,8 +90,11 @@ package body Simple.JSON_Golden is
    end;
 
    --  --------------------------------------------------------------------
-   --  ADA_DERIVED_TYPE_DEF: Concrete_Taggd_Record
+   --  Concrete_Taggd_Record
    --  --------------------------------------------------------------------
+   --
+   Concrete_Taggd_Record_Data2_Field_Name : constant String := "Data2";
+
    function Create (Val : Concrete_Taggd_Record) return JSON_Value is
    begin
       return Ret : constant JSON_Value := Create_Object do
@@ -108,14 +104,14 @@ package body Simple.JSON_Golden is
 
    function Get (Val : JSON_Value) return Concrete_Taggd_Record is
    begin
-      return ret : Concrete_Taggd_Record do
+      return Ret : Concrete_Taggd_Record do
          Map_JSON_Object (Val, Map_JSON_Value'Access, Ret);
       end return;
    end Get;
 
    function Get (Val : JSON_Value; Field : UTF8_String) return Concrete_Taggd_Record is
    begin
-       return Concrete_Taggd_Record'(Get (JSON_Value'(Get (Val, Field))));
+      return Concrete_Taggd_Record'(Get (JSON_Value'(Get (Val, Field))));
    end Get;
 
    procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Concrete_Taggd_Record) is
@@ -123,7 +119,6 @@ package body Simple.JSON_Golden is
       Set_Field (Val, Field_Name, Create (Field));
    end Set_Field;
 
-   Concrete_Taggd_Record_Data2_Field_Name : constant String := "Data2";
 
    procedure Set_Fields (Val : JSON_Value; Data : Concrete_Taggd_Record) is
    begin
@@ -147,34 +142,35 @@ package body Simple.JSON_Golden is
    --  --------------------------------------------------------------------
    --  Concrete_Taggd_Record_with_Time
    --  --------------------------------------------------------------------
+   --
+   Concrete_Taggd_Record_With_Time_T_Field_Name : constant String := "T";
 
-   function Create (Val : Concrete_Taggd_Record_with_Time) return JSON_Value is
+   function Create (Val : Concrete_Taggd_Record_With_Time) return JSON_Value is
    begin
       return Ret : constant JSON_Value := Create_Object do
          Set_Fields (Ret, Val);
       end return;
    end Create;
 
-   function Get (Val : JSON_Value) return Concrete_Taggd_Record_with_Time is
+   function Get (Val : JSON_Value) return Concrete_Taggd_Record_With_Time is
    begin
-      return ret : Concrete_Taggd_Record_with_Time do
+      return Ret : Concrete_Taggd_Record_With_Time do
          Map_JSON_Object (Val, Map_JSON_Value'Access, Ret);
       end return;
    end Get;
 
-   function Get (Val : JSON_Value; Field : UTF8_String) return Concrete_Taggd_Record_with_Time is
+   function Get (Val : JSON_Value; Field : UTF8_String) return Concrete_Taggd_Record_With_Time is
    begin
-       return Concrete_Taggd_Record_with_Time'(Get (JSON_Value'(Get (Val, Field))));
+      return Concrete_Taggd_Record_With_Time'(Get (JSON_Value'(Get (Val, Field))));
    end Get;
 
-   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Concrete_Taggd_Record_with_Time) is
+   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Concrete_Taggd_Record_With_Time) is
    begin
       Set_Field (Val, Field_Name, Create (Field));
    end Set_Field;
 
-      Concrete_Taggd_Record_With_Time_T_Field_Name : constant String := "T";
 
-   procedure Map_JSON_Value (User_Object : in out Concrete_Taggd_Record_with_Time;
+   procedure Map_JSON_Value (User_Object : in out Concrete_Taggd_Record_With_Time;
                              Name        : UTF8_String;
                              Value       : JSON_Value) is
    begin
@@ -192,48 +188,72 @@ package body Simple.JSON_Golden is
       Set_Field (Val, Concrete_Taggd_Record_With_Time_T_Field_Name, Data.T);
    end;
 
+   --  -------------------------------------------------------------------------
+   --    Record_With_Discriminatns
+   --  -------------------------------------------------------------------------
+   --
+   Record_With_Discriminatns_D1_Field_Name : constant String := "D1";
+   Record_With_Discriminatns_D2_Field_Name : constant String := "D2";
+   Record_With_Discriminatns_Name_Field_Name : constant String := "Name";
+   Record_With_Discriminatns_F_Field_Name : constant String := "F";
+   Record_With_Discriminatns_I_Field_Name    : constant String := "I";
 
-  function Create (Val : Concrete_Taggd_Record_with_Time) return JSON_Value is
+   function Create (Val : Record_With_Discriminatns) return JSON_Value is
    begin
       return Ret : constant JSON_Value := Create_Object do
          Set_Fields (Ret, Val);
       end return;
    end Create;
 
-   function Get (Val : JSON_Value) return Concrete_Taggd_Record_with_Time is
+   function Get (Val : JSON_Value) return Record_With_Discriminatns is
+      D1  : Natural;
+      D2  : Boolean;
+
    begin
-      return ret : Concrete_Taggd_Record_with_Time do
+      D1 := Get (JSON_Value'(Get (Val, Record_With_Discriminatns_D1_Field_Name)));
+      D2 := Get (JSON_Value'(Get (Val, Record_With_Discriminatns_D2_Field_Name)));
+
+      return Ret : Record_With_Discriminatns (D1, D2) do
          Map_JSON_Object (Val, Map_JSON_Value'Access, Ret);
       end return;
    end Get;
 
-   function Get (Val : JSON_Value; Field : UTF8_String) return Concrete_Taggd_Record_with_Time is
+   function Get (Val : JSON_Value; Field : UTF8_String) return Record_With_Discriminatns is
    begin
-       return Concrete_Taggd_Record_with_Time'(Get (JSON_Value'(Get (Val, Field))));
+      return Record_With_Discriminatns'(Get (JSON_Value'(Get (Val, Field))));
    end Get;
 
-   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Concrete_Taggd_Record_with_Time) is
+   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Record_With_Discriminatns) is
    begin
       Set_Field (Val, Field_Name, Create (Field));
    end Set_Field;
 
-      Concrete_Taggd_Record_With_Time_T_Field_Name : constant String := "T";
 
-   procedure Map_JSON_Value (User_Object : in out Concrete_Taggd_Record_with_Time;
+   procedure Map_JSON_Value (User_Object : in out Record_With_Discriminatns;
                              Name        : UTF8_String;
                              Value       : JSON_Value) is
    begin
-      if Name = Concrete_Taggd_Record_With_Time_T_Field_Name then
-         User_Object.T := Get (Value);
-
+      if Name = Record_With_Discriminatns_Name_Field_Name then
+         User_Object.Name := Get (Value);
+      elsif Name = Record_With_Discriminatns_F_Field_Name then
+         User_Object.F := Get (Value);
+      elsif Name = Record_With_Discriminatns_I_Field_Name then
+         User_Object.I := Get (Value);
       else
-         Map_JSON_Value (Concrete_Taggd_Record (User_Object), Name, Value);
+         null;
       end if;
    end;
 
-   procedure Set_Fields (Val : JSON_Value; Data : Concrete_Taggd_Record_With_Time) is
+   procedure Set_Fields (Val : JSON_Value; Data : Record_With_Discriminatns) is
    begin
-      Set_Fields (Val, Concrete_Taggd_Record (Data));
-      Set_Field (Val, Concrete_Taggd_Record_With_Time_T_Field_Name, Data.T);
+      Set_Field (Val, Record_With_Discriminatns_D1_Field_Name, Data.D1);
+      Set_Field (Val, Record_With_Discriminatns_D2_Field_Name, Data.D2);
+      Set_Field (Val, Record_With_Discriminatns_Name_Field_Name, Data.Name);
+      case Data.D2 is
+         when True =>
+            Set_Field (Val, Record_With_Discriminatns_F_Field_Name, Data.F);
+         when False =>
+            Set_Field (Val, Record_With_Discriminatns_I_Field_Name, Data.I);
+      end case;
    end;
 end Simple.JSON_Golden;

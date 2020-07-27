@@ -13,12 +13,12 @@ package Simple is
 
 
    type Simple_Record is record
-      D1_Integer     : Integer;
-      D3_Long_Float  : Long_Float;
-      D2_AA          : AA;
-      D4_Aa_Array    : Aa_Array (1 .. 10);
-      D5_Enum        : Enum;
-      D6_My          : My;
+      D1_Integer     : Integer := 1;
+      D3_Long_Float  : Long_Float := 0.0;
+      D2_AA          : AA := 3;
+      D4_Aa_Array    : Aa_Array (1 .. 10) := (others =>2);
+      D5_Enum        : Enum := DD;
+      D6_My          : My := 11;
    end record;
 
    type Some_Interface is interface;
@@ -39,12 +39,12 @@ package Simple is
    end record;
 
    type Record_With_Discriminatns (D1 : Natural ; D2  : Boolean) is record
-      Name : String (1 .. D1);
+      Name : String (1 .. D1) := (others => '!');
       case D2 is
          when True =>
-            F : Float;
+            F : Float := 3.14;
          when False =>
-            I : Integer;
+            I : Integer := 314;
       end case;
    end record;
 
