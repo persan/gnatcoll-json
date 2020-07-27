@@ -110,5 +110,16 @@ package Simple.JSON_Golden is
    procedure Set_Fields (Val : JSON_Value; Data : Concrete_Taggd_Record_with_Time);
 --  -------------------------------------------------------------------------
 
+   function Create (Val : Record_With_Discriminatns) return JSON_Value;
+   function Get (Val : JSON_Value) return Record_With_Discriminatns;
+   function Get (Val : JSON_Value; Field : UTF8_String) return Record_With_Discriminatns;
+   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Record_With_Discriminatns);
+
+   procedure Map_JSON_Value (User_Object : in out Record_With_Discriminatns;
+                             Name        : UTF8_String;
+                             Value       : JSON_Value);
+   procedure Map_JSON_Object is new Gen_Map_JSON_Object (Record_With_Discriminatns);
+
+   procedure Set_Fields (Val : JSON_Value; Data : Record_With_Discriminatns);
 
 end Simple.JSON_Golden;

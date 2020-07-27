@@ -192,4 +192,48 @@ package body Simple.JSON_Golden is
       Set_Field (Val, Concrete_Taggd_Record_With_Time_T_Field_Name, Data.T);
    end;
 
+
+  function Create (Val : Concrete_Taggd_Record_with_Time) return JSON_Value is
+   begin
+      return Ret : constant JSON_Value := Create_Object do
+         Set_Fields (Ret, Val);
+      end return;
+   end Create;
+
+   function Get (Val : JSON_Value) return Concrete_Taggd_Record_with_Time is
+   begin
+      return ret : Concrete_Taggd_Record_with_Time do
+         Map_JSON_Object (Val, Map_JSON_Value'Access, Ret);
+      end return;
+   end Get;
+
+   function Get (Val : JSON_Value; Field : UTF8_String) return Concrete_Taggd_Record_with_Time is
+   begin
+       return Concrete_Taggd_Record_with_Time'(Get (JSON_Value'(Get (Val, Field))));
+   end Get;
+
+   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Concrete_Taggd_Record_with_Time) is
+   begin
+      Set_Field (Val, Field_Name, Create (Field));
+   end Set_Field;
+
+      Concrete_Taggd_Record_With_Time_T_Field_Name : constant String := "T";
+
+   procedure Map_JSON_Value (User_Object : in out Concrete_Taggd_Record_with_Time;
+                             Name        : UTF8_String;
+                             Value       : JSON_Value) is
+   begin
+      if Name = Concrete_Taggd_Record_With_Time_T_Field_Name then
+         User_Object.T := Get (Value);
+
+      else
+         Map_JSON_Value (Concrete_Taggd_Record (User_Object), Name, Value);
+      end if;
+   end;
+
+   procedure Set_Fields (Val : JSON_Value; Data : Concrete_Taggd_Record_With_Time) is
+   begin
+      Set_Fields (Val, Concrete_Taggd_Record (Data));
+      Set_Field (Val, Concrete_Taggd_Record_With_Time_T_Field_Name, Data.T);
+   end;
 end Simple.JSON_Golden;

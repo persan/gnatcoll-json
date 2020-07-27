@@ -34,4 +34,4 @@ clean:
 
 gnatstudio gps:
 	${GNATSTUDIO} -P gnatcoll-json-builder.gpr & 
-	${GNATSTUDIO} -P test/codegen.gpr
+	${GNATSTUDIO} -P test/codegen.gpr & 

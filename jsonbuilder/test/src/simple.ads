@@ -38,4 +38,14 @@ package Simple is
       T : Ada.Calendar.Time := Ada.Calendar.Time_Of (2020, 01, 10, 100.0);
    end record;
 
+   type Record_With_Discriminatns (D1 : Natural ; D2  : Boolean) is record
+      Name : String (1 .. D1);
+      case D2 is
+         when True =>
+            F : Float;
+         when False =>
+            I : Integer;
+      end case;
+   end record;
+
 end Simple;
