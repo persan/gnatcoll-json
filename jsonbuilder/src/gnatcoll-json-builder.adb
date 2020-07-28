@@ -3573,6 +3573,7 @@ package body GNATCOLL.Json.Builder is
       Append (Self.Spec_Buffer, ASCII.LF & ASCII.LF);
 
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
+      Print (Node, Show_Slocs => True, Line_Prefix => "   >");
 
       for N of Node.Children loop
          if not N.Is_Null then
