@@ -18,6 +18,11 @@ procedure Simple.Main is
    V_Record_With_Discriminatns_2_False : Record_With_Discriminatns (2, False);
    V_Record_With_Discriminatns_3_True  : Record_With_Discriminatns (3, True);
 
+   procedure Extra_Init  is
+   begin
+      null;
+   end Extra_Init;
+   
    --  begin read-only
    --  <begin>
 
