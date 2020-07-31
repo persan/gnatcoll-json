@@ -6,4 +6,4 @@ all:
 	json-builder -P codegen.gpr  -o src/gen src/simple.ads
 
 gen:
-	./generate_test.py src/simple_main.adb
+	./generate_test.py src/simple-main.adb

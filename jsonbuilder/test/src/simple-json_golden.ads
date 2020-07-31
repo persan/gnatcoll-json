@@ -4,6 +4,7 @@ with GNATCOLL.JSON.Support.Integer_Generic;
 with GNATCOLL.JSON.Support.Modular_Generic;
 with GNATColl.JSON;
 with GNATCOLL.JSON.Support.Gen_Map_JSON_Object;
+with GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Vectors;
 
 package Simple.JSON_Golden is
    use GNATColl.JSON;
@@ -91,7 +92,6 @@ package Simple.JSON_Golden is
    procedure Map_JSON_Object is new Gen_Map_JSON_Object (Concrete_Taggd_Record);
 
    procedure Set_Fields (Val : JSON_Value; Data : Concrete_Taggd_Record);
-
    --  -------------------------------------------------------------------------
 
 
@@ -109,8 +109,11 @@ package Simple.JSON_Golden is
    procedure Map_JSON_Object is new Gen_Map_JSON_Object (Concrete_Taggd_Record_with_Time);
 
    procedure Set_Fields (Val : JSON_Value; Data : Concrete_Taggd_Record_with_Time);
---  -------------------------------------------------------------------------
+   --  -------------------------------------------------------------------------
 
+   --  -------------------------------------------------------------------------
+   --  Record_With_Discriminatns
+   --  -------------------------------------------------------------------------
    function Create (Val : Record_With_Discriminatns) return JSON_Value;
    function Get (Val : JSON_Value) return Record_With_Discriminatns;
    function Get (Val : JSON_Value; Field : UTF8_String) return Record_With_Discriminatns;
@@ -122,5 +125,19 @@ package Simple.JSON_Golden is
    procedure Map_JSON_Object is new GNATCOLL.JSON.Support.Gen_Map_JSON_Object (Record_With_Discriminatns);
 
    procedure Set_Fields (Val : JSON_Value; Data : Record_With_Discriminatns);
+   --  -------------------------------------------------------------------------
 
+   --  -------------------------------------------------------------------------
+   --  My_Vectors
+   --  -------------------------------------------------------------------------
+   package My_Vectors_JSON_Impl is new
+     GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Vectors (My_Vectors, Create => Create, Get => Get);
+   function Create (Val : My_Vectors.Vector) return JSON_Array renames My_Vectors_JSON_Impl.Create;
+   function Create (Val : My_Vectors.Vector) return JSON_Object renames My_Vectors_JSON_Impl.Create;
+   function Get (Val : JSON_Value) return My_Vectors.Vector renames My_Vectors_JSON_Impl.Get;
+
+   function Get (Val : JSON_Value; Field : UTF8_String) return My_Vectors.Vector renames My_Vectors_JSON_Impl.Get;
+   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : My_Vectors.Vector) renames My_Vectors_JSON_Impl.Set_Field;
+
+   --  -------------------------------------------------------------------------
 end Simple.JSON_Golden;

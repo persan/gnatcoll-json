@@ -15,7 +15,7 @@ def process(path):
     typenames = []
     calls = []
     for line in matches.group(1).split("\n"):
-        matches = re.match(r" +V_\S+ +: *(constant|) *(\w+).+", line)
+        matches = re.match(r" +V_\S+ +: *(constant|) *([\w\.]+).+", line)
         if matches:
             typename = matches.group(2)
             if typename not in typenames:
@@ -51,8 +51,8 @@ def process(path):
 
         
 def main(argv):
-    for i in argv:        
-        if exists(i) and splitext(i) == ".adb":
+    for i in argv:
+        if exists(i) and (splitext(i)[1] == ".adb"):
             process(i)
 
 if __name__ == "__main__":

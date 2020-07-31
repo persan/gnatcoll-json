@@ -1,4 +1,5 @@
 with Ada.Calendar;
+with Ada.Containers.Indefinite_Vectors;
 package Simple is
 
    type AA is range 1 .. 20;
@@ -47,5 +48,9 @@ package Simple is
             I : Integer := 314;
       end case;
    end record;
+
+   package My_Vectors is new Ada.Containers.Indefinite_Vectors
+     (Index_Type => Natural, Element_Type => String);
+
 
 end Simple;
