@@ -1,10 +1,12 @@
 package body GNATCOLL.JSON.Support.Simple_Arrays_Generic is
 
+   Data_Field_Name : constant String := "Data";
    ------------
    -- Create --
    ------------
 
    function Create (Val : Array_Type) return JSON_Array is
+
    begin
       return Data : JSON_Array do
          for I of Val loop
@@ -13,6 +15,15 @@ package body GNATCOLL.JSON.Support.Simple_Arrays_Generic is
       end return;
    end Create;
 
+   -------------------
+   -- Create_Object --
+   -------------------
+   function Create_Object (Val : Array_Type) return JSON_Value is
+   begin
+      return Ret : constant JSON_Value := Create_Object do
+         Set_Field (Ret, Data_Field_Name, Create (Val));
+      end return;
+   end Create_Object;
    ---------
    -- Get --
    ---------
@@ -36,6 +47,7 @@ package body GNATCOLL.JSON.Support.Simple_Arrays_Generic is
    begin
       return Get (JSON_Array'(Get (Val, Field)));
    end Get;
+
    procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Array_Type) is
    begin
       Set_Field (Val, Field_Name, Create (Field));

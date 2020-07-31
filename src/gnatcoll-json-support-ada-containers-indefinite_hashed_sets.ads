@@ -35,10 +35,12 @@ generic
 
 package GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Hashed_Sets is
 
-   function Create (Val : S.Set) return JSON_Array;
-   function Get (Val : JSON_Value) return S.Set;
+   function Create (Val : Set) return JSON_Array;
+   function Create_Object (Val : Set) return JSON_Value;
 
-   function Get (Val : JSON_Value; Field : UTF8_String) return S.Set;
-   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : S.Set);
+   function Get (Val : JSON_Value) return Set;
+
+   function Get (Val : JSON_Value; Field : UTF8_String) return Set;
+   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Set);
 
 end GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Hashed_Sets;

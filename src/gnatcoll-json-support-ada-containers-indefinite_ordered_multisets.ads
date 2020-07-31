@@ -38,6 +38,7 @@ package GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Ordered_Multisets is
 
    function Create (Val : Set) return JSON_Array;
    function Get (Val : JSON_Value) return Set;
+   function Create_Object (Val : Set) return JSON_Value;
 
    function Get (Val : JSON_Value; Field : UTF8_String) return Set;
    procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Set);

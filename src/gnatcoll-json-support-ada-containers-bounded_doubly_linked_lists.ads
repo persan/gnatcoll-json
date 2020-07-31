@@ -35,6 +35,7 @@ package GNATCOLL.JSON.Support.Ada.Containers.Bounded_Doubly_Linked_Lists is
 
    function Create (Val : L.List) return JSON_Array with
      Inline_Always => True;
+   function Create_Object (Val : List) return JSON_Value;
 
    function Get (Val : JSON_Value) return L.List;
 

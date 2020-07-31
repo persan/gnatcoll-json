@@ -22,7 +22,7 @@
 ------------------------------------------------------------------------------
 
 package body GNATCOLL.JSON.Support.Ada.Containers.Vectors is
-
+   Data_Field_Name : constant String := "Data";
    ------------
    -- Create --
    ------------
@@ -37,6 +37,16 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Vectors is
       end return;
    end Create;
 
+   -------------------
+   -- Create_Object --
+   -------------------
+   function Create_Object (Val : Vector) return JSON_Value is
+   begin
+      return Ret : constant JSON_Value := Create_Object do
+         Set_Field (Ret, Data_Field_Name, Create (Val));
+      end return;
+   end Create_Object;
+
    ---------
    -- Get --
    ---------
@@ -46,7 +56,7 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Vectors is
 
       procedure Process (Name : UTF8_String; Value : JSON_Value) is
       begin
-         if Name = "Data" then
+         if Name = Data_Field_Name then
             Data := Get (Value);
          end if;
       end Process;

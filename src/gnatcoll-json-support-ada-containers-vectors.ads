@@ -36,6 +36,7 @@ generic
 
 package GNATCOLL.JSON.Support.Ada.Containers.Vectors is
    function Create (Val : V.Vector) return JSON_Array;
+   function Create_Object (Val : Vector) return JSON_Value;
 
    function Get (Val : JSON_Value) return V.Vector;
 

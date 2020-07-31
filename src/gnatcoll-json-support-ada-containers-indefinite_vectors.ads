@@ -36,6 +36,8 @@ generic
 package GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Vectors is
 
    function Create (Val : Vector) return JSON_Array;
+   function Create_Object (Val : Vector) return JSON_Value;
+
    function Get (Val : JSON_Value) return Vector;
 
    function Get (Val : JSON_Value; Field : UTF8_String) return Vector;

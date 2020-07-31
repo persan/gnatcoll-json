@@ -34,12 +34,13 @@ generic
    with function Get (Val : JSON_Value) return L.Element_Type is <>;
 package GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Doubly_Linked_Lists is
 
-   function Create (Val : L.List) return JSON_Array with
+   function Create (Val : List) return JSON_Array with
      Inline_Always => True;
+   function Create_Object (Val : List) return JSON_Value;
 
-   function Get (Val : JSON_Value) return L.List;
+   function Get (Val : JSON_Value) return List;
 
-   function Get (Val : JSON_Value; Field : UTF8_String) return L.List;
-   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : L.List);
+   function Get (Val : JSON_Value; Field : UTF8_String) return List;
+   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : List);
 
 end GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Doubly_Linked_Lists;
