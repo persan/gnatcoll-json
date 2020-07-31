@@ -18,14 +18,16 @@ procedure Simple.Main is
    V_Record_With_Discriminatns_2_False : Record_With_Discriminatns (2, False);
    V_Record_With_Discriminatns_3_True  : Record_With_Discriminatns (3, True);
    V_My_Vectors                        : My_Vectors.Vector;
+
    procedure Extra_Init  is
    begin
       V_My_Vectors.Append("a1");
       V_My_Vectors.Append("a 2");
       V_My_Vectors.Append("a  3");
    end Extra_Init;
+
    use type My_Vectors.Vector;
-   
+
    --  begin read-only
    --  <begin>
 
@@ -38,7 +40,7 @@ procedure Simple.Main is
              Put_Line ("FAIL AA ");
           end if;
        end Test;
-       
+
 
        procedure Test (S : String; Data : Aa_Array) is
           D : constant Aa_Array := Get (Read (S));
@@ -49,7 +51,7 @@ procedure Simple.Main is
              Put_Line ("FAIL Aa_Array ");
           end if;
        end Test;
-       
+
 
        procedure Test (S : String; Data : Enum) is
           D : constant Enum := Get (Read (S));
@@ -60,7 +62,7 @@ procedure Simple.Main is
              Put_Line ("FAIL Enum ");
           end if;
        end Test;
-       
+
 
        procedure Test (S : String; Data : My_Mod) is
           D : constant My_Mod := Get (Read (S));
@@ -71,7 +73,7 @@ procedure Simple.Main is
              Put_Line ("FAIL My_Mod ");
           end if;
        end Test;
-       
+
 
        procedure Test (S : String; Data : My) is
           D : constant My := Get (Read (S));
@@ -82,7 +84,7 @@ procedure Simple.Main is
              Put_Line ("FAIL My ");
           end if;
        end Test;
-       
+
 
        procedure Test (S : String; Data : Simple_Record) is
           D : constant Simple_Record := Get (Read (S));
@@ -93,7 +95,7 @@ procedure Simple.Main is
              Put_Line ("FAIL Simple_Record ");
           end if;
        end Test;
-       
+
 
        procedure Test (S : String; Data : Concrete_Taggd_Record) is
           D : constant Concrete_Taggd_Record := Get (Read (S));
@@ -104,7 +106,7 @@ procedure Simple.Main is
              Put_Line ("FAIL Concrete_Taggd_Record ");
           end if;
        end Test;
-       
+
 
        procedure Test (S : String; Data : Concrete_Taggd_Record_With_Time) is
           D : constant Concrete_Taggd_Record_With_Time := Get (Read (S));
@@ -115,7 +117,7 @@ procedure Simple.Main is
              Put_Line ("FAIL Concrete_Taggd_Record_With_Time ");
           end if;
        end Test;
-       
+
 
        procedure Test (S : String; Data : Record_With_Discriminatns) is
           D : constant Record_With_Discriminatns := Get (Read (S));
@@ -126,7 +128,7 @@ procedure Simple.Main is
              Put_Line ("FAIL Record_With_Discriminatns ");
           end if;
        end Test;
-       
+
 
        procedure Test (S : String; Data : My_Vectors.Vector) is
           D : constant My_Vectors.Vector := Get (Read (S));
@@ -137,7 +139,7 @@ procedure Simple.Main is
              Put_Line ("FAIL My_Vectors.Vector ");
           end if;
        end Test;
-       
+
 begin
    Extra_Init;
 
@@ -151,7 +153,7 @@ begin
    Test (Write (Create (V_Concrete_Taggd_Record_With_Time)), V_Concrete_Taggd_Record_With_Time);
    Test (Write (Create (V_Record_With_Discriminatns_2_False)), V_Record_With_Discriminatns_2_False);
    Test (Write (Create (V_Record_With_Discriminatns_3_True)), V_Record_With_Discriminatns_3_True);
-   Test (Write (Create (V_My_Vectors)), V_My_Vectors);
+   Test (Write (Create_Object (V_My_Vectors)), V_My_Vectors);
    --  <end>
    --  end read only
 end Simple.Main;

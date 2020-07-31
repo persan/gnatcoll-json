@@ -15,6 +15,8 @@ package ${package-name}.JSON is
 end ${package-name};
 ```
 
+Rev 1.4.0 2018-12-xx
+
 Rev 1.3.0 2018-12-xx
 * Corrected implementation of simple_maps.
 * Clean up compiler warnings.

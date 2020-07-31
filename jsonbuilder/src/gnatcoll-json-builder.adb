@@ -980,12 +980,13 @@ package body GNATCOLL.Json.Builder is
    procedure On_Ada_Package_Decl (Self : in out Analyzser; Node : Ada_Node'Class) is
       Name : Unbounded_String;
    begin
-      --  Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
+      Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
       for N of Node.Children loop
          if not N.Is_Null then
+            Put_Line (Source_Location & ">" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
             case N.Kind is
                when Ada_Defining_Name =>
-                  Name := To_Unbounded_String (Debug_Text (N.As_Defining_Name));
+                  --  Name := To_Unbounded_String (Debug_Text (N.As_Defining_Name));
                   if Self.Name = Null_Unbounded_String then
                      Append (Name, ".JSON");
                      Self.Name := Name;
@@ -1002,7 +1003,7 @@ package body GNATCOLL.Json.Builder is
                   Append (Self.Spec_Buffer, "end " & Name & ";" & ASCII.LF);
 
                when others =>
-                  Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
+                  Put_Line (Source_Location & "others: " & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
             end case;
          end if;
       end loop;
@@ -1130,12 +1131,12 @@ package body GNATCOLL.Json.Builder is
 
    procedure On_Ada_Type_Decl (Self : in out Analyzser; Node : Ada_Node'Class) is
    begin
-      --  Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
+      Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
       for N of Node.Children loop
          if not N.Is_Null then
             case N.Kind is
-               when Ada_Defining_Name =>
-                  Self.Current.Type_Name := To_Unbounded_String (Debug_Text (N.As_Defining_Name));
+            --  when Ada_Defining_Name =>
+            --  Self.Current.Type_Name := To_Unbounded_String (Debug_Text (N.As_Defining_Name));
                when Ada_Signed_Int_Type_Def =>
                   Self.On_Ada_Signed_Int_Type_Def (N);
                when Ada_Enum_Type_Def =>

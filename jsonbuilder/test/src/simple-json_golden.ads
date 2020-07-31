@@ -133,7 +133,7 @@ package Simple.JSON_Golden is
    package My_Vectors_JSON_Impl is new
      GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Vectors (My_Vectors, Create => Create, Get => Get);
    function Create (Val : My_Vectors.Vector) return JSON_Array renames My_Vectors_JSON_Impl.Create;
-   function Create (Val : My_Vectors.Vector) return JSON_Object renames My_Vectors_JSON_Impl.Create;
+   function Create_Object (Val : My_Vectors.Vector) return JSON_Value renames My_Vectors_JSON_Impl.Create_Object;
    function Get (Val : JSON_Value) return My_Vectors.Vector renames My_Vectors_JSON_Impl.Get;
 
    function Get (Val : JSON_Value; Field : UTF8_String) return My_Vectors.Vector renames My_Vectors_JSON_Impl.Get;
