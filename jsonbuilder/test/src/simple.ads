@@ -56,5 +56,6 @@ package Simple is
    package My_Vectors is new Ada.Containers.Indefinite_Vectors
      (Index_Type => Natural, Element_Type => String);
 
-
+private
+   type provate_type is new integer;
 end Simple;

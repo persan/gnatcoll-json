@@ -1,4 +1,4 @@
-with "libiconv.gpr";
+-- with "libiconv.gpr";
 with "libadalang.gpr";
 with "../gnatcoll-json.gpr";
 project Gnatcoll.Json.Builder is

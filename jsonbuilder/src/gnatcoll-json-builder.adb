@@ -7,6 +7,7 @@ with GNAT.Source_Info;
 with Ada.Strings.Maps;
 with Ada.Characters.Conversions;
 with GNATCOLL.VFS;
+with Ada.Strings.Wide_Wide_Unbounded;
 package body GNATCOLL.Json.Builder is
 
    use Libadalang.Common;
@@ -14,6 +15,9 @@ package body GNATCOLL.Json.Builder is
    use GNAT.Source_Info;
    use Ada.Strings.Unbounded;
    use Ada.Text_IO.Unbounded_IO;
+   use Ada.Strings.Wide_Wide_Unbounded;
+   use Ada.Characters.Conversions;
+
    Ada2file : constant Ada.Strings.Maps.Character_Mapping := Ada.Strings.Maps.To_Mapping ("ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ.",
                                                                                           "abcdefgjijklmnopqrstuvwxyzåäö-");
    procedure App_Setup (Context : Libadalang.Helpers.App_Context; Jobs : Libadalang.Helpers.App_Job_Context_Array) is
@@ -27,23 +31,23 @@ package body GNATCOLL.Json.Builder is
 
    procedure Process_Unit (Context : Libadalang.Helpers.App_Job_Context; Unit : Analysis_Unit) is
       Self : Analyzser (Context'Unrestricted_Access, Unit'Unrestricted_Access);
-      root : GNATCOLL.VFS.Virtual_File;
+      Root : GNATCOLL.VFS.Virtual_File;
       use all type Libadalang.Helpers.Source_Provider_Kind;
       use all type GNATCOLL.VFS.Filesystem_String;
-      Output_folder  : Ada.Strings.Unbounded.Unbounded_String;
+      Output_Folder  : Ada.Strings.Unbounded.Unbounded_String;
 
    begin
       if Context.App_Ctx.Provider.Kind = Libadalang.Helpers.Project_File then
-         root := Context.App_Ctx.Provider.Project.Root_Project.Project_Path.Get_Parent;
+         Root := Context.App_Ctx.Provider.Project.Root_Project.Project_Path.Get_Parent;
       else
-         root := GNATCOLL.VFS.Create (".");
+         Root := GNATCOLL.VFS.Create (".");
       end if;
 
-      Output_folder := To_Unbounded_String ((+root.Full_Name.all) & To_String (Args.Output_folder.Get));
-      if not Ada.Directories.Exists (To_String (Output_folder)) then
-         Ada.Directories.Create_Path (To_String (Output_folder));
+      Output_Folder := To_Unbounded_String ((+Root.Full_Name.all) & To_String (Args.Output_Folder.Get));
+      if not Ada.Directories.Exists (To_String (Output_Folder)) then
+         Ada.Directories.Create_Path (To_String (Output_Folder));
       end if;
-      Append (Output_folder, "/");
+      Append (Output_Folder, "/");
 
       for Node of Unit.Root.Children loop
          case Node.Kind is
@@ -56,13 +60,13 @@ package body GNATCOLL.Json.Builder is
          end case;
       end loop;
 
-      Self.Create_File (To_String (Output_folder) & Translate (Self.Name, Ada2file) & ".ads");
+      Self.Create_File (To_String (Output_Folder) & Translate (Self.Name, Ada2file) & ".ads");
       for I of Self.Withs loop
          Self.Put_Line ("with " & I & ";");
       end loop;
       Self.Put_Line (Self.Spec_Buffer);
       Self.Close_File;
-      Self.Create_File (To_String (Output_folder) & Translate (Self.Name, Ada2file) & ".adb");
+      Self.Create_File (To_String (Output_Folder) & Translate (Self.Name, Ada2file) & ".adb");
 
       Self.Put_Line (Self.Body_Buffer);
       Self.Close_File;
@@ -978,7 +982,7 @@ package body GNATCOLL.Json.Builder is
    end On_Ada_Generic_Package_Internal;
 
    procedure On_Ada_Package_Decl (Self : in out Analyzser; Node : Ada_Node'Class) is
-      Name : Unbounded_String;
+      Name : Ada.Strings.Unbounded.Unbounded_String;
    begin
       Put_Line (Source_Location & ":" & Enclosing_Entity & " >> " & Node.Kind'Img & " : " & Node.Image);
       for N of Node.Children loop
@@ -986,21 +990,21 @@ package body GNATCOLL.Json.Builder is
             Put_Line (Source_Location & ">" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
             case N.Kind is
                when Ada_Defining_Name =>
-                  --  Name := To_Unbounded_String (Debug_Text (N.As_Defining_Name));
+                  Name := To_Unbounded_String (To_String (To_Wide_Wide_String (P_Canonical_Text (N.As_Defining_Name))));
                   if Self.Name = Null_Unbounded_String then
-                     Append (Name, ".JSON");
-                     Self.Name := Name;
+                     Append (Self.Name, Name);
+                     Append (Self.Name, ".JSON");
                   end if;
-                  Append (Self.Body_Buffer, "package body " & Name & " is" & ASCII.LF);
+                  Append (Self.Body_Buffer, "package body " & Self.Name & " is" & ASCII.LF);
 
                   Append (Self.Spec_Buffer, "with GNATColl.JSON;" & ASCII.LF & ASCII.LF);
-                  Append (Self.Spec_Buffer, "package " & Name & " is" & ASCII.LF);
+                  Append (Self.Spec_Buffer, "package " & Self.Name & " is" & ASCII.LF);
                   Append (Self.Spec_Buffer, "   use GNATColl.JSON;" & ASCII.LF & ASCII.LF);
                when Ada_Public_Part =>
                   Self.On_Ada_Public_Part (N);
                when Ada_End_Name =>
-                  Append (Self.Body_Buffer, "end " & Name & ";" & ASCII.LF);
-                  Append (Self.Spec_Buffer, "end " & Name & ";" & ASCII.LF);
+                  Append (Self.Body_Buffer, "end " & Self.Name & ";" & ASCII.LF);
+                  Append (Self.Spec_Buffer, "end " & Self.Name & ";" & ASCII.LF);
 
                when others =>
                   Put_Line (Source_Location & "others: " & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
@@ -1135,8 +1139,8 @@ package body GNATCOLL.Json.Builder is
       for N of Node.Children loop
          if not N.Is_Null then
             case N.Kind is
-            --  when Ada_Defining_Name =>
-            --  Self.Current.Type_Name := To_Unbounded_String (Debug_Text (N.As_Defining_Name));
+               when Ada_Defining_Name =>
+                  Self.Current.Type_Name := To_Unbounded_String (To_String (To_Wide_Wide_String (P_Canonical_Text (N.As_Defining_Name))));
                when Ada_Signed_Int_Type_Def =>
                   Self.On_Ada_Signed_Int_Type_Def (N);
                when Ada_Enum_Type_Def =>
@@ -1708,8 +1712,6 @@ package body GNATCOLL.Json.Builder is
       for N of Node.Children loop
          if not N.Is_Null then
             case N.Kind is
-               when Ada_Anonymous_Object_Decl =>
-                  Self.On_Ada_Anonymous_Object_Decl (N);
                when others =>
                   Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
             end case;
@@ -2879,8 +2881,6 @@ package body GNATCOLL.Json.Builder is
       for N of Node.Children loop
          if not N.Is_Null then
             case N.Kind is
-               when Ada_Prim_Type_Accessor =>
-                  Self.On_Ada_Prim_Type_Accessor (N);
                when others =>
                   Put_Line (Source_Location & ":" & Enclosing_Entity & " : " & N.Kind'Img & " : " & N.Image);
             end case;
@@ -3517,7 +3517,7 @@ package body GNATCOLL.Json.Builder is
    end On_Ada_Ordinary_Fixed_Point_Def;
 
    procedure On_Ada_Record_Type_Def (Self : in out Analyzser; Node : Ada_Node'Class) is
-      Name : constant String := To_String (Self.Current.Type_Name);
+      Name                : constant String := To_String (Self.Current.Type_Name);
       ABSTRACT_ABSENT     : Boolean := False with Warnings => Off;
       LIMITED_ABSENT      : Boolean := False with Warnings => Off;
       SYNCHRONIZED_ABSENT : Boolean := False with Warnings => Off;

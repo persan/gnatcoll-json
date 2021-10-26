@@ -48,7 +48,6 @@ package body GNATCOLL.JSON.Support.Ada.Containers.Indefinite_Ordered_Multisets i
       end return;
    end Create_Object;
 
-
    ---------
    -- Get --
    ---------

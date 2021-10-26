@@ -23,7 +23,7 @@ package GNATCOLL.Json.Builder is
       use Ada.Strings.Unbounded;
       use Application.Args;
 
-      package Output_folder is new Parse_Option
+      package Output_Folder is new Parse_Option
         (Parser, "-o", "--output", "Where to write the output results.",
          Unbounded_String,
          Default_Val => To_Unbounded_String (""));
