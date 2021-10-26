@@ -3302,7 +3302,7 @@ package body GNATCOLL.Json.Builder is
          end if;
       end loop;
       Append (Self.Spec_Buffer, "   package " & Name & "_JSON_Impl is new GNATCOLL.JSON.Support.Arrays_Generic" & ASCII.LF &
-                "      (" & Index_Name & "," & Element_Name & "," &  Name & ", Create, Get, Create, Get); " & ASCII.LF);
+                "     (" & Index_Name & ", " & Element_Name & ", " &  Name & ", Create, Get, Create, Get); " & ASCII.LF);
 
       Append (Self.Spec_Buffer, "   function Create (Val : " & Name & ") return JSON_Value renames " & Name & "_JSON_Impl.Create;" & ASCII.LF);
       Append (Self.Spec_Buffer, "   function Get (Val : JSON_Value) return " & Name & " renames " & Name & "_JSON_Impl.Get;" & ASCII.LF);
