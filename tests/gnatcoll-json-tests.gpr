@@ -1,9 +1,9 @@
 with "../gnatcoll-json.gpr";
 with "../util/gnatcoll-json-util.gpr";
-with "aunit";
+with "aunit.gpr";
 project GnatColl.JSON.Tests is
-
-   for Main use project'Main & ("gnatcoll-json-support-test-json_merge-main.ads");
+   for Create_Missing_Dirs use "True";
+   --     for Main use project'Main & ("gnatcoll-json-support-test-json_merge-main.ads");
    --     for Main use project'Main & ("gnatcoll-json-support-test-json_paths-main.ads");
    for Main use project'Main & ("gnatcoll-json-support-test-main.adb");
    --     for Main use project'Main & ("gnatcoll-json-support-test-tree_suites-main.adb");

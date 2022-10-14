@@ -14,7 +14,7 @@ project Gnatcoll.Json.Builder is
    for Exec_Dir use "bin";
 
    package Builder is
-      for Switches ("ada") use ("-s", "-j0", "-g", "-k", "-C");
+      for Switches ("ada") use ("-s", "-j0", "-g", "-k", "-C", "-gnatX");
       for Executable ("gnatcoll-json-builder-main.adb") use "json-builder";
    end Builder;
 

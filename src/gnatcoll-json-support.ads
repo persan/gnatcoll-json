@@ -46,8 +46,8 @@
 --------------------------------------------------------------------------------
 
 package GNATCOLL.JSON.Support is
-   VERSION      : constant String := "1.4.0";
-   VERSION_DATE : constant String := "2020-08-xx";
+   VERSION      : constant String := "1.4.1";
+   VERSION_DATE : constant String := "2020-09-27";
    --  Note The above versions shall be in sync with
    --  gnatcoll-json.gpr  file and the README.md file
 

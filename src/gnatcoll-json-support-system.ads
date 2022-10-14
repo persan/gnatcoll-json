@@ -29,7 +29,6 @@
 --
 ------------------------------------------------------------------------------
 
-with GNATCOLL.JSON; use GNATCOLL.JSON;
 with System; use System;
 package GNATCOLL.JSON.Support.System is
 

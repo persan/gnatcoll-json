@@ -98,6 +98,7 @@ package body Simple.JSON_Golden is
    function Create (Val : Concrete_Taggd_Record) return JSON_Value is
    begin
       return Ret : constant JSON_Value := Create_Object do
+
          Set_Fields (Ret, Val);
       end return;
    end Create;

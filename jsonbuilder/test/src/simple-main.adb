@@ -1,7 +1,7 @@
 with Ada.Text_IO; use Ada.Text_IO;
 
 with Simple.JSON_Golden; use Simple.JSON_Golden;
---  with Simple.JSON; use Simple.JSON;
+-- with Simple.JSON; use Simple.JSON;
 
 with GNATCOLL.JSON; use  GNATCOLL.JSON;
 
@@ -12,11 +12,11 @@ procedure Simple.Main is
    V_Enum                              : constant Enum := DD;
    V_My_Mod                            : constant My_Mod := 10;
    V_My                                : constant My := 88;
-   V_Simple_Record                     : Simple_Record;
-   V_Concrete_Taggd_Record             : Concrete_Taggd_Record;
-   V_Concrete_Taggd_Record_With_Time   : Concrete_Taggd_Record_With_Time;
-   V_Record_With_Discriminatns_2_False : Record_With_Discriminatns (2, False);
-   V_Record_With_Discriminatns_3_True  : Record_With_Discriminatns (3, True);
+   V_Simple_Record                     : constant Simple_Record := (2, 1.0, 1, (1, 2, 3, 4, 5, 6, 7, 8, 9, 1), A, 22);
+   V_Concrete_Taggd_Record             : constant Concrete_Taggd_Record := Concrete_Taggd_Record'(20, 30);
+   V_Concrete_Taggd_Record_With_Time   : constant Concrete_Taggd_Record_With_Time := Concrete_Taggd_Record_With_Time'(2, 3, Ada.Calendar.Time_Of (2021, 02, 11, 11.0));
+   V_Record_With_Discriminatns_2_False : constant Record_With_Discriminatns (2, False) := (2, False, (others => '!'), 333);
+   V_Record_With_Discriminatns_3_True  : constant Record_With_Discriminatns (3, True) := (3, True, (others => '!'), 1.22);
    V_My_Vectors                        : My_Vectors.Vector;
 
    procedure Extra_Init  is
@@ -26,10 +26,7 @@ procedure Simple.Main is
       V_My_Vectors.Append("a  3");
    end Extra_Init;
 
-   use type My_Vectors.Vector;
-
-   --  begin read-only
-   --  <begin>
+   -- use type My_Vectors.Vector;
 
        procedure Test (S : String; Data : AA) is
           D : constant AA := Get (Read (S));
@@ -130,15 +127,15 @@ procedure Simple.Main is
        end Test;
 
 
-       procedure Test (S : String; Data : My_Vectors.Vector) is
-          D : constant My_Vectors.Vector := Get (Read (S));
-       begin
-          if D = Data then
-             Put_Line ("OK My_Vectors.Vector ");
-          else
-             Put_Line ("FAIL My_Vectors.Vector ");
-          end if;
-       end Test;
+       --  procedure Test (S : String; Data : My_Vectors.Vector) is
+       --     D : constant My_Vectors.Vector := Get (Read (S));
+       --  begin
+       --     if D = Data then
+       --        Put_Line ("OK My_Vectors.Vector ");
+       --     else
+       --        Put_Line ("FAIL My_Vectors.Vector ");
+       --     end if;
+       --  end Test;
 
 begin
    Extra_Init;
@@ -153,7 +150,5 @@ begin
    Test (Write (Create (V_Concrete_Taggd_Record_With_Time)), V_Concrete_Taggd_Record_With_Time);
    Test (Write (Create (V_Record_With_Discriminatns_2_False)), V_Record_With_Discriminatns_2_False);
    Test (Write (Create (V_Record_With_Discriminatns_3_True)), V_Record_With_Discriminatns_3_True);
-   Test (Write (Create_Object (V_My_Vectors)), V_My_Vectors);
-   --  <end>
-   --  end read only
+   --    Test (Write (Create (V_My_Vectors)), V_My_Vectors);
 end Simple.Main;

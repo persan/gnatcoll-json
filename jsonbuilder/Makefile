@@ -23,10 +23,10 @@ Makefile.conf: Makefile # IGNORE
 compile:
 	gprbuild  -P ${PROJECT} ${GPRBUILDFLAGS}
 .PHONY: test
-test:
+test:compile
 	${MAKE} -C test all
 
-install:
+install:test
 	gprinstall  -P ${PROJECT} ${GPRBUILDFLAGS} --prefix=${DESTDIR}${PREFIX}
 
 clean:
@@ -35,3 +35,7 @@ clean:
 gnatstudio gps:
 	${GNATSTUDIO} -P gnatcoll-json-builder.gpr & 
 	${GNATSTUDIO} -P test/codegen.gpr & 
+NDDS=/home/per/Working/projects@github.com/dds-ada-api-7.0.0.develop/ndds-ada/
+ALL:
+	gprbuild  -P ${PROJECT} ${GPRBUILDFLAGS}
+	bin/json-builder -P ${NDDS}/dds-ada.gpr  ${NDDS}/src/dds.ads

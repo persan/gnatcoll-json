@@ -152,9 +152,9 @@ check_clean: # IGNORE
 	@if [ -n "`git status --porcelain`" ] ; then git status ; exit -1 ; fi
 tools:
 	gprbuild -P gnatcoll-json-util.gpr -XLIBRARY_TYPE=static
+
 test:
-	gprbuild -P tests/gnatcoll-json-tests.gpr -XLIBRARY_TYPE=static
-	tests/bin/gnatcoll-json-support-test-main
+	${MAKE} -C tests test
 
 tag:tools check_clean all
 	@check_version >/dev/null

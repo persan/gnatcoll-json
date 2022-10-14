@@ -55,4 +55,45 @@ with Ada.Containers.Vectors; -- @ Impl-> TestOK
 pragma Warnings (On);
 
 package GNATCOLL.JSON.Support.Test is
+   type Test_Data is record
+      I1 : Integer;
+      F1 : Float;
+   end record;
+   function Create (Val : Test_Data) return JSON_Value  with
+     Inline_Always => True;
+
+   function Get (Val : JSON_Value) return Test_Data;
+
+   function Get
+     (Val   : JSON_Value;
+      Field : UTF8_String) return Test_Data with Inline_Always;
+
+   procedure Set_Field
+     (Val        : JSON_Value;
+      Field_Name : UTF8_String;
+      Field      : Test_Data) with Inline_Always;
+
+   procedure Populate (Item : in out JSON_Value; Val : Test_Data);
+   procedure Map (Name : UTF8_String; Value : JSON_Value; Into : out Test_Data);
+
+   type Cursor is private;
+   type Test_Data_Iter (<>) is private with
+     Iterable => (First        => First_Cursor,
+                  Next         => Advance,
+                  Has_Element  => Cursor_Has_Element,
+                  Element      => Get_Element);
+
+   function First_Cursor (Cont : Test_Data_Iter) return Cursor;
+   function Advance (Cont : Test_Data_Iter; Position : Cursor) return Cursor;
+   function Cursor_Has_Element (Cont : Test_Data_Iter; Position : Cursor) return Boolean;
+   function Get_Element (Cont : Test_Data_Iter; Position : Cursor) return Test_Data;
+   function Get_Test_Data (Items : Integer) return Test_Data_Iter;
+   --  To be used as
+   --  for Test_Data of Get_Test_Data (count) loop
+   --     Do_Somthing_With Test_Data;
+   --  end loop;
+private
+   type Test_Data_Iter is new Integer;
+   type Cursor is new Integer;
+
 end GNATCOLL.JSON.Support.Test;

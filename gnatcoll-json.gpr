@@ -3,7 +3,7 @@ library project GnatColl.JSON is
    type Library_Type_Type is ("static", "relocatable", "static-pic");
    Library_Type : Library_Type_Type := external("LIBRARY_TYPE","static");
 
-   VERSION  := "1.4.0";
+   VERSION  := "1.4.1";
    -- VERSION shall be in sync with:
    --   GNATCOLL.JSON.Support.VERSION
    --   The the README.md file
