@@ -1,0 +1,7 @@
+   --  -------------------------------------------------------------------------
+   --  @_Name_@
+   package @_Name_@_JSON_Impl is new GNATCOLL.JSON.Support.Integer_Generic (@_Name_@);
+   function Create (Val : @_Name_@) return JSON_Value renames @_Name_@_JSON_Impl.Create;
+   function Get (Val : JSON_Value) return @_Name_@ renames @_Name_@_JSON_Impl.Get;
+   function Get (Val : JSON_Value; Field : UTF8_String) return @_Name_@ renames @_Name_@_JSON_Impl.Get;
+   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : @_Name_@) renames @_Name_@_JSON_Impl.Set_Field;

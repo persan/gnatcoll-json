@@ -12,6 +12,7 @@ package Simple is
    type Enum is (A, B, C, DD);
 
    type My_Mod is mod 33;
+   type My_Mod2 is new My_Mod;
 
    subtype My is Integer;
 

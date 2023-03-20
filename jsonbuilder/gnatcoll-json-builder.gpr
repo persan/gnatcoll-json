@@ -1,14 +1,13 @@
+with "templates_parser.gpr";
 -- with "libiconv.gpr";
 with "libadalang.gpr";
 with "../gnatcoll-json.gpr";
+
 project Gnatcoll.Json.Builder is
+
    for Create_Missing_Dirs use "True";
-
    for Main use ("gnatcoll-json-builder-main.adb");
-
-   for Languages use ("Ada", "python","Makefile");
-
-
+   for Languages use ("Ada", "python", "Makefile");
    for Source_Dirs use (".", "src/**");
    for Object_Dir use ".obj";
    for Exec_Dir use "bin";
@@ -19,15 +18,9 @@ project Gnatcoll.Json.Builder is
    end Builder;
 
    package Compiler is
-      for Driver ("Python") use "";
-      for Driver ("Makefile") use "";
-
-      for Switches ("ada") use ("-g",
-                                "-gnatQ",
-                                "-fcallgraph-info=su,da",
-                                "-fstack-check",
-                                "-gnatwa",
-                                "-gnatyABOabcdfhiklnprtux");
+      for Driver ("python") use "";
+      for Driver ("makefile") use "";
+      for Switches ("ada") use ("-g", "-gnatQ", "-fcallgraph-info=su,da", "-fstack-check", "-gnatX", "-gnatwa", "-gnatyABOabcdfhiklnprtux");
    end Compiler;
 
    package Binder is
@@ -53,8 +46,9 @@ project Gnatcoll.Json.Builder is
 
    package Naming is
       for Body_Suffix ("python") use ".py";
-      for Body_Suffix ("Makefile") use ".mk";
-      for Implementation_Exceptions ("Makefile") use ("Makefile");
+      for Body_Suffix ("makefile") use ".mk";
+      for Implementation_Exceptions ("makefile") use ("Makefile");
    end Naming;
 
 end Gnatcoll.Json.Builder;
+

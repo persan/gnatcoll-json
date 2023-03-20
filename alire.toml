@@ -1,0 +1,15 @@
+name = "gnatcoll_json"
+description = ""
+version = "1.4.2-dev"
+project-files = ["gnatcoll-json.gpr"]
+
+
+authors = ["Per Sandberg"]
+maintainers = ["Per Sandberg <per.s.sandberg@bahnhof.se>"]
+maintainers-logins = ["persan"]
+licenses = "MIT OR Apache-2.0"
+website = "https://github.com/persan/gnatcoll-json"
+tags = []
+
+[[depends-on]]
+gnatcoll = "^23.0.0"

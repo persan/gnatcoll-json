@@ -37,3 +37,4 @@ trader
 gcov_input.txt
 .clang-format
 compile_commands.json
+alire
