@@ -1,0 +1,5 @@
+@@-- ----------------------------------
+@@-- Auto template for json-builder.
+@@-- To be completed.
+@@-- ----------------------------------
+with GNATCOLL.JSON.Support.Integer_Generic;

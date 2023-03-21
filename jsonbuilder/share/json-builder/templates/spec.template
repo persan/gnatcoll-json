@@ -1,0 +1,9 @@
+pragma Ada_2022;
+@@INCLUDE@@ header.template
+@_withs_@
+package @_Name_@ is
+   pragma Elaborate_Body;
+
+@_methods_@
+
+end @_Name_@;

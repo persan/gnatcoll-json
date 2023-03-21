@@ -1,0 +1,5 @@
+@@INCLUDE@@ header.template
+package body @_Name_@ is
+   pragma Elaborate_Body;
+@_methods_@
+end @_Name_@;
