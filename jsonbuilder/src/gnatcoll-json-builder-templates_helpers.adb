@@ -4,12 +4,14 @@ with Ada.Text_IO;
 with GNAT.Source_Info;
 with Ada.Strings.Fixed;
 with Ada.Strings.Maps.Constants;
+with Ada.Environment_Variables;
 package body GNATCOLL.JSON.Builder.Templates_Helpers is
 
    use Ada.Directories;
    -------------------------
    -- Get_Template_Folder --
    -------------------------
+
    function Get_Filename (S : String := GNAT.Source_Info.Enclosing_Entity) return String is
       Lc : constant String := Ada.Strings.Fixed.Translate (S, Ada.Strings.Maps.Constants.Lower_Case_Map);
       Ix : Natural := Ada.Strings.Fixed.Index (Lc, ".", Lc'Last, Ada.Strings.Backward);
@@ -22,7 +24,7 @@ package body GNATCOLL.JSON.Builder.Templates_Helpers is
 
    function Get_Template_Folder return String is
    begin
-      return Compose (Compose (Compose (Containing_Directory (Containing_Directory (Ada.Command_Line.Command_Name)), "share"), "json-builder"), "templates");
+      return Full_Name (Compose (Compose (Compose (Containing_Directory (Containing_Directory (Ada.Command_Line.Command_Name)), "share"), "json-builder"), "templates"));
    end Get_Template_Folder;
 
    procedure Create (Path : String) is

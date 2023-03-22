@@ -22,7 +22,7 @@ package GNATCOLL.JSON.Builder.Application is
         (App.Args.Parser, "-o", "--output-dir",
          Arg_Type    => Ada.Strings.Unbounded.Unbounded_String,
          Default_Val => Default_Output_Dir,
-         Help        => "Project file to use");
+         Help        => "Project file to use default: '" & Default_Output_Dir.To_String & "'.");
 
       Default_Template_Dir : constant Ada.Strings.Unbounded.Unbounded_String :=
                                Ada.Strings.Unbounded.To_Unbounded_String (Templates_Helpers.Get_Template_Folder);
@@ -30,7 +30,7 @@ package GNATCOLL.JSON.Builder.Application is
         (App.Args.Parser, "-t", "--templates",
          Arg_Type    => Ada.Strings.Unbounded.Unbounded_String,
          Default_Val => Default_Template_Dir,
-         Help        => "Project file to use");
+         Help        => "Templates to use default: '" & Default_Template_Dir.To_String & "/*.template'.");
    end Args;
 
 end GNATCOLL.JSON.Builder.Application;
