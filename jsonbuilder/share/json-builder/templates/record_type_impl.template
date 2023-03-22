@@ -1,0 +1,42 @@
+   --  =================================================================
+   --     @_Name_@ 
+   --  =================================================================
+   
+@@IF@@ @_Is_Abstract_@
+@@ELSE@@ 
+ 
+   function Create (Val : @_Name_@) return JSON_Value is
+   begin
+      return Ret : constant JSON_Value := Create_Object do
+         Set_Fields (Ret, Val);
+      end return;
+   end Create;
+
+   function Get (Val : JSON_Value) return @_Name_@ is
+   begin
+      return Ret : Simple_Record do
+         Map_JSON_Object (Val, Map_JSON_Value'Access, Ret);
+      end return;
+   end Get;   
+   
+   function Get (Val : JSON_Value; Field : UTF8_String) return @_Name_@ is
+   begin
+      return Get (Get (Val, Field));
+   end Get;
+@@END_IF@@
+   
+   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : @_Name_@) is
+   begin
+      Set_Field (Val, Field_Name, Create (Field));
+   end Set_Field;
+<table>
+@@TABLE@@
+   @_Name_@_@_Field_@_Field_Name    : constant String := "@_Field_Name_@";
+@@END_TABLE@@   
+   procedure Set_Fields (Val : JSON_Value; Data : @_Name_@);
+
+   procedure Map_JSON_Value (User_Object : in out @_Name_@;
+                             Name        : UTF8_String;
+                             Value       : JSON_Value);
+
+   procedure Set_Fields (Val : JSON_Value; Data : @_Name_@);

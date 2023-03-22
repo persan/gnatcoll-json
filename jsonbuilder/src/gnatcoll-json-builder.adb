@@ -1,16 +1,23 @@
+with Ada.Characters.Conversions; use Ada.Characters.Conversions;
 with Ada.Command_Line;
+with Ada.Containers.Indefinite_Ordered_Sets;
 with Ada.Strings.Fixed;
 with Ada.Strings.Maps;
-with Ada.Text_IO;
-with Libadalang.Common; use Libadalang.Common;
-with GNAT.Traceback.Symbolic;
-with GNAT.Exception_Traces;
-with GNATCOLL.JSON.Builder.Templates;
-with Templates_Parser;
-with Langkit_Support.Text; use Langkit_Support.Text;
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
-with Ada.Characters.Conversions;
-with Ada.Containers.Indefinite_Ordered_Sets;
+with Ada.Strings.Wide_Wide_Unbounded;
+with Ada.Text_IO; use Ada.Text_IO;
+
+with GNAT.Exception_Traces;
+with GNAT.Traceback.Symbolic;
+
+with GNATCOLL.JSON.Builder.Templates;
+
+with Langkit_Support.Text; use Langkit_Support.Text;
+
+with Libadalang.Common; use Libadalang.Common;
+
+with Templates_Parser;
+
 package body GNATCOLL.JSON.Builder is
    package String_Sets is new Ada.Containers.Indefinite_Ordered_Sets (String);
 
@@ -19,6 +26,21 @@ package body GNATCOLL.JSON.Builder is
 
    Spec_Includes : String_Sets.Set;
    Body_Includes : String_Sets.Set;
+
+   function Get_First (From : Ada_Node'Class; Kind : Ada_Node_Kind_Type; Indent : String := "  ") return Ada_Node'Class is
+   begin
+      Put_Line (Indent & From.Image);
+      for I in From.First_Child_Index .. From.Last_Child_Index loop
+         if not From.Child (I).Is_Null then
+            if From.Child (I).Kind = Kind then
+               return From.Child (I);
+            else
+               return Get_First (From.Child (I), Kind, Indent & "  ");
+            end if;
+         end if;
+      end loop;
+      return No_Ada_Node;
+   end Get_First;
 
    function To_String (Set : String_Sets.Set; Delimiter : String := "" & ASCII.LF) return String is
       First : Boolean := True;
@@ -33,8 +55,6 @@ package body GNATCOLL.JSON.Builder is
       end loop;
       return Ret.To_String;
    end;
-   use Ada.Text_IO;
-   use Ada.Characters.Conversions;
 
    --  -------------------------------------------------------------------------
 
@@ -49,13 +69,13 @@ package body GNATCOLL.JSON.Builder is
 
    --  -------------------------------------------------------------------------
    function Get_Name (Node : Ada_Node) return Text_Type is
-      Ret : access Ada_Node'Class;
+      Ret : Ada.Strings.Wide_Wide_Unbounded.Unbounded_Wide_Wide_String;
       function Visit (Node : Ada_Node'Class) return Visit_Status;
       function Visit (Node : Ada_Node'Class) return Visit_Status is
       begin
          case Node.Kind is
          when Ada_Dotted_Name | Ada_Identifier =>
-            Ret := Node'Unrestricted_Access;
+            Ret.Append (Node.Text);
             return Stop;
          when others =>
             return Into;
@@ -63,26 +83,16 @@ package body GNATCOLL.JSON.Builder is
       end;
    begin
       Node.Traverse (Visit'Access);
-      return Ret.all.Text;
+      return Ret.To_Wide_Wide_String;
    end;
 
    procedure Print_ARRAY_TYPE_DEF (Nodes : Ada_Node_Array) is
       Tr        : Templates_Parser.Translate_Set;
       use Templates_Parser;
    begin
-
-      for Node of Nodes loop
-         Ada.Text_IO.Put_Line ("  2 " & Node.Image);
-         if not Node.Is_Null then
-            for Node of Nodes (Nodes'First + 2).Children loop
-               Ada.Text_IO.Put_Line ("    3 " & Node.Image);
-            end loop;
-         end if;
-      end loop;
-
       Tr.Insert (Assoc ("Name", To_String (Nodes (Nodes'First).Text)));
-      Tr.Insert (Assoc ("Index", To_String (Get_Name (Nodes (Nodes'First + 1)))));
-      Tr.Insert (Assoc ("Element", To_String (Get_Name (Nodes (Nodes'First + 2)))));
+      Tr.Insert (Assoc ("Index", To_String (Get_Name (Nodes (Nodes'First + 2).Child (1)))));
+      Tr.Insert (Assoc ("Element", To_String (Get_Name (Nodes (Nodes'First + 2).Child (2)))));
       Spec_Source.Append (Unbounded_String'(Parse (Templates.ARRAY_TYPE_Template, Tr)));
       Spec_Includes.Include (Parse (Templates.ARRAY_TYPE_With_Template, Tr));
    end Print_ARRAY_TYPE_DEF;
@@ -122,10 +132,23 @@ package body GNATCOLL.JSON.Builder is
    --  -------------------------------------------------------------------------
 
    procedure Print_RECORD_TYPE_DEF (Nodes : Ada_Node_Array) is
-      Tr        : Templates_Parser.Translate_Set;
+      Tr          : Templates_Parser.Translate_Set;
+      Fields      : Templates_Parser.Vector_Tag;
+      Field_Names : Templates_Parser.Vector_Tag;
       use Templates_Parser;
    begin
       Tr.Insert (Assoc ("Name", To_String (Nodes (Nodes'First).Text)));
+      for Node of Nodes loop
+         Put_Line (" - " & Node.Image);
+      end loop;
+      for Field of Get_First (Nodes (Nodes'First + 2), Ada_Ada_Node_List).Children loop
+         Fields.Append (To_String (Get_First (Field, Ada_Defining_Name).Text));
+         Field_Names.Append (To_String (Get_First (Field, Ada_Defining_Name).Text));
+      end loop;
+
+      Tr.Insert (Assoc ("Field", Fields));
+      Tr.Insert (Assoc ("Field_Name", Field_Names));
+
       Spec_Source.Append (Unbounded_String'(Parse (Templates.RECORD_TYPE_Template, Tr)));
    end Print_RECORD_TYPE_DEF;
 

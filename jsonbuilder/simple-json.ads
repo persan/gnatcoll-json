@@ -10,6 +10,7 @@ with GNATCOLL.JSON.Support.Integer_Generic;
 with GNATCOLL.JSON.Support.Modular_Generic;
 package Simple.JSON is
    pragma Elaborate_Body;
+   use GNATCOLL.JSON;
 
    --  -------------------------------------------------------------------------
    --  AA
@@ -21,59 +22,23 @@ package Simple.JSON is
    procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : AA) renames AA_JSON_Impl.Set_Field;
 
    --  ---------------------------------------------------------------
+   --  BB
+   --
+   package BB_JSON_Impl is new GNATCOLL.JSON.Support.Modular_Generic (BB);
+   function Create (Val : BB) return JSON_Value renames BB_JSON_Impl.Create;
+   function Get (Val : JSON_Value) return BB renames BB_JSON_Impl.Get;
+   function Get (Val : JSON_Value; Field : UTF8_String) return BB renames BB_JSON_Impl.Get;
+   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : BB) renames BB_JSON_Impl.Set_Field;
+
+   --  ---------------------------------------------------------------
    --  Aa_Array
    --
    package Aa_Array_JSON_Impl is new GNATCOLL.JSON.Support.Arrays_Generic
-      (,,Aa_Array, Create, Get, Create, Get);
+      (Natural, AA, Aa_Array, Create, Get, Create, Get);
    function Create (Val : Aa_Array) return JSON_Value renames Aa_Array_JSON_Impl.Create;
    function Get (Val : JSON_Value) return Aa_Array renames Aa_Array_JSON_Impl.Get;
    function Get (Val : JSON_Value; Field : UTF8_String) return Aa_Array renames Aa_Array_JSON_Impl.Get;
    procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Aa_Array) renames Aa_Array_JSON_Impl.Set_Field;
-
-
-   --  ---------------------------------------------------------------
-   --  Aa_Array_2
-   --
-   package Aa_Array_2_JSON_Impl is new GNATCOLL.JSON.Support.Arrays_Generic
-      (,,Aa_Array_2, Create, Get, Create, Get);
-   function Create (Val : Aa_Array_2) return JSON_Value renames Aa_Array_JSON_Impl.Create;
-   function Get (Val : JSON_Value) return Aa_Array renames Aa_Array_JSON_Impl.Get;
-   function Get (Val : JSON_Value; Field : UTF8_String) return Aa_Array_2 renames Aa_Array_JSON_Impl.Get;
-   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Aa_Array_2) renames Aa_Array_JSON_Impl.Set_Field;
-
-
-   --  ---------------------------------------------------------------
-   --  Aa_Array_3
-   --
-   package Aa_Array_3_JSON_Impl is new GNATCOLL.JSON.Support.Arrays_Generic
-      (,,Aa_Array_3, Create, Get, Create, Get);
-   function Create (Val : Aa_Array_3) return JSON_Value renames Aa_Array_JSON_Impl.Create;
-   function Get (Val : JSON_Value) return Aa_Array renames Aa_Array_JSON_Impl.Get;
-   function Get (Val : JSON_Value; Field : UTF8_String) return Aa_Array_3 renames Aa_Array_JSON_Impl.Get;
-   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Aa_Array_3) renames Aa_Array_JSON_Impl.Set_Field;
-
-
-   --  ---------------------------------------------------------------
-   --  Aa_Array_4
-   --
-   package Aa_Array_4_JSON_Impl is new GNATCOLL.JSON.Support.Arrays_Generic
-      (,,Aa_Array_4, Create, Get, Create, Get);
-   function Create (Val : Aa_Array_4) return JSON_Value renames Aa_Array_JSON_Impl.Create;
-   function Get (Val : JSON_Value) return Aa_Array renames Aa_Array_JSON_Impl.Get;
-   function Get (Val : JSON_Value; Field : UTF8_String) return Aa_Array_4 renames Aa_Array_JSON_Impl.Get;
-   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Aa_Array_4) renames Aa_Array_JSON_Impl.Set_Field;
-
-
-   --  ---------------------------------------------------------------
-   --  Aa_Array_Simple
-   --
-   package Aa_Array_Simple_JSON_Impl is new GNATCOLL.JSON.Support.Arrays_Generic
-      (,,Aa_Array_Simple, Create, Get, Create, Get);
-   function Create (Val : Aa_Array_Simple) return JSON_Value renames Aa_Array_JSON_Impl.Create;
-   function Get (Val : JSON_Value) return Aa_Array renames Aa_Array_JSON_Impl.Get;
-   function Get (Val : JSON_Value; Field : UTF8_String) return Aa_Array_Simple renames Aa_Array_JSON_Impl.Get;
-   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Aa_Array_Simple) renames Aa_Array_JSON_Impl.Set_Field;
-
 
    --  ---------------------------------------------------------------
    --  Enum
@@ -92,9 +57,6 @@ package Simple.JSON is
    function Get (Val : JSON_Value) return My_Mod renames My_Mod_JSON_Impl.Get;
    function Get (Val : JSON_Value; Field : UTF8_String) return My_Mod renames My_Mod_JSON_Impl.Get;
    procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : My_Mod) renames My_Mod_JSON_Impl.Set_Field;
-
-   --  ---------------------------------------------------------------
-   --  My_Mod2 derived
 
    --  ---------------------------------------------------------------
    --  Simple_Record record

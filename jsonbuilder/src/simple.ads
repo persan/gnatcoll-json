@@ -3,19 +3,15 @@ with Ada.Containers.Indefinite_Vectors;
 package Simple is
 
    type AA is range 1 .. 20;
-
+   type BB is mod 22;
    type Aa_Array is array (Natural range <>) of AA;
-   type Aa_Array_2 is array (Standard.Character) of Standard.Character;
-   type Aa_Array_3 is array (Integer range 1 .. 4) of AA;
-   type Aa_Array_4 is array (1 .. 4) of AA;
 
-   type Aa_Array_Simple is array (Natural range <>) of AA with
-     Annotate => (JSON, Simple);
+   --  type Aa_Array_Simple is array (Natural range <>) of BB with
+   --    Annotate => (JSON, Simple);
 
    type Enum is (A, B, C, DD);
 
    type My_Mod is mod 33;
-   type My_Mod2 is new My_Mod;
 
    subtype My is Integer;
 
@@ -25,13 +21,8 @@ package Simple is
       D2_AA          : AA := 3;
       D4_Aa_Array    : Aa_Array (1 .. 10) := [others => 2];
       D5_Enum        : Enum := DD;
-      D6_My          : My := 11 with
-        Annotate => (JSON, Field_Name, "d6_renamed");
+      D6_My          : My := 11 with Annotate => (JSON, Field_Name, "d6_renamed");
    end record;
-
-   type Some_Interface is interface;
-   type Some_Limited_Interface is interface;
-   type Some_Syncronized_Interface is synchronized interface;
 
    type Abstract_Record is abstract tagged record
       Data : Integer := 0;

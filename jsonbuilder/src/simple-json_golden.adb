@@ -24,11 +24,10 @@ package body Simple.JSON_Golden is
       return Get (Get (Val, Field));
    end Get;
 
-
    procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : Simple_Record) is
    begin
       Set_Field (Val, Field_Name, Create (Field));
-   end;
+   end Set_Field;
 
    Simple_Record_D1_Integer_Field_Name    : constant String := "D1_Integer";
    Simple_Record_D3_Long_Float_Field_Name : constant String := "D3_Long_Float";
@@ -51,21 +50,15 @@ package body Simple.JSON_Golden is
                              Name        : UTF8_String;
                              Value       : JSON_Value) is
    begin
-      if Name = Simple_Record_D1_Integer_Field_Name then
-         User_Object.D1_Integer := Get (Value);
-      elsif Name = Simple_Record_D3_Long_Float_Field_Name then
-         User_Object.D3_Long_Float := Get_Long_Float (Value);
-      elsif Name = Simple_Record_D2_AA_Field_Name then
-         User_Object.D2_AA := Get (Value);
-      elsif Name = Simple_Record_D4_Aa_Array_Field_Name then
-         User_Object.D4_Aa_Array := Get (Value);
-      elsif Name = Simple_Record_D5_Enum_Field_Name then
-         User_Object.D5_Enum := Get (Value);
-      elsif Name = Simple_Record_D6_My_Field_Name then
-         User_Object.D6_My := Get (Value);
-      else
-         null;
-      end if;
+      case Name is
+      when Simple_Record_D1_Integer_Field_Name => User_Object.D1_Integer := Get (Value);
+      when Simple_Record_D3_Long_Float_Field_Name => User_Object.D3_Long_Float := Get_Long_Float (Value);
+      when Simple_Record_D2_AA_Field_Name => User_Object.D2_AA := Get (Value);
+      when Simple_Record_D4_Aa_Array_Field_Name => User_Object.D4_Aa_Array := Get (Value);
+      when Simple_Record_D5_Enum_Field_Name => User_Object.D5_Enum := Get (Value);
+      when Simple_Record_D6_My_Field_Name => User_Object.D6_My := Get (Value);
+      when others =>         null;
+      end case;
    end;
 
    -------------------------------------------------------------------------
@@ -120,7 +113,6 @@ package body Simple.JSON_Golden is
       Set_Field (Val, Field_Name, Create (Field));
    end Set_Field;
 
-
    procedure Set_Fields (Val : JSON_Value; Data : Concrete_Taggd_Record) is
    begin
       Set_Fields (Val, Abstract_Record (Data));
@@ -138,7 +130,6 @@ package body Simple.JSON_Golden is
       end if;
 
    end;
-
 
    --  --------------------------------------------------------------------
    --  Concrete_Taggd_Record_with_Time
@@ -170,7 +161,6 @@ package body Simple.JSON_Golden is
       Set_Field (Val, Field_Name, Create (Field));
    end Set_Field;
 
-
    procedure Map_JSON_Value (User_Object : in out Concrete_Taggd_Record_With_Time;
                              Name        : UTF8_String;
                              Value       : JSON_Value) is
@@ -193,10 +183,10 @@ package body Simple.JSON_Golden is
    --    Record_With_Discriminatns
    --  -------------------------------------------------------------------------
    --
-   Record_With_Discriminatns_D1_Field_Name : constant String := "D1";
-   Record_With_Discriminatns_D2_Field_Name : constant String := "D2";
+   Record_With_Discriminatns_D1_Field_Name   : constant String := "D1";
+   Record_With_Discriminatns_D2_Field_Name   : constant String := "D2";
    Record_With_Discriminatns_Name_Field_Name : constant String := "Name";
-   Record_With_Discriminatns_F_Field_Name : constant String := "F";
+   Record_With_Discriminatns_F_Field_Name    : constant String := "F";
    Record_With_Discriminatns_I_Field_Name    : constant String := "I";
 
    function Create (Val : Record_With_Discriminatns) return JSON_Value is
@@ -228,7 +218,6 @@ package body Simple.JSON_Golden is
    begin
       Set_Field (Val, Field_Name, Create (Field));
    end Set_Field;
-
 
    procedure Map_JSON_Value (User_Object : in out Record_With_Discriminatns;
                              Name        : UTF8_String;

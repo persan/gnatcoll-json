@@ -3,6 +3,7 @@ pragma Ada_2022;
 @_withs_@
 package @_Name_@ is
    pragma Elaborate_Body;
+   use GNATCOLL.JSON;
 
 @_methods_@
 

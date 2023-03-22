@@ -1,8 +1,22 @@
-@@-- ----------------------------------
-@@-- Auto template for json-builder.
-@@-- To be completed.
-@@-- ----------------------------------
    --  ---------------------------------------------------------------
    --  @_Name_@ record
+@@IF@@ @_Is_Abstract_@
+@@ELSE@@ 
+   function Create (Val : @_Name_@) return JSON_Value;
 
+   function Get (Val : JSON_Value) return @_Name_@;
 
+   function Get (Val : JSON_Value; Field : UTF8_String) return @_Name_@;
+
+@@END_IF@@
+   procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : @_Name_@);
+
+   procedure Set_Fields (Val : JSON_Value; Data : @_Name_@);
+
+   procedure Map_JSON_Value (User_Object : in out @_Name_@;
+                             Name        : UTF8_String;
+                             Value       : JSON_Value);
+
+   procedure Map_JSON_Object is new Gen_Map_JSON_Object (@_Name_@);
+
+   procedure Set_Fields (Val : JSON_Value; Data : @_Name_@);

@@ -6,11 +6,10 @@
    --  @_Name_@
    --
    package @_Name_@_JSON_Impl is new GNATCOLL.JSON.Support.Arrays_Generic
-      (@_Index_@,@_Element_@,@_Name_@, Create, Get, Create, Get);
+      (@_Index_@, @_Element_@, @_Name_@, Create, Get, Create, Get);
    function Create (Val : @_Name_@) return JSON_Value renames Aa_Array_JSON_Impl.Create;
    function Get (Val : JSON_Value) return Aa_Array renames Aa_Array_JSON_Impl.Get;
    function Get (Val : JSON_Value; Field : UTF8_String) return @_Name_@ renames Aa_Array_JSON_Impl.Get;
    procedure Set_Field  (Val : JSON_Value;  Field_Name : UTF8_String; Field  : @_Name_@) renames Aa_Array_JSON_Impl.Set_Field;
 
 
-	
