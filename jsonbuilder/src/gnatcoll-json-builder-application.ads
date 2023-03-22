@@ -2,9 +2,8 @@ with Libadalang.Analysis; use Libadalang.Analysis;
 with Libadalang.Helpers;  use Libadalang.Helpers;
 with Ada.Strings.Unbounded;
 with GNATCOLL.Opt_Parse;
-package GNATCOLL.JSON.Builder is
-
-   Version : constant String := "3.0";
+with GNATCOLL.JSON.Builder.Templates_Helpers;
+package GNATCOLL.JSON.Builder.Application is
 
    procedure Process_Unit (Context : App_Job_Context; Unit : Analysis_Unit);
    procedure App_Setup (Context : App_Context; Jobs : App_Job_Context_Array);
@@ -24,6 +23,14 @@ package GNATCOLL.JSON.Builder is
          Arg_Type    => Ada.Strings.Unbounded.Unbounded_String,
          Default_Val => Default_Output_Dir,
          Help        => "Project file to use");
+
+      Default_Template_Dir : constant Ada.Strings.Unbounded.Unbounded_String :=
+                               Ada.Strings.Unbounded.To_Unbounded_String (Templates_Helpers.Get_Template_Folder);
+      package Template_Dir is new Parse_Option
+        (App.Args.Parser, "-t", "--templates",
+         Arg_Type    => Ada.Strings.Unbounded.Unbounded_String,
+         Default_Val => Default_Template_Dir,
+         Help        => "Project file to use");
    end Args;
 
-end GNATCOLL.JSON.Builder;
+end GNATCOLL.JSON.Builder.Application;

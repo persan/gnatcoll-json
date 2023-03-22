@@ -18,7 +18,7 @@ with Libadalang.Common; use Libadalang.Common;
 
 with Templates_Parser;
 
-package body GNATCOLL.JSON.Builder is
+package body GNATCOLL.JSON.Builder.Application is
    package String_Sets is new Ada.Containers.Indefinite_Ordered_Sets (String);
 
    Spec_Source : Ada.Strings.Unbounded.Unbounded_String;
@@ -243,4 +243,4 @@ package body GNATCOLL.JSON.Builder is
          end;
       end if;
    end Process_Unit;
-end GNATCOLL.JSON.Builder;
+end GNATCOLL.JSON.Builder.Application;

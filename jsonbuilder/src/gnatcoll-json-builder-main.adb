@@ -1,5 +1,5 @@
-
+with GNATCOLL.JSON.Builder.Application;
 procedure GNATCOLL.JSON.Builder.Main is
 begin
-   App.Run;
+   Application.App.Run;
 end GNATCOLL.JSON.Builder.Main;

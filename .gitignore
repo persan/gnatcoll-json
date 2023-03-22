@@ -35,6 +35,6 @@ trader
 *.gcno
 *.gcda
 gcov_input.txt
-.clang-format
+.clang*
 compile_commands.json
 alire
